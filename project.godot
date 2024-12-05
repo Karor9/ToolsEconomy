@@ -11,12 +11,26 @@ config_version=5
 [application]
 
 config/name="ToolsEconomy"
-config/features=PackedStringArray("4.4", "GL Compatibility")
+config/tags=PackedStringArray("github")
+run/main_scene="res://Scenes/ui.tscn"
+config/features=PackedStringArray("4.4", "C#", "GL Compatibility")
 config/icon="res://icon.svg"
+
+[autoload]
+
+Globals="*res://Scenes/Globals.tscn"
 
 [dotnet]
 
 project/assembly_name="ToolsEconomy"
+
+[input]
+
+RMB={
+"deadzone": 0.2,
+"events": [Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"button_mask":2,"position":Vector2(310, 16),"global_position":Vector2(319, 62),"factor":1.0,"button_index":2,"canceled":false,"pressed":true,"double_click":false,"script":null)
+]
+}
 
 [rendering]
 

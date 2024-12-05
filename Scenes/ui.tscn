@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://5d8fsq53apj6"]
+
+[ext_resource type="Script" path="res://Scripts/Tools.cs" id="1_jxero"]
+[ext_resource type="PackedScene" uid="uid://cm3kug28fwds2" path="res://Scenes/node.tscn" id="2_qdvrb"]
+
+[node name="UI" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+script = ExtResource("1_jxero")
+Node = ExtResource("2_qdvrb")
