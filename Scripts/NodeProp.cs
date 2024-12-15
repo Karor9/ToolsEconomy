@@ -1,3 +1,4 @@
+using System;
 using Godot;
 using Godot.Collections;
 
@@ -10,7 +11,7 @@ public partial class NodeProp : Panel
 
     public override void _Ready()
     {
-        Button b = GetChild(1) as Button;
+        Button b = GetChild(2) as Button;
         b.Pressed += () => OnClick();
     }
 
@@ -29,6 +30,12 @@ public partial class NodeProp : Panel
             Vector2 e = Position + (Size/2);
             Line2D line = node as Line2D;
             line.Points = new Vector2[] {s, e};
+            RichTextLabel text = node.GetChild(0) as RichTextLabel;
+            text.Position = (s + e)/2;
+            // float rotation = s.AngleToPoint(e);
+            text.RotationDegrees = 0;
+                // rotation -= 1;
+            // text.Rotation = s.AngleToPoint(e);
             Globals.Instance.EdgesContainer.AddChild(line);
             Globals.Instance.ClickedId = -1;
         }

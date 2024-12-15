@@ -1,6 +1,6 @@
 using Godot;
 
-public partial class Tools : CanvasLayer
+public partial class Tools : Control
 {
     [Export] PackedScene Node;
     public override void _Input(InputEvent @event)
@@ -10,7 +10,7 @@ public partial class Tools : CanvasLayer
             Node node = Node.Instantiate();
             NodeProp n = node as NodeProp;
             n.ID = GetChildren().Count;
-            n.Position = GetViewport().GetMousePosition();
+            n.Position = GetGlobalMousePosition();
             AddChild(n);
             Globals.Instance.Nodes.Add(n);
         }
