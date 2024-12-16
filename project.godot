@@ -24,6 +24,10 @@ Globals="*res://Scenes/Globals.tscn"
 
 project/assembly_name="ToolsEconomy"
 
+[gui]
+
+theme/custom="res://Themes/DefaultTheme.tres"
+
 [input]
 
 RMB={

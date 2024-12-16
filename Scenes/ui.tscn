@@ -1,19 +1,98 @@
-[gd_scene load_steps=3 format=3 uid="uid://5d8fsq53apj6"]
+[gd_scene load_steps=4 format=3 uid="uid://5d8fsq53apj6"]
 
 [ext_resource type="Script" path="res://Scripts/Tools.cs" id="1_jxero"]
+[ext_resource type="Script" path="res://Scripts/UIControler.cs" id="1_nf4gj"]
 [ext_resource type="PackedScene" uid="uid://cm3kug28fwds2" path="res://Scenes/node.tscn" id="2_qdvrb"]
 
-[node name="UI" type="Control"]
+[node name="UI" type="Control" node_paths=PackedStringArray("Open", "Close", "UIPanel", "Nodes", "UIButtons")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_nf4gj")
+Open = NodePath("Canvas/Open")
+Close = NodePath("Canvas/Close")
+UIPanel = NodePath("Canvas/UIPanel")
+Nodes = NodePath("Nodes")
+UIButtons = [NodePath("Canvas/UIPanel/ScrollContainer/VBoxContainer/Button"), NodePath("Canvas/UIPanel/ScrollContainer/VBoxContainer/Button2"), NodePath("Canvas/UIPanel/ScrollContainer/VBoxContainer/Button3")]
 
-[node name="CanvasLayer" type="Control" parent="."]
+[node name="Nodes" type="Control" parent="."]
 anchors_preset = 0
 script = ExtResource("1_jxero")
 Node = ExtResource("2_qdvrb")
 
 [node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="Canvas" type="CanvasLayer" parent="."]
+
+[node name="UIPanel" type="Panel" parent="Canvas"]
+anchors_preset = -1
+anchor_right = 0.1
+anchor_bottom = 1.0
+
+[node name="ColorRect" type="ColorRect" parent="Canvas/UIPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.312461, 0.269673, 0.340811, 1)
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Canvas/UIPanel"]
+clip_contents = false
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 10.0
+anchor_bottom = 10.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.1, 0.1)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Canvas/UIPanel/ScrollContainer"]
+layout_mode = 2
+
+[node name="Button" type="Button" parent="Canvas/UIPanel/ScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(1152, 400)
+layout_mode = 2
+text = "Add Node"
+
+[node name="Button2" type="Button" parent="Canvas/UIPanel/ScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(1152, 400)
+layout_mode = 2
+text = "Edit Node"
+
+[node name="Button3" type="Button" parent="Canvas/UIPanel/ScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(1152, 400)
+layout_mode = 2
+text = "Add Line"
+
+[node name="Close" type="Button" parent="Canvas"]
+anchors_preset = -1
+anchor_left = 0.1
+anchor_top = 1.0
+anchor_right = 0.1
+anchor_bottom = 1.0
+offset_top = -32.0
+offset_right = 32.0
+focus_mode = 0
+theme_override_constants/outline_size = 5
+theme_override_font_sizes/font_size = 20
+text = "<"
+
+[node name="Open" type="Button" parent="Canvas"]
+anchors_preset = -1
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -32.0
+offset_right = 32.0
+grow_vertical = 0
+focus_mode = 0
+theme_override_constants/outline_size = 5
+theme_override_font_sizes/font_size = 20
+text = ">"
+
+[connection signal="pressed" from="Canvas/Close" to="." method="ChangeState"]
+[connection signal="pressed" from="Canvas/Open" to="." method="ChangeState"]
