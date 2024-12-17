@@ -22,21 +22,18 @@ public partial class UIControler : Control
         }
     }
 
+
     void ChangeState()
     {
-        GD.Print("state");
         Open.Visible = !Open.Visible;
         Close.Visible = !Close.Visible;
         UIPanel.Visible = !UIPanel.Visible;
+        ClearLastAdded();
     }
 
     void ChangeToolState(int id)
     {
-        if(Nodes.GetChildCount() > 0 && Globals.Instance.CurrentState == Globals.ToolState.AddingNode)
-        {
-            Node n = Nodes.GetChild(Nodes.GetChildCount() - 1);
-            n.QueueFree();
-        }
+        ClearLastAdded();
         Globals.Instance.CurrentState = (Globals.ToolState)id;
         for (int i = 0; i < UIButtons.Count; i++)
         {
@@ -44,6 +41,16 @@ public partial class UIControler : Control
                 UIButtons[i].Disabled = true;
             else if(UIButtons[i].Disabled)
                 UIButtons[i].Disabled = false;
+        }
+    }
+
+    void ClearLastAdded()
+    {
+        if(Nodes.GetChildCount() > 0 && Globals.Instance.CurrentState == Globals.ToolState.AddingNode)
+        {
+            Node n = Nodes.GetChild(Nodes.GetChildCount() - 1);
+            Globals.Instance.Nodes.RemoveAt(Globals.Instance.Nodes.Count - 1);
+            n.QueueFree();
         }
     }
 }

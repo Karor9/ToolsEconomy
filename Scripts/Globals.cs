@@ -8,12 +8,14 @@ public partial class Globals : Node
         None,
         AddingNode,
         EditingNode,
-        AddingLine
+        AddingLine,
+        MoveNode
     }
     public static Globals Instance {get; private set;}
     public Array<NodeProp> Nodes = new Array<NodeProp>();
     public int ClickedId = -1;
     public ToolState CurrentState;
+    public Control EditedNode = null;
 
     [Export] public PackedScene Edge;
     [Export] public Node EdgesContainer;
