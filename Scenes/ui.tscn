@@ -1,10 +1,11 @@
-[gd_scene load_steps=4 format=3 uid="uid://5d8fsq53apj6"]
+[gd_scene load_steps=5 format=3 uid="uid://5d8fsq53apj6"]
 
 [ext_resource type="Script" path="res://Scripts/Tools.cs" id="1_jxero"]
 [ext_resource type="Script" path="res://Scripts/UIControler.cs" id="1_nf4gj"]
 [ext_resource type="PackedScene" uid="uid://cm3kug28fwds2" path="res://Scenes/node.tscn" id="2_qdvrb"]
+[ext_resource type="PackedScene" uid="uid://debapeg4vcoxh" path="res://Scenes/generator.tscn" id="4_2246s"]
 
-[node name="UI" type="Control" node_paths=PackedStringArray("Open", "Close", "UIPanel", "Nodes", "UIButtons")]
+[node name="UI" type="Control" node_paths=PackedStringArray("Open", "Close", "UIPanel", "Nodes", "Generators", "UIButtons")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -16,12 +17,20 @@ Open = NodePath("Canvas/Open")
 Close = NodePath("Canvas/Close")
 UIPanel = NodePath("Canvas/UIPanel")
 Nodes = NodePath("Nodes")
-UIButtons = [NodePath("Canvas/UIPanel/ScrollContainer/VBoxContainer/Button"), NodePath("Canvas/UIPanel/ScrollContainer/VBoxContainer/Button2"), NodePath("Canvas/UIPanel/ScrollContainer/VBoxContainer/Button3"), NodePath("Canvas/UIPanel/ScrollContainer/VBoxContainer/Button4")]
+Generators = NodePath("Generator")
+UIButtons = [NodePath("Canvas/UIPanel/ScrollContainer/VBoxContainer/Button"), NodePath("Canvas/UIPanel/ScrollContainer/VBoxContainer/Button2"), NodePath("Canvas/UIPanel/ScrollContainer/VBoxContainer/Button3"), NodePath("Canvas/UIPanel/ScrollContainer/VBoxContainer/Button4"), NodePath("Canvas/UIPanel/ScrollContainer/VBoxContainer/Button5"), NodePath("Canvas/UIPanel/ScrollContainer/VBoxContainer/Button6")]
 
-[node name="Nodes" type="Control" parent="."]
+[node name="Nodes" type="Control" parent="." node_paths=PackedStringArray("Generators")]
 anchors_preset = 0
 script = ExtResource("1_jxero")
 Node = ExtResource("2_qdvrb")
+Generator = ExtResource("4_2246s")
+Generators = NodePath("../Generator")
+
+[node name="Generator" type="Control" parent="."]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
 
 [node name="Camera2D" type="Camera2D" parent="."]
 
@@ -73,6 +82,16 @@ text = "Add Line"
 custom_minimum_size = Vector2(1152, 400)
 layout_mode = 2
 text = "Move Node"
+
+[node name="Button5" type="Button" parent="Canvas/UIPanel/ScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(1152, 400)
+layout_mode = 2
+text = "Edit Line"
+
+[node name="Button6" type="Button" parent="Canvas/UIPanel/ScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(1152, 400)
+layout_mode = 2
+text = "Add Generator"
 
 [node name="Close" type="Button" parent="Canvas"]
 anchors_preset = -1

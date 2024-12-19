@@ -7,6 +7,7 @@ public partial class UIControler : Control
     [Export] Button Close;
     [Export] Panel UIPanel;
     [Export] Control Nodes;
+    [Export] Control Generators;
     [Export] Array<Button> UIButtons = new Array<Button>();
 
     public override void _Ready()
@@ -50,6 +51,11 @@ public partial class UIControler : Control
         {
             Node n = Nodes.GetChild(Nodes.GetChildCount() - 1);
             Globals.Instance.Nodes.RemoveAt(Globals.Instance.Nodes.Count - 1);
+            n.QueueFree();
+        }
+        if(Generators.GetChildCount() > 0 && Globals.Instance.CurrentState == Globals.ToolState.AddingGenerator)
+        {
+            Node n = Generators.GetChild(Generators.GetChildCount() - 1);
             n.QueueFree();
         }
     }

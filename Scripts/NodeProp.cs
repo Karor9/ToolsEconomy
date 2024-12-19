@@ -2,36 +2,17 @@ using System;
 using Godot;
 using Godot.Collections;
 
-public partial class NodeProp : Panel
+public partial class NodeProp : GraphElement
 {
     [Export] public Array<int> Parents = new Array<int>();
     [Export] public Array<int> Childs = new Array<int>();
     bool secondPressTime = false;
 
-    public int ID;
-    public double Count;
-    public string Text;
-
     public override void _Ready()
     {
+        base._Ready();
         Button b = GetChild(GetChildCount() - 1) as Button;
         b.Pressed += () => OnClick();
-        Control edit = GetChild(3) as Control;
-        edit.FocusExited += () => SaveEditName();
-        SetCountText();
-        SetNameText();
-    }
-
-
-    void SaveEditName()
-    {
-        LineEdit lineEdit = GetChild(3) as LineEdit;
-        lineEdit.Visible = false;
-
-        RichTextLabel name = GetChild(1) as RichTextLabel;
-        name.Visible = true;
-        Text = lineEdit.Text;
-        SetNameText();
     }
 
     void AddLine()
@@ -43,12 +24,20 @@ public partial class NodeProp : Panel
         Node node = Globals.Instance.Edge.Instantiate();
         Vector2 s = Globals.Instance.Nodes[Globals.Instance.ClickedId].Position + (Globals.Instance.Nodes[Globals.Instance.ClickedId].Size / 2);
         Vector2 e = Position + (Size/2);
-        Line2D line = node as Line2D;
+
+        LineProp line = node as LineProp;
         line.Points = new Vector2[] {s, e};
         RichTextLabel text = node.GetChild(0) as RichTextLabel;
-        text.Position = (s + e)/2;
+        text.Position = (s + e)/2 - (text.Size/20);
         text.RotationDegrees = 0;
+        line.ID = Globals.Instance.EdgesContainer.GetChildCount();
+        
+        LinesStop.Add(line.ID);
+        Globals.Instance.Nodes[Globals.Instance.ClickedId].LinesStart.Add(line.ID); 
+        Globals.Instance.Lines.Add(line);
         Globals.Instance.EdgesContainer.AddChild(line);
+
+        
         Globals.Instance.ClickedId = -1;
     }
 
@@ -83,19 +72,7 @@ public partial class NodeProp : Panel
         }
     }
 
-    public void SetCountText()
-    {
-        RichTextLabel count = GetChild(2) as RichTextLabel;
-        count.Text = Math.Round(Count, 2).ToString();
-    }
 
-    public void SetNameText()
-    {
-        RichTextLabel name = GetChild(1) as RichTextLabel;
-        LineEdit lineEdit = GetChild(3) as LineEdit;
-        name.Text = Text;
-        lineEdit.Text = Text;
-    }
 
     // public override void _Input(InputEvent @event)
     // {

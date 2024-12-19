@@ -9,10 +9,13 @@ public partial class Globals : Node
         AddingNode,
         EditingNode,
         AddingLine,
-        MoveNode
+        MoveNode,
+        EditingLine,
+        AddingGenerator
     }
     public static Globals Instance {get; private set;}
     public Array<NodeProp> Nodes = new Array<NodeProp>();
+    public Array<LineProp> Lines = new Array<LineProp>();
     public int ClickedId = -1;
     public ToolState CurrentState;
     public Control EditedNode = null;
