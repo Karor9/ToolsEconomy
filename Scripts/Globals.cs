@@ -19,9 +19,12 @@ public partial class Globals : Node
     public int ClickedId = -1;
     public ToolState CurrentState;
     public Control EditedNode = null;
+    public Generator FreshGenerator = null;
+    public bool IsObstructed = false;
 
     [Export] public PackedScene Edge;
     [Export] public Node EdgesContainer;
+    [Export] public Node EdgesGeneratorContainer;
 
     public override void _Ready()
     {

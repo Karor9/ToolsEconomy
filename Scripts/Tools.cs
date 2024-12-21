@@ -1,3 +1,4 @@
+using System.Threading;
 using Godot;
 
 public partial class Tools : Control
@@ -12,6 +13,8 @@ public partial class Tools : Control
             switch(Globals.Instance.CurrentState)
             {
                 case Globals.ToolState.AddingNode:
+                    if(Globals.Instance.IsObstructed)
+                        break;
                     Node node = Node.Instantiate();
                     NodeProp n = node as NodeProp;
                     n.ID = GetChildren().Count;
@@ -32,13 +35,36 @@ public partial class Tools : Control
                 //     GD.Print("Start");
                 //     break;
                 case Globals.ToolState.AddingGenerator:
-                    Node gen = Generator.Instantiate();
-                    Generator g = gen as Generator;
-                    g.Text = "New Generator";
-                    g.ID = Generators.GetChildren().Count;
-                    Vector2 genSize = g.Size;
-                    g.Position = GetGlobalMousePosition() - (genSize/2);
-                    Generators.AddChild(g);
+                    if(Globals.Instance.IsObstructed)
+                        break;
+                    if(Globals.Instance.ClickedId < 0 && Globals.Instance.FreshGenerator == null)
+                    {
+                        Node gen = Generator.Instantiate();
+                        Generator g = gen as Generator;
+                        g.Text = "New Generator";
+                        g.ID = Generators.GetChildren().Count;
+                        Vector2 genSize = g.Size;
+                        g.Position = GetGlobalMousePosition() - (genSize/2);
+                        Globals.Instance.FreshGenerator = g;
+                        Generators.AddChild(g);
+                        break;
+                    }
+                    else if(Globals.Instance.ClickedId >= 0 && Globals.Instance.FreshGenerator == null)
+                    {
+                        Node gen = Generator.Instantiate();
+                        Generator g = gen as Generator;
+                        g.Text = "New Generator";
+                        g.ID = Generators.GetChildren().Count;
+                        Vector2 genSize = g.Size;
+                        g.Position = GetGlobalMousePosition() - (genSize/2);
+
+                        Line2D line2D = new Line2D();
+                        line2D.DefaultColor = Colors.Blue;
+                        line2D.Points = new Vector2[] {g.Position + (g.Size/2), Globals.Instance.Nodes[Globals.Instance.ClickedId].Position + (Globals.Instance.Nodes[Globals.Instance.ClickedId].Size/2)};
+                        Globals.Instance.EdgesGeneratorContainer.AddChild(line2D);
+
+                        Generators.AddChild(g);
+                    }
                     break;
             }
         }

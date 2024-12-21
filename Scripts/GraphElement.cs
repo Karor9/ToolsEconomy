@@ -16,6 +16,9 @@ public partial class GraphElement : Panel
         edit.FocusExited += () => SaveEditName();
         SetCountText();
         SetNameText();
+        Button b = GetChild(GetChildCount() - 1) as Button;
+        b.MouseEntered += () => Obstructed(true);
+        b.MouseExited += () => Obstructed(false);
     }
 
     void SaveEditName()
@@ -41,5 +44,10 @@ public partial class GraphElement : Panel
         LineEdit lineEdit = GetChild(3) as LineEdit;
         name.Text = Text;
         lineEdit.Text = Text;
+    }
+
+    public void Obstructed(bool obstructed)
+    {
+        Globals.Instance.IsObstructed = obstructed;
     }
 }
