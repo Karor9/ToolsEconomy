@@ -1,6 +1,5 @@
 # Godot 4+ specific ignores
 .godot/
-Fonts/
 
 # Godot-specific ignores
 .import/
@@ -14,3 +13,9 @@ export_presets.cfg
 .mono/
 data_*/
 mono_crash.*.json
+
+#Old files ignores
+_*/
+
+#Custom files
+Fonts/

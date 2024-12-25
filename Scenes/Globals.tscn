@@ -1,14 +1,10 @@
-[gd_scene load_steps=3 format=3 uid="uid://b0xflafnln18f"]
+[gd_scene load_steps=2 format=3 uid="uid://bc4f1f2tmxcst"]
 
-[ext_resource type="Script" path="res://Scripts/Globals.cs" id="1_18ypc"]
-[ext_resource type="PackedScene" uid="uid://bpm4d6c4oo4e8" path="res://Scenes/line_2d.tscn" id="2_t1ydv"]
+[ext_resource type="Script" path="res://Scripts/Globals.cs" id="1_uq25s"]
 
-[node name="Node" type="Node" node_paths=PackedStringArray("EdgesContainer", "EdgesGeneratorContainer")]
-script = ExtResource("1_18ypc")
-Edge = ExtResource("2_t1ydv")
-EdgesContainer = NodePath("Edges")
-EdgesGeneratorContainer = NodePath("EdgesGenerator")
+[node name="Globals" type="Node"]
+script = ExtResource("1_uq25s")
+
+[node name="Nodes" type="Node" parent="."]
 
 [node name="Edges" type="Node" parent="."]
-
-[node name="EdgesGenerator" type="Node" parent="."]
