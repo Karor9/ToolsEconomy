@@ -53,14 +53,14 @@ public partial class NodeProp : Control
     {
         RichTextLabel name = GetChild(1) as RichTextLabel;
         LineEdit lineEdit = GetChild(3) as LineEdit;
-        name.Text = Text;
+        name.Text = "[center]" + Text;
         lineEdit.Text = Text;
     }
 
     void SetCountText()
     {
         RichTextLabel count = GetChild(2) as RichTextLabel;
-        count.Text = Math.Round(Count, 2).ToString();
+        count.Text = "[center]" + Math.Round(Count, 2).ToString();
     }
 
     

@@ -3,7 +3,6 @@
 [ext_resource type="Script" path="res://Scripts/Globals.cs" id="1_uq25s"]
 [ext_resource type="PackedScene" uid="uid://cm3kug28fwds2" path="res://Scenes/node.tscn" id="2_6rha7"]
 
-[node name="Globals" type="Node" node_paths=PackedStringArray("Nodes")]
+[node name="Globals" type="Node"]
 script = ExtResource("1_uq25s")
 Node = ExtResource("2_6rha7")
-Nodes = NodePath("")

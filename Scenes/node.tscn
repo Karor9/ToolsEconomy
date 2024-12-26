@@ -31,6 +31,7 @@ grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(0.1, 0.1)
 theme_override_font_sizes/normal_font_size = 180
+bbcode_enabled = true
 text = "e"
 
 [node name="NodeCount" type="RichTextLabel" parent="."]
@@ -45,6 +46,7 @@ grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(0.1, 0.1)
 theme_override_font_sizes/normal_font_size = 180
+bbcode_enabled = true
 text = "spysz"
 
 [node name="LineEdit" type="LineEdit" parent="."]
