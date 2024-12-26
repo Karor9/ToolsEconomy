@@ -16,12 +16,13 @@ Close = NodePath("CanvasLayer/Close")
 Simulate = NodePath("CanvasLayer/Simulate")
 UIPanel = NodePath("CanvasLayer/PanelLeft")
 
-[node name="Tools" type="Control" parent="." node_paths=PackedStringArray("Nodes")]
+[node name="Tools" type="Control" parent="." node_paths=PackedStringArray("Nodes", "Edges")]
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 script = ExtResource("2_qdvrb")
 Nodes = NodePath("../Nodes")
+Edges = NodePath("../Edges")
 
 [node name="Nodes" type="Control" parent="."]
 anchors_preset = 0
@@ -70,7 +71,6 @@ layout_mode = 2
 text = "Edit Node"
 
 [node name="Button3" type="Button" parent="CanvasLayer/PanelLeft/ScrollContainer/VBoxContainer"]
-visible = false
 custom_minimum_size = Vector2(1152, 400)
 layout_mode = 2
 text = "Add Line"

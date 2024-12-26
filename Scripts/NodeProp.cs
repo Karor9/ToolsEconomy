@@ -10,6 +10,11 @@ public partial class NodeProp : Control
     public string Text;
 
 
+    [Export] public Array<int> Parents = new Array<int>();
+    [Export] public Array<int> Childs = new Array<int>();
+    [Export] public Array<int> StartLine = new Array<int>();
+    [Export] public Array<int> EndLine = new Array<int>();
+
     public override void _Ready()
     {
         Name = ID.ToString();
@@ -20,7 +25,6 @@ public partial class NodeProp : Control
         //Check is mouse is on Button (Node)
         Button button = GetChild(5) as Button;
 
-        button.Pressed += () => OnClick();
         button.MouseEntered += () => Obstructed(true);
         button.MouseExited += () => Obstructed(false);
         // GD.Print(button.IsConnected(SignalName.MouseEntered, Callable.From(() => Obstructed(true))));
@@ -65,7 +69,7 @@ public partial class NodeProp : Control
 
     
 
-    public void OnClick()
+    public virtual void OnClick()
     {
         switch(Globals.Instance.CurrentState)
         {
@@ -74,4 +78,11 @@ public partial class NodeProp : Control
                 break;
         }
     }
+
+    private void AddLine()
+    {
+        if(ID == Globals.Instance.ClickedId)
+            return;
+    }
+
 }

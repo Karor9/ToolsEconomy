@@ -52,7 +52,6 @@ public partial class UIController : Control
     private void ChangeToolState(int x)
     {
         Globals.Instance.CurrentState = (Enums.ToolState)x;
-        GD.Print(Globals.Instance.CurrentState);
         for (int i = 0; i < UIButtons.Count; i++)
         {
             Button button = UIButtons[i] as Button;
@@ -72,7 +71,6 @@ public partial class UIController : Control
     
     public void Obstructed(bool obstructed)
     {
-        GD.Print(Name);
         Globals.Instance.IsObstructed = obstructed;
     }
 }

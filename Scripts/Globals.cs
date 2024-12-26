@@ -5,9 +5,12 @@ public partial class Globals : Node
 {
     //Exported scenes - nodes, generators, lines;
     [Export] public PackedScene Node;
+    [Export] public PackedScene Generator;
+    [Export] public PackedScene Edge;
 
 
     [Export] public Control Nodes;
+    [Export] public Control Edges;
 
     //Resources
     [Export] Array<int> Goods = new Array<int>();
@@ -15,7 +18,7 @@ public partial class Globals : Node
     public static Globals Instance {get; private set;}
     public Enums.ToolState CurrentState;
 
-    public int ClickedId = -1;
+    [Export] public int ClickedId = -1;
     public bool IsObstructed = false;
 
     public override void _Ready()
