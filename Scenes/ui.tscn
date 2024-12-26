@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://cb13hwlue68to"]
+[gd_scene load_steps=3 format=3 uid="uid://cb13hwlue68to"]
 
 [ext_resource type="Script" path="res://Scripts/UIController.cs" id="1_jxero"]
+[ext_resource type="Script" path="res://Scripts/Tools.cs" id="2_qdvrb"]
 
 [node name="UI" type="Control" node_paths=PackedStringArray("Open", "Close", "Simulate", "UIPanel")]
 layout_mode = 3
@@ -44,11 +45,13 @@ layout_mode = 2
 text = "Add Node"
 
 [node name="Button2" type="Button" parent="CanvasLayer/PanelLeft/ScrollContainer/VBoxContainer"]
+visible = false
 custom_minimum_size = Vector2(1152, 400)
 layout_mode = 2
 text = "Edit Node"
 
 [node name="Button3" type="Button" parent="CanvasLayer/PanelLeft/ScrollContainer/VBoxContainer"]
+visible = false
 custom_minimum_size = Vector2(1152, 400)
 layout_mode = 2
 text = "Add Line"
@@ -59,11 +62,13 @@ layout_mode = 2
 text = "Move Node"
 
 [node name="Button5" type="Button" parent="CanvasLayer/PanelLeft/ScrollContainer/VBoxContainer"]
+visible = false
 custom_minimum_size = Vector2(1152, 400)
 layout_mode = 2
 text = "Edit Line"
 
 [node name="Button6" type="Button" parent="CanvasLayer/PanelLeft/ScrollContainer/VBoxContainer"]
+visible = false
 custom_minimum_size = Vector2(1152, 400)
 layout_mode = 2
 text = "Add Generator"
@@ -105,6 +110,12 @@ focus_mode = 0
 theme_override_constants/outline_size = 5
 theme_override_font_sizes/font_size = 20
 text = "Simulate"
+
+[node name="Tools" type="Control" parent="."]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("2_qdvrb")
 
 [connection signal="pressed" from="CanvasLayer/Close" to="." method="ChangeState"]
 [connection signal="pressed" from="CanvasLayer/Open" to="." method="ChangeState"]

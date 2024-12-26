@@ -25,15 +25,15 @@ public partial class UIController : Control
 
         Control panel = UIPanel.GetChild(0) as Control;
 
-        panel.MouseEntered += () => Utils.Obstructed(true);
-        Open.MouseEntered += () => Utils.Obstructed(true);
-        Close.MouseEntered += () => Utils.Obstructed(true);
-        Simulate.MouseEntered += () => Utils.Obstructed(true);
+        panel.MouseEntered += () => Obstructed(true);
+        Open.MouseEntered += () => Obstructed(true);
+        Close.MouseEntered += () => Obstructed(true);
+        Simulate.MouseEntered += () => Obstructed(true);
     
-        panel.MouseExited += () => Utils.Obstructed(false);
-        Open.MouseExited += () => Utils.Obstructed(false);
-        Close.MouseExited += () => Utils.Obstructed(false);
-        Simulate.MouseExited += () => Utils.Obstructed(false);
+        panel.MouseExited += () => Obstructed(false);
+        Open.MouseExited += () => Obstructed(false);
+        Close.MouseExited += () => Obstructed(false);
+        Simulate.MouseExited += () => Obstructed(false);
     
         UIButtons = UIPanel.GetChild(0).GetChild(0).GetChildren();
 
@@ -44,15 +44,15 @@ public partial class UIController : Control
                 break;
             Button button = UIButtons[i] as Button;
             button.Pressed += () => ChangeToolState(x);
-            button.MouseEntered += () => Utils.Obstructed(true);
-            button.MouseExited += () => Utils.Obstructed(false);
+            button.MouseEntered += () => Obstructed(true);
+            button.MouseExited += () => Obstructed(false);
         }
     }
 
     private void ChangeToolState(int x)
     {
         Globals.Instance.CurrentState = (Enums.ToolState)x;
-
+        GD.Print(Globals.Instance.CurrentState);
         for (int i = 0; i < UIButtons.Count; i++)
         {
             Button button = UIButtons[i] as Button;
@@ -68,5 +68,10 @@ public partial class UIController : Control
         Open.Visible = !Open.Visible;
         Close.Visible = !Close.Visible;
         UIPanel.Visible = !UIPanel.Visible;
+    }
+    
+    public void Obstructed(bool obstructed)
+    {
+        Globals.Instance.IsObstructed = obstructed;
     }
 }

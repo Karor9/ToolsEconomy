@@ -1,6 +1,7 @@
 using Godot;
 using Godot.Collections;
 using System;
+using System.Reflection;
 
 public partial class NodeProp : Control
 {
@@ -11,18 +12,26 @@ public partial class NodeProp : Control
 
     public override void _Ready()
     {
+        Name = ID.ToString();
         //Grab LineEdit and add signal to save changes
         Control edit = GetChild(3) as Control;
         edit.FocusExited += () => SaveEditName();
 
         //Check is mouse is on Button (Node)
         Button button = GetChild(GetChildCount() - 1) as Button;
-        button.MouseEntered += () => Utils.Obstructed(true);
-        button.MouseExited += () => Utils.Obstructed(false);
+        button.Pressed += () => OnClick();
+        button.MouseEntered += () => Obstructed(true);
+        button.MouseExited += () => Obstructed(false);
 
         //Set Texts on Node
         SetCountText();
         SetNameText();
+        GD.Print("ID: ", ID, " Stop");
+    }
+    public void Obstructed(bool obstructed)
+    {
+        GD.Print(ID, " ", obstructed);
+        Globals.Instance.IsObstructed = obstructed;
     }
 
     void SaveEditName()
@@ -56,13 +65,13 @@ public partial class NodeProp : Control
 
     
 
-    public virtual void OnClick()
+    public void OnClick()
     {
         switch(Globals.Instance.CurrentState)
         {
             case Enums.ToolState.MoveNode:
+                GD.Print(ID);
                 Globals.Instance.ClickedId = ID;
-                GD.Print(Globals.Instance.ClickedId);
                 break;
         }
     }
