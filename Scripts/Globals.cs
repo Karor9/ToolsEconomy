@@ -16,7 +16,7 @@ public partial class Globals : Node
     public Enums.ToolState CurrentState;
 
     public int ClickedId = -1;
-    public bool IsObstructed;
+    public bool IsObstructed = false;
 
     public override void _Ready()
     {

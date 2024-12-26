@@ -31,7 +31,6 @@ public partial class NodeProp : Control
     }
     public void Obstructed(bool obstructed)
     {
-        GD.Print(obstructed);
         Globals.Instance.IsObstructed = obstructed;
     }
 
@@ -68,7 +67,6 @@ public partial class NodeProp : Control
 
     public void OnClick()
     {
-        GD.Print(ID);
         switch(Globals.Instance.CurrentState)
         {
             case Enums.ToolState.MoveNode:

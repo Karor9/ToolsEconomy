@@ -16,6 +16,24 @@ Close = NodePath("CanvasLayer/Close")
 Simulate = NodePath("CanvasLayer/Simulate")
 UIPanel = NodePath("CanvasLayer/PanelLeft")
 
+[node name="Tools" type="Control" parent="." node_paths=PackedStringArray("Nodes")]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("2_qdvrb")
+Nodes = NodePath("../Nodes")
+
+[node name="Nodes" type="Control" parent="."]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Edges" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
 [node name="MainCamera" type="Camera2D" parent="."]
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
@@ -107,12 +125,6 @@ focus_mode = 0
 theme_override_constants/outline_size = 5
 theme_override_font_sizes/font_size = 20
 text = "Simulate"
-
-[node name="Tools" type="Control" parent="."]
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
-script = ExtResource("2_qdvrb")
 
 [connection signal="pressed" from="CanvasLayer/Close" to="." method="ChangeState"]
 [connection signal="pressed" from="CanvasLayer/Open" to="." method="ChangeState"]

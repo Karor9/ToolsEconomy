@@ -1,15 +1,9 @@
 [gd_scene load_steps=3 format=3 uid="uid://bc4f1f2tmxcst"]
 
 [ext_resource type="Script" path="res://Scripts/Globals.cs" id="1_uq25s"]
-[ext_resource type="PackedScene" uid="uid://cm3kug28fwds2" path="res://Scenes/node.tscn" id="2_i2lb3"]
+[ext_resource type="PackedScene" uid="uid://cm3kug28fwds2" path="res://Scenes/node.tscn" id="2_6rha7"]
 
 [node name="Globals" type="Node" node_paths=PackedStringArray("Nodes")]
 script = ExtResource("1_uq25s")
-Node = ExtResource("2_i2lb3")
-Nodes = NodePath("Nodes")
-
-[node name="Nodes" type="Control" parent="."]
-layout_mode = 3
-anchors_preset = 0
-
-[node name="Edges" type="Node" parent="."]
+Node = ExtResource("2_6rha7")
+Nodes = NodePath("")

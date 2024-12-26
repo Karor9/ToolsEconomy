@@ -4,17 +4,23 @@ using System.Threading;
 
 public partial class Tools : Control
 {
+    [Export] Control Nodes;
+
+    public override void _Ready()
+    {
+        Globals.Instance.Nodes = Nodes;
+    }
     public override void _Input(InputEvent @event)
     {
         if(@event.IsActionPressed("LMB"))
         {
-            int id = -1;
             switch(Globals.Instance.CurrentState)
             {
                 case Enums.ToolState.AddingNode:
                     if(Globals.Instance.IsObstructed)
                         break;
-                    id = Globals.Instance.Nodes.GetChildCount();
+                    
+                    int id = Nodes.GetChildCount();
                     Node node = Globals.Instance.Node.Instantiate();
                     
                     ResourceNode nodeProp = node as ResourceNode;
@@ -24,7 +30,7 @@ public partial class Tools : Control
                     
                     Vector2 size = nodeProp.Size;
                     nodeProp.Position = GetGlobalMousePosition() - (size/2);
-                    Globals.Instance.Nodes.AddChild(nodeProp);
+                    Nodes.AddChild(nodeProp);
                     break;
             }
         }
@@ -56,7 +62,7 @@ public partial class Tools : Control
             if(Globals.Instance.ClickedId >= 0)
             {
                 int id = Globals.Instance.ClickedId;
-                ResourceNode node = Globals.Instance.Nodes.GetNode(new NodePath(id.ToString())) as ResourceNode;
+                ResourceNode node = Nodes.GetNode(new NodePath(id.ToString())) as ResourceNode;
                 Vector2 newPos = GetGlobalMousePosition() -  (node.Size/2);
                 
                 node.Position = newPos;
