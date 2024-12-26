@@ -30,8 +30,9 @@ color = Color(0.584314, 0.490196, 0.678431, 1)
 [node name="ScrollContainer" type="ScrollContainer" parent="CanvasLayer/PanelLeft"]
 layout_mode = 1
 anchors_preset = -1
-anchor_right = 10.0
+anchor_right = 1.0
 anchor_bottom = 10.0
+offset_right = 1036.8
 grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(0.1, 0.1)
@@ -45,13 +46,11 @@ layout_mode = 2
 text = "Add Node"
 
 [node name="Button2" type="Button" parent="CanvasLayer/PanelLeft/ScrollContainer/VBoxContainer"]
-visible = false
 custom_minimum_size = Vector2(1152, 400)
 layout_mode = 2
 text = "Edit Node"
 
 [node name="Button3" type="Button" parent="CanvasLayer/PanelLeft/ScrollContainer/VBoxContainer"]
-visible = false
 custom_minimum_size = Vector2(1152, 400)
 layout_mode = 2
 text = "Add Line"
@@ -62,13 +61,11 @@ layout_mode = 2
 text = "Move Node"
 
 [node name="Button5" type="Button" parent="CanvasLayer/PanelLeft/ScrollContainer/VBoxContainer"]
-visible = false
 custom_minimum_size = Vector2(1152, 400)
 layout_mode = 2
 text = "Edit Line"
 
 [node name="Button6" type="Button" parent="CanvasLayer/PanelLeft/ScrollContainer/VBoxContainer"]
-visible = false
 custom_minimum_size = Vector2(1152, 400)
 layout_mode = 2
 text = "Add Generator"

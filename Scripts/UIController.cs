@@ -72,6 +72,7 @@ public partial class UIController : Control
     
     public void Obstructed(bool obstructed)
     {
+        GD.Print(Name);
         Globals.Instance.IsObstructed = obstructed;
     }
 }

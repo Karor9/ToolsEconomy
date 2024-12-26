@@ -8,6 +8,8 @@ script = ExtResource("1_uq25s")
 Node = ExtResource("2_i2lb3")
 Nodes = NodePath("Nodes")
 
-[node name="Nodes" type="Node" parent="."]
+[node name="Nodes" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
 
 [node name="Edges" type="Node" parent="."]

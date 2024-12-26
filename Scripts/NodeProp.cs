@@ -18,19 +18,20 @@ public partial class NodeProp : Control
         edit.FocusExited += () => SaveEditName();
 
         //Check is mouse is on Button (Node)
-        Button button = GetChild(GetChildCount() - 1) as Button;
+        Button button = GetChild(5) as Button;
+
         button.Pressed += () => OnClick();
         button.MouseEntered += () => Obstructed(true);
         button.MouseExited += () => Obstructed(false);
+        // GD.Print(button.IsConnected(SignalName.MouseEntered, Callable.From(() => Obstructed(true))));
 
         //Set Texts on Node
         SetCountText();
         SetNameText();
-        GD.Print("ID: ", ID, " Stop");
     }
     public void Obstructed(bool obstructed)
     {
-        GD.Print(ID, " ", obstructed);
+        GD.Print(obstructed);
         Globals.Instance.IsObstructed = obstructed;
     }
 
@@ -67,10 +68,10 @@ public partial class NodeProp : Control
 
     public void OnClick()
     {
+        GD.Print(ID);
         switch(Globals.Instance.CurrentState)
         {
             case Enums.ToolState.MoveNode:
-                GD.Print(ID);
                 Globals.Instance.ClickedId = ID;
                 break;
         }

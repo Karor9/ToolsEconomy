@@ -7,7 +7,7 @@ public partial class Globals : Node
     [Export] public PackedScene Node;
 
 
-    [Export] public Node Nodes;
+    [Export] public Control Nodes;
 
     //Resources
     [Export] Array<int> Goods = new Array<int>();
@@ -27,4 +27,5 @@ public partial class Globals : Node
     {
         Goods.Add(id);
     }
+
 }

@@ -6,7 +6,7 @@ public partial class Tools : Control
 {
     public override void _Input(InputEvent @event)
     {
-        if(@event.IsActionReleased("LMB"))
+        if(@event.IsActionPressed("LMB"))
         {
             int id = -1;
             switch(Globals.Instance.CurrentState)
@@ -15,7 +15,6 @@ public partial class Tools : Control
                     if(Globals.Instance.IsObstructed)
                         break;
                     id = Globals.Instance.Nodes.GetChildCount();
-                    GD.Print("ID: ", id, " Start");
                     Node node = Globals.Instance.Node.Instantiate();
                     
                     ResourceNode nodeProp = node as ResourceNode;
@@ -27,6 +26,13 @@ public partial class Tools : Control
                     nodeProp.Position = GetGlobalMousePosition() - (size/2);
                     Globals.Instance.Nodes.AddChild(nodeProp);
                     break;
+            }
+        }
+        if(@event.IsActionReleased("LMB"))
+        {
+            int id = -1;
+            switch(Globals.Instance.CurrentState)
+            {
                 case Enums.ToolState.MoveNode:
                     id = Globals.Instance.ClickedId;
                     if(id < 0)

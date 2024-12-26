@@ -31,8 +31,7 @@ grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(0.1, 0.1)
 theme_override_font_sizes/normal_font_size = 180
-text = "Resource Name"
-horizontal_alignment = 1
+text = "e"
 
 [node name="NodeCount" type="RichTextLabel" parent="."]
 layout_mode = 1
@@ -46,8 +45,7 @@ grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(0.1, 0.1)
 theme_override_font_sizes/normal_font_size = 180
-text = "Count"
-horizontal_alignment = 1
+text = "spysz"
 
 [node name="LineEdit" type="LineEdit" parent="."]
 visible = false
@@ -108,7 +106,10 @@ texture = ExtResource("1_5g7os")
 expand_mode = 1
 
 [node name="Button" type="Button" parent="."]
-self_modulate = Color(1, 1, 1, 0)
+process_priority = 1
+process_physics_priority = 1
+self_modulate = Color(1, 1, 0, 1)
+z_index = 1
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
