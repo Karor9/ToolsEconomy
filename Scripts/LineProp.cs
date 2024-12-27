@@ -4,12 +4,13 @@ using System.Threading;
 
 public partial class LineProp : Line2D
 {
-    double val = 1d;
+    public double Val = 1d;
     public int ID;
+    public bool Editable = true;
     public override void _Ready()
     {
         RichTextLabel label = GetChild(0) as RichTextLabel;
-        label.Text = "[center]" + Math.Round(val, 2).ToString();
+        label.Text = "[center]" + Math.Round(Val, 2).ToString();
         LineEdit lineEdit = GetChild(1) as LineEdit;
         lineEdit.FocusExited += () => SetNameText();
     }

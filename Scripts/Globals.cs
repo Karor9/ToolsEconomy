@@ -20,6 +20,7 @@ public partial class Globals : Node
 
     [Export] public int ClickedId = -1;
     public bool IsObstructed = false;
+    public GeneratorNode LastGenerator = null;
 
     public override void _Ready()
     {
@@ -29,6 +30,16 @@ public partial class Globals : Node
     public void SetNextID(int id)
     {
         Goods.Add(id);
+    }
+
+    public Node GetNode(int name)
+    {
+        return Nodes.GetNode(new NodePath(name.ToString()));
+    }
+
+    public Node GetEdge(int name)
+    {
+        return Edges.GetNode(new NodePath(name.ToString()));
     }
 
 }

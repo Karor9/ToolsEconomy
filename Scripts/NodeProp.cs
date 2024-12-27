@@ -23,7 +23,7 @@ public partial class NodeProp : Control
         edit.FocusExited += () => SaveEditName();
 
         //Check is mouse is on Button (Node)
-        Button button = GetChild(5) as Button;
+        Button button = GetChild(GetChildCount() - 1) as Button;
 
         button.MouseEntered += () => Obstructed(true);
         button.MouseExited += () => Obstructed(false);
@@ -53,7 +53,7 @@ public partial class NodeProp : Control
         SetNameText();
     }
 
-    void SetNameText()
+    public void SetNameText()
     {
         RichTextLabel name = GetChild(1) as RichTextLabel;
         LineEdit lineEdit = GetChild(3) as LineEdit;
@@ -61,7 +61,7 @@ public partial class NodeProp : Control
         lineEdit.Text = Text;
     }
 
-    void SetCountText()
+    public void SetCountText()
     {
         RichTextLabel count = GetChild(2) as RichTextLabel;
         count.Text = "[center]" + Math.Round(Count, 2).ToString();

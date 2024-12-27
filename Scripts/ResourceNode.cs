@@ -7,7 +7,7 @@ public partial class ResourceNode : NodeProp
     public override void _Ready()
     {
         base._Ready();
-        Button button = GetChild(5) as Button;
+        Button button = GetChild(GetChildCount() - 1) as Button;
         button.Pressed += () => OnClick();
     }
 
@@ -29,6 +29,38 @@ public partial class ResourceNode : NodeProp
                     AddLine();
                 }
                 break;
+            case Enums.ToolState.AddingGenerator:
+                if(Globals.Instance.ClickedId <= -1 && Globals.Instance.LastGenerator == null)
+                {
+                    Globals.Instance.ClickedId = ID;
+                    Control control = GetChild(4) as Control;
+                    control.Visible = true;
+                } else if(Globals.Instance.LastGenerator != null)
+                {
+                    GeneratorNode generator = Globals.Instance.LastGenerator;
+                    Globals.Instance.LastGenerator = null;
+                    Control c = generator.GetChild(4) as Control;
+                    c.Visible = false;
+                    Vector2 start = generator.Position + (generator.Size / 2);
+                    Vector2 end = Position + (Size/2);
+
+                    Node node = Globals.Instance.Edge.Instantiate();
+                    LineProp line = node as LineProp;
+                    line.Points = new Vector2[] {start, end};
+                    line.DefaultColor = Colors.Bisque;
+                    line.Gradient = null;
+                    int id = Globals.Instance.Edges.GetChildCount();
+                    line.Name = id.ToString();
+                    line.ID = id;
+                    line.Val = 10d;
+                    line.Editable = false;
+                    generator.StartLine.Add(id);
+                    EndLine.Add(id);
+
+                    Globals.Instance.Edges.AddChild(line);
+                    Globals.Instance.ClickedId = -1;
+                }
+                break;
         }
     }
 
@@ -39,7 +71,7 @@ public partial class ResourceNode : NodeProp
             return;
 
         Parents.Add(id);
-        ResourceNode resourceNode = Globals.Instance.Nodes.GetNode(new NodePath(id.ToString())) as ResourceNode;
+        ResourceNode resourceNode = Globals.Instance.GetNode(id) as ResourceNode;
         resourceNode.Childs.Add(ID);
         Node node = Globals.Instance.Edge.Instantiate();
         Vector2 start = resourceNode.Position + (resourceNode.Size / 2);

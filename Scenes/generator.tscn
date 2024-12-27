@@ -20,6 +20,7 @@ grow_vertical = 2
 color = Color(0.362829, 0.362829, 0.362829, 1)
 
 [node name="NodeName" type="RichTextLabel" parent="."]
+z_index = 2
 layout_mode = 1
 anchors_preset = -1
 anchor_right = 1.0
@@ -35,6 +36,7 @@ bbcode_enabled = true
 text = "e"
 
 [node name="NodeCount" type="RichTextLabel" parent="."]
+z_index = 2
 layout_mode = 1
 anchors_preset = -1
 anchor_right = 1.0
@@ -107,10 +109,23 @@ grow_vertical = 2
 texture = ExtResource("2_bpda3")
 expand_mode = 1
 
+[node name="Color" type="ColorRect" parent="."]
+self_modulate = Color(0, 0, 1, 0.392157)
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -5.0
+offset_top = -5.0
+offset_right = 5.0
+offset_bottom = 5.0
+grow_horizontal = 2
+grow_vertical = 2
+
 [node name="Button" type="Button" parent="."]
 process_priority = 1
 process_physics_priority = 1
-self_modulate = Color(0, 0, 1, 1)
+self_modulate = Color(1, 1, 1, 0)
 z_index = 1
 layout_mode = 1
 anchors_preset = 15
