@@ -1,6 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://bpm4d6c4oo4e8"]
+[gd_scene load_steps=4 format=3 uid="uid://bpm4d6c4oo4e8"]
 
 [ext_resource type="Script" path="res://Scripts/LineProp.cs" id="1_mryio"]
+[ext_resource type="Texture2D" uid="uid://dkbkc87blrlyj" path="res://rysunek.svg" id="2_3euj1"]
 
 [sub_resource type="Gradient" id="Gradient_6i82f"]
 interpolation_color_space = 2
@@ -49,3 +50,6 @@ theme_override_font_sizes/font_size = 280
 placeholder_text = "Input change"
 alignment = 1
 metadata/_edit_use_anchors_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_3euj1")

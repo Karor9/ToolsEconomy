@@ -81,7 +81,6 @@ layout_mode = 2
 text = "Move Node"
 
 [node name="Button5" type="Button" parent="CanvasLayer/PanelLeft/ScrollContainer/VBoxContainer"]
-visible = false
 custom_minimum_size = Vector2(1152, 400)
 layout_mode = 2
 text = "Edit Line"

@@ -21,6 +21,7 @@ public partial class Globals : Node
     [Export] public int ClickedId = -1;
     public bool IsObstructed = false;
     public GeneratorNode LastGenerator = null;
+    public Control EditedNode = null;
 
     public override void _Ready()
     {

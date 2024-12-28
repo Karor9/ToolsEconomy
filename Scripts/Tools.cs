@@ -62,6 +62,12 @@ public partial class Tools : Control
                     }
                     Nodes.AddChild(generator);
                     break;
+                case Enums.ToolState.EditingLine:
+                    if(Globals.Instance.EditedNode == null)
+                        break;
+                    Globals.Instance.EditedNode.ReleaseFocus();
+                    Globals.Instance.EditedNode = null;
+                    break;
             }
         }
         if(@event.IsActionReleased("LMB"))
