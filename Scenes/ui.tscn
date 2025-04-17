@@ -1,132 +1,49 @@
-[gd_scene load_steps=3 format=3 uid="uid://cb13hwlue68to"]
+[gd_scene load_steps=2 format=3 uid="uid://dbkd43hcka6mm"]
 
-[ext_resource type="Script" path="res://Scripts/UIController.cs" id="1_jxero"]
-[ext_resource type="Script" path="res://Scripts/Tools.cs" id="2_qdvrb"]
+[ext_resource type="Theme" uid="uid://cqjbmnt6in0d5" path="res://Themes/DefaultTheme.tres" id="1_w371h"]
 
-[node name="UI" type="Control" node_paths=PackedStringArray("Open", "Close", "Simulate", "UIPanel")]
+[node name="Control" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_jxero")
-Open = NodePath("CanvasLayer/Open")
-Close = NodePath("CanvasLayer/Close")
-Simulate = NodePath("CanvasLayer/Simulate")
-UIPanel = NodePath("CanvasLayer/PanelLeft")
 
-[node name="Tools" type="Control" parent="." node_paths=PackedStringArray("Nodes", "Edges")]
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
-script = ExtResource("2_qdvrb")
-Nodes = NodePath("../Nodes")
-Edges = NodePath("../Edges")
+[node name="Button" type="Button" parent="."]
+layout_mode = 0
+offset_right = 206.0
+offset_bottom = 58.0
 
-[node name="Nodes" type="Control" parent="."]
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
-
-[node name="Edges" type="Control" parent="."]
-layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
-
-[node name="MainCamera" type="Camera2D" parent="."]
-
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
-
-[node name="PanelLeft" type="ColorRect" parent="CanvasLayer"]
-anchors_preset = -1
-anchor_right = 0.1
-anchor_bottom = 1.0
-grow_vertical = 2
-color = Color(0.584314, 0.490196, 0.678431, 1)
-
-[node name="ScrollContainer" type="ScrollContainer" parent="CanvasLayer/PanelLeft"]
+[node name="RichTextLabel" type="RichTextLabel" parent="Button"]
 layout_mode = 1
 anchors_preset = -1
-anchor_right = 1.0
+anchor_right = 10.0
 anchor_bottom = 10.0
-offset_right = 1036.8
 grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(0.1, 0.1)
+theme = ExtResource("1_w371h")
+theme_override_font_sizes/normal_font_size = 160
+text = "test"
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/PanelLeft/ScrollContainer"]
-layout_mode = 2
+[node name="Button2" type="Button" parent="."]
+offset_left = 1.0
+offset_top = 58.0
+offset_right = 207.0
+offset_bottom = 116.0
 
-[node name="Button" type="Button" parent="CanvasLayer/PanelLeft/ScrollContainer/VBoxContainer"]
-custom_minimum_size = Vector2(1152, 400)
-layout_mode = 2
-text = "Add Node"
-
-[node name="Button2" type="Button" parent="CanvasLayer/PanelLeft/ScrollContainer/VBoxContainer"]
-visible = false
-custom_minimum_size = Vector2(1152, 400)
-layout_mode = 2
-text = "Edit Node"
-
-[node name="Button3" type="Button" parent="CanvasLayer/PanelLeft/ScrollContainer/VBoxContainer"]
-custom_minimum_size = Vector2(1152, 400)
-layout_mode = 2
-text = "Add Line"
-
-[node name="Button4" type="Button" parent="CanvasLayer/PanelLeft/ScrollContainer/VBoxContainer"]
-custom_minimum_size = Vector2(1152, 400)
-layout_mode = 2
-text = "Move Node"
-
-[node name="Button5" type="Button" parent="CanvasLayer/PanelLeft/ScrollContainer/VBoxContainer"]
-custom_minimum_size = Vector2(1152, 400)
-layout_mode = 2
-text = "Edit Line"
-
-[node name="Button6" type="Button" parent="CanvasLayer/PanelLeft/ScrollContainer/VBoxContainer"]
-custom_minimum_size = Vector2(1152, 400)
-layout_mode = 2
-text = "Add Generator"
-
-[node name="Close" type="Button" parent="CanvasLayer"]
+[node name="RichTextLabel" type="RichTextLabel" parent="Button2"]
+layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.1
-anchor_top = 1.0
-anchor_right = 0.1
-anchor_bottom = 1.0
-offset_top = -32.0
-offset_right = 32.0
-focus_mode = 0
-theme_override_constants/outline_size = 5
-theme_override_font_sizes/font_size = 20
-text = "<"
-
-[node name="Open" type="Button" parent="CanvasLayer"]
-anchors_preset = 2
-anchor_top = 1.0
-anchor_bottom = 1.0
-offset_top = -32.0
-offset_right = 32.0
-grow_vertical = 0
-focus_mode = 0
-theme_override_constants/outline_size = 5
-theme_override_font_sizes/font_size = 20
-text = ">"
-
-[node name="Simulate" type="Button" parent="CanvasLayer"]
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -87.0
-offset_right = 3.0
-offset_bottom = 35.0
-grow_horizontal = 0
-focus_mode = 0
-theme_override_constants/outline_size = 5
-theme_override_font_sizes/font_size = 20
-text = "Simulate"
-
-[connection signal="pressed" from="CanvasLayer/Close" to="." method="ChangeState"]
-[connection signal="pressed" from="CanvasLayer/Open" to="." method="ChangeState"]
+anchor_right = 10.0
+anchor_bottom = 10.0
+offset_left = -1.0
+offset_top = -1.0
+offset_right = -1.0
+offset_bottom = -1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 1
+text = "test"

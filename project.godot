@@ -12,21 +12,25 @@ config_version=5
 
 config/name="ToolsEconomy"
 config/tags=PackedStringArray("github")
-run/main_scene="res://Scenes/ui.tscn"
-config/features=PackedStringArray("4.3", "C#", "GL Compatibility")
+run/main_scene="res://Scenes/UI.tscn"
+config/features=PackedStringArray("4.4", "C#", "GL Compatibility")
 config/icon="res://icon.svg"
 
 [autoload]
 
-Globals="*res://Scenes/globals.tscn"
+Globals="*res://Scenes/Globals.tscn"
+
+[display]
+
+window/size/viewport_width=1280
+window/size/viewport_height=720
+window/size/mode=2
+window/stretch/mode="canvas_items"
+window/stretch/aspect="expand"
 
 [dotnet]
 
 project/assembly_name="ToolsEconomy"
-
-[gui]
-
-theme/custom="res://Themes/DefaultTheme.tres"
 
 [input]
 

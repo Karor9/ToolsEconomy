@@ -1,12 +1,6 @@
-[gd_scene load_steps=5 format=3 uid="uid://bc4f1f2tmxcst"]
+[gd_scene load_steps=2 format=3 uid="uid://dq883xrcuecr5"]
 
-[ext_resource type="Script" path="res://Scripts/Globals.cs" id="1_uq25s"]
-[ext_resource type="PackedScene" uid="uid://cm3kug28fwds2" path="res://Scenes/node.tscn" id="2_6rha7"]
-[ext_resource type="PackedScene" uid="uid://8f3l3ff76fn8" path="res://Scenes/generator.tscn" id="3_gwlwr"]
-[ext_resource type="PackedScene" uid="uid://bpm4d6c4oo4e8" path="res://Scenes/line_2d.tscn" id="4_2mcxs"]
+[ext_resource type="Script" uid="uid://cmjgxohx4ewap" path="res://Scripts/Globals.cs" id="1_18ypc"]
 
-[node name="Globals" type="Node"]
-script = ExtResource("1_uq25s")
-Node = ExtResource("2_6rha7")
-Generator = ExtResource("3_gwlwr")
-Edge = ExtResource("4_2mcxs")
+[node name="Node" type="Node"]
+script = ExtResource("1_18ypc")
