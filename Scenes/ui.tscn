@@ -5,7 +5,7 @@
 [ext_resource type="Script" uid="uid://btdkpkhblrhk8" path="res://Scripts/ElementsController.cs" id="3_dewlx"]
 [ext_resource type="PackedScene" uid="uid://cvbwir3ylwhoq" path="res://Scenes/element.tscn" id="3_hfhsn"]
 
-[node name="Control" type="Control" node_paths=PackedStringArray("UIPanel", "openButton", "closeButton")]
+[node name="Control" type="Control" node_paths=PackedStringArray("UIPanel", "SecondaryPanel", "openButton", "closeButton", "CategoryButtons")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -14,8 +14,10 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_w371h")
 UIPanel = NodePath("MainUIPanel")
+SecondaryPanel = NodePath("UIAddSubpanel")
 openButton = NodePath("OpenPanel")
 closeButton = NodePath("ClosePanel")
+CategoryButtons = [NodePath("UIAddSubpanel/ColorRect/Adding"), NodePath("UIAddSubpanel/ColorRect/Editing")]
 
 [node name="OpenPanel" type="Button" parent="."]
 layout_mode = 1
@@ -45,6 +47,7 @@ text = "<"
 
 [node name="ElementsContainer" type="Control" parent="." node_paths=PackedStringArray("Parent")]
 layout_mode = 1
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
@@ -73,7 +76,7 @@ mouse_filter = 2
 color = Color(0.237539, 0.237539, 0.237539, 1)
 
 [node name="Button" type="Button" parent="MainUIPanel/ColorRect"]
-custom_minimum_size = Vector2(0, 20)
+custom_minimum_size = Vector2(0, 40)
 layout_mode = 1
 anchors_preset = -1
 anchor_right = 1.0
@@ -91,6 +94,59 @@ grow_vertical = 2
 scale = Vector2(0.1, 0.1)
 mouse_filter = 1
 text = "Add"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="RichTextLabel2" type="RichTextLabel" parent="MainUIPanel/ColorRect/Button"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 10.0
+anchor_bottom = 10.0
+offset_left = 91.0
+offset_right = -819.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.1, 0.1)
+mouse_filter = 1
+text = ">"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Button2" type="Button" parent="MainUIPanel/ColorRect"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+offset_top = 40.0
+offset_bottom = 40.0
+focus_mode = 0
+theme = ExtResource("2_nxvpl")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="MainUIPanel/ColorRect/Button2"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 10.0
+anchor_bottom = 10.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.1, 0.1)
+mouse_filter = 1
+text = "Edit"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="RichTextLabel2" type="RichTextLabel" parent="MainUIPanel/ColorRect/Button2"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 10.0
+anchor_bottom = 10.0
+offset_left = 91.0
+offset_right = -819.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.1, 0.1)
+mouse_filter = 1
+text = ">"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -113,8 +169,68 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.239216, 0.239216, 0.239216, 0.470588)
 
+[node name="Adding" type="VBoxContainer" parent="UIAddSubpanel/ColorRect"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Button" type="Button" parent="UIAddSubpanel/ColorRect/Adding"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+focus_mode = 0
+theme = ExtResource("2_nxvpl")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="UIAddSubpanel/ColorRect/Adding/Button"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 10.0
+anchor_bottom = 10.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.1, 0.1)
+mouse_filter = 1
+text = "Add Node"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Editing" type="VBoxContainer" parent="UIAddSubpanel/ColorRect"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Button" type="Button" parent="UIAddSubpanel/ColorRect/Editing"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+focus_mode = 0
+theme = ExtResource("2_nxvpl")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="UIAddSubpanel/ColorRect/Editing/Button"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 10.0
+anchor_bottom = 10.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.1, 0.1)
+mouse_filter = 1
+text = "Edit Node"
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [connection signal="pressed" from="OpenPanel" to="." method="OpenClose" binds= [true]]
 [connection signal="pressed" from="ClosePanel" to="." method="OpenClose" binds= [false]]
 [connection signal="mouse_entered" from="MainUIPanel" to="." method="IsObstructed" binds= [true]]
 [connection signal="mouse_exited" from="MainUIPanel" to="." method="IsObstructed" binds= [false]]
-[connection signal="pressed" from="MainUIPanel/ColorRect/Button" to="." method="SetToolState" binds= [1]]
+[connection signal="pressed" from="MainUIPanel/ColorRect/Button" to="." method="OpenCloseSecondary" binds= [0]]
+[connection signal="pressed" from="MainUIPanel/ColorRect/Button2" to="." method="OpenCloseSecondary" binds= [1]]
+[connection signal="mouse_entered" from="UIAddSubpanel" to="." method="IsObstructed" binds= [true]]
+[connection signal="mouse_exited" from="UIAddSubpanel" to="." method="IsObstructed" binds= [false]]
+[connection signal="pressed" from="UIAddSubpanel/ColorRect/Adding/Button" to="." method="SetToolState" binds= [1]]

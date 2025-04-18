@@ -21,10 +21,10 @@ public static class Utils
         return Globals.Instace.Goods.Keys.Max() + 1;
     }
 
-    public static void AddToGoodsArray(int id)
+    public static void AddToGoodsArray(int id, Goods goods)
     {
         if(!Globals.Instace.Goods.ContainsKey(id))
-            Globals.Instace.Goods.Add(id, new Goods());
+            Globals.Instace.Goods.Add(id, goods);
         //TBD
     }
 }

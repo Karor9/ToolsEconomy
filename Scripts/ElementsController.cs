@@ -15,19 +15,7 @@ public partial class ElementsController : Control
             switch(Globals.Instace.CurrentToolState)
             {
                 case Enums.ToolState.AddingNode:
-                    Node node = Node.Instantiate();
-                    Panel nodeProp = (Panel)node;
-
-                    int id = Utils.GetNextID();
-                    Utils.AddToGoodsArray(id);
-                    nodeProp.Name = id.ToString();
-                    
-                    Vector2 size = nodeProp.Size;
-                    nodeProp.Position = GetGlobalMousePosition() - (size/2);
-                    nodeProp.MouseEntered += () => IsObstructed(true);
-                    nodeProp.MouseExited += () => IsObstructed(false);
-                    Parent.AddChild(nodeProp);
-
+                    CreateNode();
                     break;
             }
         }
@@ -37,6 +25,29 @@ public partial class ElementsController : Control
     void IsObstructed(bool state)
     {
         Globals.Instace.Obstructed = state;
+    }
+
+    void CreateNode()
+    {
+        Node node = Node.Instantiate();
+        Panel nodeProp = (Panel)node;
+
+        int id = Utils.GetNextID();
+        Goods good = new Goods("New Goods Name", 0d, nodeProp);
+        Utils.AddToGoodsArray(id, good);
+        nodeProp.Name = id.ToString();
+                
+        RichTextLabel GoodName = (RichTextLabel)nodeProp.GetChild(0);
+        GoodName.Text = good.Name;
+                
+        RichTextLabel Count = (RichTextLabel)nodeProp.GetChild(1);
+        Count.Text = string.Format("{0:0.00}",Math.Round(good.Count, 3));
+
+        Vector2 size = nodeProp.Size;
+        nodeProp.Position = GetGlobalMousePosition() - (size/2);
+        nodeProp.MouseEntered += () => IsObstructed(true);
+        nodeProp.MouseExited += () => IsObstructed(false);
+        Parent.AddChild(nodeProp);
     }
 
 }

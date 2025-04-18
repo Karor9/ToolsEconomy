@@ -1,21 +1,35 @@
 using Godot;
-using System;
+using Godot.Collections;
 using static Enums;
 
 public partial class UIController : Control
 {
     [ExportGroup("UIElements")]
     [Export] Panel UIPanel;
+    [Export] Panel SecondaryPanel;
 
     [ExportGroup("OpenCloseButtons")]
     [Export] Button openButton;
     [Export] Button closeButton;
+    [Export] Array<Control> CategoryButtons = new Array<Control>();
 
     void OpenClose(bool open)
     {
         openButton.Visible = !open;
         closeButton.Visible = open;
         UIPanel.Visible = open;
+    }
+
+    void OpenCloseSecondary(int category)
+    {
+        SecondaryPanel.Visible = true;
+        for (int i = 0; i < CategoryButtons.Count; i++)
+        {
+            if(category == i)
+                CategoryButtons[i].Visible = true;
+            else
+                CategoryButtons[i].Visible = false;
+        }
     }
 
     void SetToolState(int state)
