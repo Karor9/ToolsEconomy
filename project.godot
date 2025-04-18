@@ -32,6 +32,11 @@ window/stretch/aspect="expand"
 
 project/assembly_name="ToolsEconomy"
 
+[gui]
+
+theme/custom="uid://cqjbmnt6in0d5"
+theme/custom_font="uid://b5ut3plp75jd7"
+
 [input]
 
 RMB={

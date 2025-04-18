@@ -1,21 +1,87 @@
-[gd_scene load_steps=2 format=3 uid="uid://dbkd43hcka6mm"]
+[gd_scene load_steps=5 format=3 uid="uid://dbkd43hcka6mm"]
 
-[ext_resource type="Theme" uid="uid://cqjbmnt6in0d5" path="res://Themes/DefaultTheme.tres" id="1_w371h"]
+[ext_resource type="Script" uid="uid://cgs64qdjrn5d3" path="res://Scripts/UIController.cs" id="1_w371h"]
+[ext_resource type="Theme" uid="uid://cyu8db8yf0kqr" path="res://Themes/UIButtonTheme.tres" id="2_nxvpl"]
+[ext_resource type="Script" uid="uid://btdkpkhblrhk8" path="res://Scripts/ElementsController.cs" id="3_dewlx"]
+[ext_resource type="PackedScene" uid="uid://cvbwir3ylwhoq" path="res://Scenes/element.tscn" id="3_hfhsn"]
 
-[node name="Control" type="Control"]
+[node name="Control" type="Control" node_paths=PackedStringArray("UIPanel", "openButton", "closeButton")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_w371h")
+UIPanel = NodePath("MainUIPanel")
+openButton = NodePath("OpenPanel")
+closeButton = NodePath("ClosePanel")
 
-[node name="Button" type="Button" parent="."]
-layout_mode = 0
-offset_right = 206.0
-offset_bottom = 58.0
+[node name="OpenPanel" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -20.0
+offset_right = 109.0
+offset_bottom = 180.0
+scale = Vector2(0.1, 0.1)
+focus_mode = 0
+text = ">"
 
-[node name="RichTextLabel" type="RichTextLabel" parent="Button"]
+[node name="ClosePanel" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.05
+anchor_top = 1.0
+anchor_right = 0.05
+anchor_bottom = 1.0
+offset_top = -20.0
+offset_right = 109.0
+offset_bottom = 180.0
+scale = Vector2(0.1, 0.1)
+focus_mode = 0
+text = "<"
+
+[node name="ElementsContainer" type="Control" parent="." node_paths=PackedStringArray("Parent")]
+layout_mode = 1
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("3_dewlx")
+Parent = NodePath(".")
+Node = ExtResource("3_hfhsn")
+
+[node name="MainUIPanel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 0.08
+anchor_bottom = 1.0
+offset_top = 6.10352e-05
+offset_bottom = 6.10352e-05
+
+[node name="ColorRect" type="ColorRect" parent="MainUIPanel"]
+z_index = 4096
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.237539, 0.237539, 0.237539, 1)
+
+[node name="Button" type="Button" parent="MainUIPanel/ColorRect"]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+offset_bottom = 40.0
+focus_mode = 0
+theme = ExtResource("2_nxvpl")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="MainUIPanel/ColorRect/Button"]
 layout_mode = 1
 anchors_preset = -1
 anchor_right = 10.0
@@ -23,27 +89,32 @@ anchor_bottom = 10.0
 grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(0.1, 0.1)
-theme = ExtResource("1_w371h")
-theme_override_font_sizes/normal_font_size = 160
-text = "test"
+mouse_filter = 1
+text = "Add"
+horizontal_alignment = 1
+vertical_alignment = 1
 
-[node name="Button2" type="Button" parent="."]
-offset_left = 1.0
-offset_top = 58.0
-offset_right = 207.0
-offset_bottom = 116.0
-
-[node name="RichTextLabel" type="RichTextLabel" parent="Button2"]
+[node name="UIAddSubpanel" type="Panel" parent="."]
+visible = false
 layout_mode = 1
 anchors_preset = -1
-anchor_right = 10.0
-anchor_bottom = 10.0
-offset_left = -1.0
-offset_top = -1.0
-offset_right = -1.0
-offset_bottom = -1.0
+anchor_left = 0.08
+anchor_right = 0.16
+anchor_bottom = 1.0
+offset_top = 6.10352e-05
+offset_bottom = 6.10352e-05
+
+[node name="ColorRect" type="ColorRect" parent="UIAddSubpanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 1
-text = "test"
+color = Color(0.239216, 0.239216, 0.239216, 0.470588)
+
+[connection signal="pressed" from="OpenPanel" to="." method="OpenClose" binds= [true]]
+[connection signal="pressed" from="ClosePanel" to="." method="OpenClose" binds= [false]]
+[connection signal="mouse_entered" from="MainUIPanel" to="." method="IsObstructed" binds= [true]]
+[connection signal="mouse_exited" from="MainUIPanel" to="." method="IsObstructed" binds= [false]]
+[connection signal="pressed" from="MainUIPanel/ColorRect/Button" to="." method="SetToolState" binds= [1]]
