@@ -7,7 +7,7 @@ public partial class Globals : Node
     public static Globals Instace = null;
     public ToolState CurrentToolState = ToolState.None;
     public bool Obstructed = false;
-    
+    [Export] public Control CurrFocus = null;
     [Export] public Dictionary<int, Goods> Goods = new Dictionary<int, Goods>();
 
     public override void _Ready()

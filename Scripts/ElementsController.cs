@@ -41,12 +41,18 @@ public partial class ElementsController : Control
         GoodName.Text = good.Name;
                 
         RichTextLabel Count = (RichTextLabel)nodeProp.GetChild(1);
-        Count.Text = string.Format("{0:0.00}",Math.Round(good.Count, 3));
+        Count.Text = Utils.FormatNumbers(good.Count);
 
         Vector2 size = nodeProp.Size;
         nodeProp.Position = GetGlobalMousePosition() - (size/2);
         nodeProp.MouseEntered += () => IsObstructed(true);
         nodeProp.MouseExited += () => IsObstructed(false);
+
+        foreach (Control item in nodeProp.GetChildren())
+        {
+            item.MouseEntered += () => IsObstructed(true);
+            item.MouseExited += () => IsObstructed(false);
+        }
         Parent.AddChild(nodeProp);
     }
 

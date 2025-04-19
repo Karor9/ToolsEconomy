@@ -4,6 +4,11 @@ using Godot;
 
 public static class Utils
 {
+    public static void Print(string message)
+    {
+        GD.Print(message);
+    }
+
     public static void Print(string color, string message)
     {
         GD.PrintRich("[color="+color+"]"+message);
@@ -26,5 +31,18 @@ public static class Utils
         if(!Globals.Instace.Goods.ContainsKey(id))
             Globals.Instace.Goods.Add(id, goods);
         //TBD
+    }
+
+    public static string FormatNumbers(float val)
+    {
+        return string.Format("{0:0.00}",Math.Round(val, 3));
+    }
+    public static string FormatNumbers(double val)
+    {
+        return string.Format("{0:0.00}",Math.Round(val, 3));
+    }
+    public static string FormatNumbers(int val)
+    {
+        return string.Format("{0:0.00}",Math.Round((decimal)val, 3));
     }
 }

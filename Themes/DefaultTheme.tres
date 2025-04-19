@@ -16,3 +16,4 @@ RichTextLabel/colors/font_outline_color = Color(0, 0, 0, 1)
 RichTextLabel/constants/outline_size = 30
 RichTextLabel/font_sizes/normal_font_size = 160
 RichTextLabel/fonts/normal_font = ExtResource("1_ko64t")
+VBoxContainer/constants/separation = 0

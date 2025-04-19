@@ -1,12 +1,17 @@
-[gd_scene format=3 uid="uid://cvbwir3ylwhoq"]
+[gd_scene load_steps=3 format=3 uid="uid://cvbwir3ylwhoq"]
 
-[node name="Element" type="Panel"]
+[ext_resource type="Script" uid="uid://c1sl0a3leikn8" path="res://Scripts/ElementController.cs" id="1_6qskw"]
+[ext_resource type="Script" uid="uid://cav3viplgcyq3" path="res://Scripts/CountInputController.cs" id="2_pj1fx"]
+
+[node name="Element" type="Panel" node_paths=PackedStringArray("LineEdits")]
 z_index = 100
 custom_minimum_size = Vector2(50, 50)
 offset_left = 342.487
 offset_top = 146.273
 offset_right = 492.487
 offset_bottom = 196.273
+script = ExtResource("1_6qskw")
+LineEdits = [NodePath("ColorName"), NodePath("ColorCount")]
 
 [node name="Name" type="RichTextLabel" parent="."]
 custom_minimum_size = Vector2(0, 25)
@@ -15,7 +20,6 @@ anchors_preset = -1
 anchor_right = 10.0
 anchor_bottom = 5.0
 scale = Vector2(0.1, 0.1)
-mouse_filter = 1
 text = "test"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -28,7 +32,54 @@ anchor_top = 0.5
 anchor_right = 10.0
 anchor_bottom = 5.0
 scale = Vector2(0.1, 0.1)
-mouse_filter = 1
 text = "test"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="ColorName" type="ColorRect" parent="."]
+visible = false
+custom_minimum_size = Vector2(0, 25)
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 0.5
+color = Color(0.201527, 0.201527, 0.201527, 1)
+
+[node name="NameInput" type="LineEdit" parent="ColorName"]
+custom_minimum_size = Vector2(0, 25)
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 10.0
+anchor_bottom = 5.0
+offset_bottom = 132.0
+scale = Vector2(0.1, 0.1)
+text = "test"
+alignment = 1
+
+[node name="ColorCount" type="ColorRect" parent="."]
+visible = false
+custom_minimum_size = Vector2(0, 25)
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 1
+color = Color(0.201527, 0.201527, 0.201527, 1)
+
+[node name="CountInput" type="LineEdit" parent="ColorCount"]
+custom_minimum_size = Vector2(0, 25)
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 10.0
+anchor_bottom = 5.0
+offset_bottom = 132.0
+scale = Vector2(0.1, 0.1)
+mouse_filter = 1
+text = "0"
+alignment = 1
+script = ExtResource("2_pj1fx")
+
+[connection signal="gui_input" from="Name" to="." method="Pressed" binds= [0]]
+[connection signal="gui_input" from="Count" to="." method="Pressed" binds= [1]]
+[connection signal="text_changed" from="ColorCount/CountInput" to="ColorCount/CountInput" method="OnTextChanged"]
