@@ -23,6 +23,11 @@ public partial class ElementController : Panel
             le.CaretColumn = le.Text.Length;
             Globals.Instace.CurrFocus = le;
         }
+        if(@event.IsActionPressed("LMB") &&
+        Globals.Instace.CurrentToolState == Enums.ToolState.MoveNode)
+        {
+            Globals.Instace.CurrFocus = this;
+        }
     }
 
     public override void _Input(InputEvent @event)
@@ -48,7 +53,43 @@ public partial class ElementController : Panel
                 ((RichTextLabel)GetChild(1)).Text = Utils.FormatNumbers(g.Count);
             }
         }
+
+        if(Input.IsActionPressed("LMB") 
+        && Globals.Instace.CurrentToolState == Enums.ToolState.MoveNode
+        && Globals.Instace.CurrFocus == this)
+        {
+            SelfModulate = new Color(1, 1, 1, 0.5f);
+        }
+
+        if(@event.IsActionReleased("LMB") 
+        && Globals.Instace.CurrentToolState == Enums.ToolState.MoveNode
+        && Globals.Instace.CurrFocus == this)
+        {
+            SelfModulate = new Color(1,1,1,1);
+            Globals.Instace.CurrFocus = null;
+        }
     }
+
+    public override void _PhysicsProcess(double delta)
+    {
+        if(Input.IsActionPressed("LMB") 
+        && Globals.Instace.CurrentToolState == Enums.ToolState.MoveNode
+        && Globals.Instace.CurrFocus == this)
+        {
+            MoveNode();
+        }
+    }
+
+
+    void MoveNode()
+    {
+        Control control = Globals.Instace.CurrFocus;
+        if(control is null)
+            return;
+        Vector2 newPos = GetGlobalMousePosition();
+        control.Position = newPos - (control.Size/2);
+    }
+
 
 
     void LostFocus()
