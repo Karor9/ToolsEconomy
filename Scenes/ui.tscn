@@ -47,17 +47,28 @@ scale = Vector2(0.1, 0.1)
 focus_mode = 0
 text = "<"
 
-[node name="ElementsContainer" type="Control" parent="." node_paths=PackedStringArray("Parent")]
+[node name="ElementsContainer" type="Control" parent="." node_paths=PackedStringArray("Parent", "ParentGenerator")]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 1
 script = ExtResource("3_dewlx")
 Parent = NodePath(".")
+ParentGenerator = NodePath("GeneratorContainer")
 Node = ExtResource("3_hfhsn")
 Generator = ExtResource("4_qwshj")
+
+[node name="GeneratorContainer" type="Control" parent="ElementsContainer"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
 
 [node name="MainUIPanel" type="Panel" parent="."]
 layout_mode = 1

@@ -4,6 +4,7 @@ using System;
 public partial class ElementsController : Control
 {
     [Export] Control Parent;
+    [Export] Control ParentGenerator;
     [ExportGroup("Nodes")]
     [Export] PackedScene Node;
     [Export] PackedScene Generator;
@@ -39,7 +40,24 @@ public partial class ElementsController : Control
 
     void CreateGenerateNode()
     {
+        if(Globals.Instace.Obstructed)
+            return;
         Panel nodeProp = CreateNode();
+        Line2D line = (Line2D)Globals.Instace.Arrow.Instantiate();
+        
+        GeneratorController gc = (GeneratorController)Globals.Instace.CurrFocus;
+        Node node = gc.GetChild(5);
+        Vector2 fp = gc.Position + (gc.Size/2);
+        Vector2 ep = nodeProp.Position + (nodeProp.Size/2);
+        line.Points = [fp, ep];
+        line.Name = nodeProp.Name;
+        NodePath nodePath = new NodePath(nodeProp.Name);
+        if(node.GetNodeOrNull(nodePath) is not null)
+            return;
+        node.AddChild(line);
+        ElementController ec = (ElementController)nodeProp;
+        ec.InLine.Add(line);
+        gc.LostFocusPanel();
     }
 
     Panel CreateNode()
@@ -75,14 +93,16 @@ public partial class ElementsController : Control
 
     void CreateGenerator()
     {
+        if(Globals.Instace.Obstructed)
+            return;
         Node node = Generator.Instantiate();
         Panel nodeProp = (Panel)node;
-        nodeProp.Name = "Generator";
+        nodeProp.Name = "Generator " + ParentGenerator.GetChildCount().ToString();
         RichTextLabel Count = (RichTextLabel)nodeProp.GetChild(1);
         Count.Text = Utils.FormatNumbers(1);
 
         nodeProp = SetupEvents(nodeProp);
-        Parent.AddChild(nodeProp);
+        ParentGenerator.AddChild(nodeProp);
         nodeProp.GrabFocus();
         
         return;
