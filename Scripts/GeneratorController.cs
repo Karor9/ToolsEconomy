@@ -1,62 +1,37 @@
 using Godot;
-using Godot.Collections;
 using System;
-using System.Linq;
 
-public partial class ElementController : NodeController
+public partial class GeneratorController : NodeController
 {
-    [Export] Control[] LineEdits;
-    [Export] public Array<Line2D> InLine;
-    [Export] public Array<Line2D> OutLine;
+    [Export] TextureRect Dot;
+    [Export] public LineEdit LineEdit;
+    void ShowGrabbedFocus(bool vis, Color color)
+    {
+        Globals.Instace.CurrFocus = this;
+        Dot.Visible = vis;
+        Dot.SelfModulate = color;
+    }
 
-    void Pressed(InputEvent @event, int id)
+    void Pressed(InputEvent @event)
     {
         if(@event.IsActionPressed("LMB") && Globals.Instace.CurrentToolState == Enums.ToolState.EditingNode)
         {
             LineEdit le = (LineEdit)Globals.Instace.CurrFocus;
             if(le is not null)
             {
-                ElementController ec = (ElementController)le.GetParent().GetParent();
+                GeneratorController ec = (GeneratorController)le.GetParent().GetParent();
                 ec.LostFocus();
             }
-
-            LineEdits[id].Visible = true;
-            le = (LineEdit)LineEdits[id].GetChild(0);
+            le = LineEdit;
             le.GrabFocus();
             le.CaretColumn = le.Text.Length;
+            ((Control)le.GetParent()).Visible = true;
             Globals.Instace.CurrFocus = le;
         }
         if(@event.IsActionPressed("LMB") &&
         Globals.Instace.CurrentToolState == Enums.ToolState.MoveNode)
         {
             Globals.Instace.CurrFocus = this;
-        }
-
-        if(Input.IsActionPressed("LMB")
-        && Globals.Instace.CurrentToolState == Enums.ToolState.AddingGenerator
-        && Globals.Instace.CurrFocus != null)
-        {
-            GeneratorController gc = (GeneratorController)Globals.Instace.CurrFocus;
-            if(gc is null)
-            {
-                Utils.Print("red", "Generator IS NULL");
-                return;
-            }
-            Node node = gc.GetChild(5);
-
-            Line2D line2D = (Line2D)Globals.Instace.Arrow.Instantiate();
-            Vector2 fp = gc.Position + (gc.Size/2);
-            Vector2 ep = Position + (Size/2);
-            line2D.Points = [fp, ep];
-            line2D.Name = Name;
-            NodePath nodePath = new NodePath(Name);
-            if(node.GetNodeOrNull(nodePath) is not null)
-                return;
-            node.AddChild(line2D);
-            InLine.Add(line2D);
-            gc.LostFocusPanel();
-            Utils.Print("green", "Connect");
-            //TBD
         }
     }
 
@@ -70,10 +45,8 @@ public partial class ElementController : NodeController
                 return;
             LineEdit le = (LineEdit)Globals.Instace.CurrFocus;
             
-            if(le.Name == "NameInput")
-                ((NameInputController)le).SaveEdits(this);
-            else if(le.Name == "CountInput")
-                ((CountInputController)le).SaveEdits(this);
+            Utils.Print("yellow", le);
+            ((CountInputController)le).SaveEdits(this);
 
         }
 
@@ -93,6 +66,19 @@ public partial class ElementController : NodeController
         }
     }
 
+    public override void LostFocus()
+    {
+        base.LostFocus();
+    }
+
+    public void LostFocusPanel()
+    {
+        Control item = Globals.Instace.CurrFocus;
+        item.ReleaseFocus();
+        Globals.Instace.CurrFocus = null;
+        ((TextureRect)GetChild(4)).Visible = false;
+    }
+
     public override void _PhysicsProcess(double delta)
     {
         if(Input.IsActionPressed("LMB") 
@@ -106,18 +92,6 @@ public partial class ElementController : NodeController
     public override void MoveNode()
     {
         base.MoveNode();
-    }
-
-    public override void LostFocus()
-    {
-        base.LostFocus();
-    }
-
-
-    void IsObstructed(bool obs)
-    {
-        Globals.Instace.Obstructed = obs;
-        Utils.Print("pink", "Mouse obstructed:" + Globals.Instace.Obstructed);
     }
 
 }

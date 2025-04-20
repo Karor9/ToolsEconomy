@@ -56,6 +56,18 @@ public partial class UIController : Control
         GD.PrintRich("[color=#]"+ Globals.Instace.CurrentToolState);
         CloseSecondary();
         SetState();
+        LostFocusOnAction();
+    }
+
+    void LostFocusOnAction()
+    {
+        if(Globals.Instace.CurrFocus is null)
+            return;
+        LineEdit le = (LineEdit)Globals.Instace.CurrFocus; 
+        if(le.Name == "NameInput")
+            ((NameInputController)le).SaveEdits((ElementController)le.GetParent().GetParent());
+        else if(le.Name == "CountInput")
+            ((CountInputController)le).SaveEdits((ElementController)le.GetParent().GetParent());
     }
 
     void IsObstructed(bool state)

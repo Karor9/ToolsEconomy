@@ -22,7 +22,10 @@ public partial class ElementsController : Control
                     SaveEdits();
                     break;
                 case Enums.ToolState.AddingGenerator:
-                    CreateGenerator();
+                    if(Globals.Instace.CurrFocus is not null)
+                        CreateGenerateNode();
+                    else
+                        CreateGenerator();
                     break;
             }
         }
@@ -34,7 +37,12 @@ public partial class ElementsController : Control
         Globals.Instace.Obstructed = state;
     }
 
-    void CreateNode()
+    void CreateGenerateNode()
+    {
+        Panel nodeProp = CreateNode();
+    }
+
+    Panel CreateNode()
     {
         Node node = Node.Instantiate();
         Panel nodeProp = (Panel)node;
@@ -49,18 +57,9 @@ public partial class ElementsController : Control
                 
         RichTextLabel Count = (RichTextLabel)nodeProp.GetChild(1);
         Count.Text = Utils.FormatNumbers(good.Count);
-
-        Vector2 size = nodeProp.Size;
-        nodeProp.Position = GetGlobalMousePosition() - (size/2);
-        nodeProp.MouseEntered += () => IsObstructed(true);
-        nodeProp.MouseExited += () => IsObstructed(false);
-
-        foreach (Control item in nodeProp.GetChildren())
-        {
-            item.MouseEntered += () => IsObstructed(true);
-            item.MouseExited += () => IsObstructed(false);
-        }
+        SetupEvents(nodeProp);
         Parent.AddChild(nodeProp);
+        return nodeProp;
     }
 
     void SaveEdits()
@@ -78,7 +77,23 @@ public partial class ElementsController : Control
     {
         Node node = Generator.Instantiate();
         Panel nodeProp = (Panel)node;
+        nodeProp.Name = "Generator";
+        RichTextLabel Count = (RichTextLabel)nodeProp.GetChild(1);
+        Count.Text = Utils.FormatNumbers(1);
+
+        nodeProp = SetupEvents(nodeProp);
+        Parent.AddChild(nodeProp);
+        nodeProp.GrabFocus();
         
         return;
+    }
+
+    Panel SetupEvents(Panel nodeProp)
+    {
+        Vector2 size = nodeProp.Size;
+        nodeProp.Position = GetGlobalMousePosition() - (size/2);
+        nodeProp.MouseEntered += () => IsObstructed(true);
+        nodeProp.MouseExited += () => IsObstructed(false);
+        return nodeProp;
     }
 }

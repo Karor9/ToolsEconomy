@@ -13,4 +13,11 @@ public partial class InputController : LineEdit
         g = Globals.Instace.Goods[id];
         ec.LostFocus();
     }
+
+    public virtual void SaveEdits(GeneratorController ec)
+    {
+        Utils.Print("yellow", Name);
+        newValue = Text;
+        ec.LostFocus();
+    }
 }

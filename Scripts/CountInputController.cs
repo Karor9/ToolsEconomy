@@ -46,6 +46,15 @@ public partial class CountInputController : InputController
         ((RichTextLabel)ec.GetChild(1)).Text = Utils.FormatNumbers(g.Count);
     }
 
+    public override void SaveEdits(GeneratorController ec)
+    {
+        base.SaveEdits(ec);
+        if(newValue.EndsWith(","))
+            newValue += 0;
+        if(double.TryParse(newValue, out double parsed))
+            ((RichTextLabel)ec.GetChild(1)).Text = Utils.FormatNumbers(parsed);
+    }
+
     string CommaRemover(string newValue)
     {
         string cleaned = newValue;

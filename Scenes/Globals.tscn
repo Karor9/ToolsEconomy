@@ -1,6 +1,8 @@
-[gd_scene load_steps=2 format=3 uid="uid://dq883xrcuecr5"]
+[gd_scene load_steps=3 format=3 uid="uid://dq883xrcuecr5"]
 
 [ext_resource type="Script" uid="uid://cmjgxohx4ewap" path="res://Scripts/Globals.cs" id="1_18ypc"]
+[ext_resource type="PackedScene" uid="uid://ckud46p1aim7u" path="res://Scenes/arrow.tscn" id="2_t1ydv"]
 
 [node name="Node" type="Node"]
 script = ExtResource("1_18ypc")
+Arrow = ExtResource("2_t1ydv")

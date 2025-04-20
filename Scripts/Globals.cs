@@ -9,7 +9,10 @@ public partial class Globals : Node
     public bool Obstructed = false;
     [Export] public Control CurrFocus = null;
     [Export] public Dictionary<int, Goods> Goods = new Dictionary<int, Goods>();
+    
 
+    [ExportGroup("Scenes")]
+    [Export] public PackedScene Arrow;
     public override void _Ready()
     {
         Instace = this;
