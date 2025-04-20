@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://dbkd43hcka6mm"]
+[gd_scene load_steps=6 format=3 uid="uid://dbkd43hcka6mm"]
 
 [ext_resource type="Script" uid="uid://cgs64qdjrn5d3" path="res://Scripts/UIController.cs" id="1_w371h"]
 [ext_resource type="Theme" uid="uid://cyu8db8yf0kqr" path="res://Themes/UIButtonTheme.tres" id="2_nxvpl"]
 [ext_resource type="Script" uid="uid://btdkpkhblrhk8" path="res://Scripts/ElementsController.cs" id="3_dewlx"]
 [ext_resource type="PackedScene" uid="uid://cvbwir3ylwhoq" path="res://Scenes/element.tscn" id="3_hfhsn"]
+[ext_resource type="PackedScene" uid="uid://bwhc82i0w0osx" path="res://Scenes/generator.tscn" id="4_qwshj"]
 
 [node name="Control" type="Control" node_paths=PackedStringArray("UIPanel", "SecondaryPanel", "CurrentState", "openButton", "closeButton", "CategoryButtons")]
 layout_mode = 3
@@ -56,6 +57,7 @@ grow_vertical = 2
 script = ExtResource("3_dewlx")
 Parent = NodePath(".")
 Node = ExtResource("3_hfhsn")
+Generator = ExtResource("4_qwshj")
 
 [node name="MainUIPanel" type="Panel" parent="."]
 layout_mode = 1
@@ -258,6 +260,26 @@ text = "Add Node"
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="Button2" type="Button" parent="UIAddSubpanel/ColorRect/Adding"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+focus_mode = 0
+mouse_filter = 1
+theme = ExtResource("2_nxvpl")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="UIAddSubpanel/ColorRect/Adding/Button2"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 10.0
+anchor_bottom = 10.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.1, 0.1)
+mouse_filter = 1
+text = "Add Generator"
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [node name="Editing" type="VBoxContainer" parent="UIAddSubpanel/ColorRect"]
 visible = false
 layout_mode = 1
@@ -297,4 +319,5 @@ vertical_alignment = 1
 [connection signal="mouse_entered" from="UIAddSubpanel" to="." method="IsObstructed" binds= [true]]
 [connection signal="mouse_exited" from="UIAddSubpanel" to="." method="IsObstructed" binds= [false]]
 [connection signal="pressed" from="UIAddSubpanel/ColorRect/Adding/Button" to="." method="SetToolState" binds= [1]]
+[connection signal="pressed" from="UIAddSubpanel/ColorRect/Adding/Button2" to="." method="SetToolState" binds= [6]]
 [connection signal="pressed" from="UIAddSubpanel/ColorRect/Editing/Button" to="." method="SetToolState" binds= [2]]

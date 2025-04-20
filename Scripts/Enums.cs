@@ -5,12 +5,12 @@ public static partial class Enums
 {
     public enum ToolState
     {
-        None,
-        AddingNode,
-        EditingNode,
-        AddingLine,
-        MoveNode,
-        EditingLine,
-        AddingGenerator
+        None, //0
+        AddingNode, //1
+        EditingNode, //2
+        AddingLine, //3
+        MoveNode, //4
+        EditingLine, //5
+        AddingGenerator //6
     }
 }

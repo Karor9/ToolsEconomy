@@ -34,24 +34,17 @@ public partial class ElementController : Panel
     {
         if(@event.IsActionPressed("AcceptTextEdit") 
         && Globals.Instace.CurrentToolState == Enums.ToolState.EditingNode
-        && Globals.Instace.CurrFocus.GetParent().GetParent() == this)
+        && Globals.Instace.CurrFocus != null)
         {
+            if(Globals.Instace.CurrFocus.GetParent().GetParent() != this)
+                return;
             LineEdit le = (LineEdit)Globals.Instace.CurrFocus;
-            Utils.Print("yellow", le.Name);
-            string newValue = le.Text;
-            int id = int.Parse(Name);
-            Goods g = Globals.Instace.Goods[id];
-            ((ElementController)le.GetParent().GetParent()).LostFocus();
+            
             if(le.Name == "NameInput")
-            {
-                g.Name = newValue;
-                ((RichTextLabel)GetChild(0)).Text = g.Name;
-            } else if(le.Name == "CountInput")
-            {
-                if(double.TryParse(newValue, out double parsed))
-                    g.Count = parsed;
-                ((RichTextLabel)GetChild(1)).Text = Utils.FormatNumbers(g.Count);
-            }
+                ((NameInputController)le).SaveEdits(this);
+            else if(le.Name == "CountInput")
+                ((CountInputController)le).SaveEdits(this);
+
         }
 
         if(Input.IsActionPressed("LMB") 
@@ -92,13 +85,19 @@ public partial class ElementController : Panel
 
 
 
-    void LostFocus()
+    public void LostFocus()
     {
         Control item = Globals.Instace.CurrFocus;
         // Control parent = (Control)item.GetParent().GetParent();
         ((Control)item.GetParent()).Visible = false;
         ((LineEdit)item).ReleaseFocus();
         Globals.Instace.CurrFocus = null;
+    }
+
+    void IsObstructed(bool obs)
+    {
+        Globals.Instace.Obstructed = obs;
+        Utils.Print("pink", "Mouse obstructed:" + Globals.Instace.Obstructed);
     }
 
 }

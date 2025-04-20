@@ -6,6 +6,7 @@ public partial class ElementsController : Control
     [Export] Control Parent;
     [ExportGroup("Nodes")]
     [Export] PackedScene Node;
+    [Export] PackedScene Generator;
     public override void _Input(InputEvent @event)
     {
         if(@event.IsActionPressed("LMB"))
@@ -16,6 +17,12 @@ public partial class ElementsController : Control
             {
                 case Enums.ToolState.AddingNode:
                     CreateNode();
+                    break;
+                case Enums.ToolState.EditingNode:
+                    SaveEdits();
+                    break;
+                case Enums.ToolState.AddingGenerator:
+                    CreateGenerator();
                     break;
             }
         }
@@ -56,4 +63,22 @@ public partial class ElementsController : Control
         Parent.AddChild(nodeProp);
     }
 
+    void SaveEdits()
+    {
+        LineEdit le = (LineEdit)Globals.Instace.CurrFocus;
+        if(Globals.Instace.CurrFocus is null)
+            return;
+        if(le.Name == "NameInput")
+            ((NameInputController)le).SaveEdits((ElementController)le.GetParent().GetParent());
+        else if(le.Name == "CountInput")
+            ((CountInputController)le).SaveEdits((ElementController)le.GetParent().GetParent());
+    }
+
+    void CreateGenerator()
+    {
+        Node node = Generator.Instantiate();
+        Panel nodeProp = (Panel)node;
+        
+        return;
+    }
 }

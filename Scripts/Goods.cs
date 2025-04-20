@@ -14,4 +14,9 @@ public partial class Goods : Resource
     }
 
     public Goods() : this("EmptyName", 0d, null) {}
+
+    public override string ToString()
+    {
+        return Name + " " + Count;
+    }
 }

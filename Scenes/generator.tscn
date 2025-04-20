@@ -1,17 +1,17 @@
-[gd_scene load_steps=4 format=3 uid="uid://cvbwir3ylwhoq"]
+[gd_scene load_steps=3 format=3 uid="uid://bwhc82i0w0osx"]
 
-[ext_resource type="Script" uid="uid://c1sl0a3leikn8" path="res://Scripts/ElementController.cs" id="1_6qskw"]
-[ext_resource type="Script" uid="uid://cav3viplgcyq3" path="res://Scripts/CountInputController.cs" id="2_pj1fx"]
-[ext_resource type="Script" uid="uid://dalagd4o5mvih" path="res://Scripts/NameInputController.cs" id="2_ya3vo"]
+[ext_resource type="Script" uid="uid://c1sl0a3leikn8" path="res://Scripts/ElementController.cs" id="1_pyrd2"]
+[ext_resource type="Script" uid="uid://cav3viplgcyq3" path="res://Scripts/CountInputController.cs" id="3_8mhug"]
 
-[node name="Element" type="Panel" node_paths=PackedStringArray("LineEdits")]
+[node name="Generator" type="Panel" node_paths=PackedStringArray("LineEdits")]
+self_modulate = Color(0.00492994, 0.228797, 1, 1)
 z_index = 100
 custom_minimum_size = Vector2(50, 50)
 offset_left = 342.487
 offset_top = 146.273
 offset_right = 492.487
 offset_bottom = 196.273
-script = ExtResource("1_6qskw")
+script = ExtResource("1_pyrd2")
 LineEdits = [NodePath("ColorName"), NodePath("ColorCount")]
 
 [node name="Name" type="RichTextLabel" parent="."]
@@ -22,7 +22,7 @@ anchor_right = 10.0
 anchor_bottom = 5.0
 scale = Vector2(0.1, 0.1)
 mouse_filter = 1
-text = "test"
+text = "Generator"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -50,6 +50,7 @@ mouse_filter = 1
 color = Color(0.201527, 0.201527, 0.201527, 1)
 
 [node name="NameInput" type="LineEdit" parent="ColorName"]
+visible = false
 custom_minimum_size = Vector2(0, 25)
 layout_mode = 1
 anchors_preset = -1
@@ -60,7 +61,6 @@ scale = Vector2(0.1, 0.1)
 mouse_filter = 1
 text = "test"
 alignment = 1
-script = ExtResource("2_ya3vo")
 
 [node name="ColorCount" type="ColorRect" parent="."]
 visible = false
@@ -84,10 +84,9 @@ scale = Vector2(0.1, 0.1)
 mouse_filter = 1
 text = "0"
 alignment = 1
-script = ExtResource("2_pj1fx")
+script = ExtResource("3_8mhug")
 
 [connection signal="mouse_entered" from="." to="." method="IsObstructed" binds= [true]]
 [connection signal="mouse_exited" from="." to="." method="IsObstructed" binds= [false]]
-[connection signal="gui_input" from="Name" to="." method="Pressed" binds= [0]]
 [connection signal="gui_input" from="Count" to="." method="Pressed" binds= [1]]
 [connection signal="text_changed" from="ColorCount/CountInput" to="ColorCount/CountInput" method="OnTextChanged"]
