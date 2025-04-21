@@ -11,9 +11,9 @@ public partial class ElementController : NodeController
 
     void Pressed(InputEvent @event, int id)
     {
-        if(@event.IsActionPressed("LMB") && Globals.Instace.CurrentToolState == Enums.ToolState.EditingNode)
+        if(@event.IsActionPressed("LMB") && Globals.Instance.CurrentToolState == Enums.ToolState.EditingNode)
         {
-            LineEdit le = (LineEdit)Globals.Instace.CurrFocus;
+            LineEdit le = (LineEdit)Globals.Instance.CurrFocus;
             if(le is not null)
             {
                 ElementController ec = (ElementController)le.GetParent().GetParent();
@@ -24,31 +24,37 @@ public partial class ElementController : NodeController
             le = (LineEdit)LineEdits[id].GetChild(0);
             le.GrabFocus();
             le.CaretColumn = le.Text.Length;
-            Globals.Instace.CurrFocus = le;
+            Globals.Instance.CurrFocus = le;
         }
         if(@event.IsActionPressed("LMB") &&
-        Globals.Instace.CurrentToolState == Enums.ToolState.MoveNode)
+        Globals.Instance.CurrentToolState == Enums.ToolState.MoveNode)
         {
-            Globals.Instace.CurrFocus = this;
+            Globals.Instance.CurrFocus = this;
         }
 
         if(Input.IsActionPressed("LMB")
-        && Globals.Instace.CurrentToolState == Enums.ToolState.AddingGenerator
-        && Globals.Instace.CurrFocus != null)
+        && Globals.Instance.CurrentToolState == Enums.ToolState.AddingGenerator
+        && Globals.Instance.CurrFocus != null)
         {
-            GeneratorController gc = (GeneratorController)Globals.Instace.CurrFocus;
+            GeneratorController gc = (GeneratorController)Globals.Instance.CurrFocus;
             if(gc is null)
             {
                 Utils.Print("red", "Generator IS NULL");
                 return;
             }
-            Node node = gc.GetChild(5);
+            Node node = gc.GetChild(6);
 
-            Line2D line2D = (Line2D)Globals.Instace.Arrow.Instantiate();
-            Vector2 fp = gc.Position + (gc.Size/2);
-            Vector2 ep = Position + (Size/2);
+            Line2D line2D = (Line2D)Globals.Instance.Arrow.Instantiate();
+            // Vector2 fp = gc.Position + (gc.Size/2);
+            // Vector2 ep = Position + (Size/2);
+            Vector2 fp = Utils.GetEdgePoint(gc, this);
+            Vector2 ep = Utils.GetEdgePoint(this, gc);
             line2D.Points = [fp, ep];
+            Utils.DrawArrow(line2D, fp, ep);
             line2D.Name = Name;
+
+
+
             NodePath nodePath = new NodePath(Name);
             if(node.GetNodeOrNull(nodePath) is not null)
                 return;
@@ -63,12 +69,12 @@ public partial class ElementController : NodeController
     public override void _Input(InputEvent @event)
     {
         if(@event.IsActionPressed("AcceptTextEdit") 
-        && Globals.Instace.CurrentToolState == Enums.ToolState.EditingNode
-        && Globals.Instace.CurrFocus != null)
+        && Globals.Instance.CurrentToolState == Enums.ToolState.EditingNode
+        && Globals.Instance.CurrFocus != null)
         {
-            if(Globals.Instace.CurrFocus.GetParent().GetParent() != this)
+            if(Globals.Instance.CurrFocus.GetParent().GetParent() != this)
                 return;
-            LineEdit le = (LineEdit)Globals.Instace.CurrFocus;
+            LineEdit le = (LineEdit)Globals.Instance.CurrFocus;
             
             if(le.Name == "NameInput")
                 ((NameInputController)le).SaveEdits(this);
@@ -78,26 +84,26 @@ public partial class ElementController : NodeController
         }
 
         if(Input.IsActionPressed("LMB") 
-        && Globals.Instace.CurrentToolState == Enums.ToolState.MoveNode
-        && Globals.Instace.CurrFocus == this)
+        && Globals.Instance.CurrentToolState == Enums.ToolState.MoveNode
+        && Globals.Instance.CurrFocus == this)
         {
             SelfModulate = new Color(1, 1, 1, 0.5f);
         }
 
         if(@event.IsActionReleased("LMB") 
-        && Globals.Instace.CurrentToolState == Enums.ToolState.MoveNode
-        && Globals.Instace.CurrFocus == this)
+        && Globals.Instance.CurrentToolState == Enums.ToolState.MoveNode
+        && Globals.Instance.CurrFocus == this)
         {
             SelfModulate = new Color(1,1,1,1);
-            Globals.Instace.CurrFocus = null;
+            Globals.Instance.CurrFocus = null;
         }
     }
 
     public override void _PhysicsProcess(double delta)
     {
         if(Input.IsActionPressed("LMB") 
-        && Globals.Instace.CurrentToolState == Enums.ToolState.MoveNode
-        && Globals.Instace.CurrFocus == this)
+        && Globals.Instance.CurrentToolState == Enums.ToolState.MoveNode
+        && Globals.Instance.CurrFocus == this)
         {
             MoveNode();
         }
@@ -116,8 +122,8 @@ public partial class ElementController : NodeController
 
     void IsObstructed(bool obs)
     {
-        Globals.Instace.Obstructed = obs;
-        Utils.Print("pink", "Mouse obstructed:" + Globals.Instace.Obstructed);
+        Globals.Instance.Obstructed = obs;
+        Utils.Print("pink", "Mouse obstructed:" + Globals.Instance.Obstructed);
     }
 
 }

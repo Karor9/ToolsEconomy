@@ -6,6 +6,9 @@ using System.Text.RegularExpressions;
 public partial class CountInputController : InputController
 {
     double value = 0f;
+
+    [Export] RichTextLabel richTextLabel;
+
     [Signal]
     public delegate void OnCountChangeEventHandler(LineEdit le);
 
@@ -43,7 +46,8 @@ public partial class CountInputController : InputController
             newValue += 0;
         if(double.TryParse(newValue, out double parsed))
             g.Count = parsed;
-        ((RichTextLabel)ec.GetChild(1)).Text = Utils.FormatNumbers(g.Count);
+        ((RichTextLabel)ec.GetChild(2)).Text = Utils.FormatNumbers(g.Count);
+
     }
 
     public override void SaveEdits(GeneratorController ec)
@@ -52,7 +56,9 @@ public partial class CountInputController : InputController
         if(newValue.EndsWith(","))
             newValue += 0;
         if(double.TryParse(newValue, out double parsed))
-            ((RichTextLabel)ec.GetChild(1)).Text = Utils.FormatNumbers(parsed);
+            ((RichTextLabel)ec.GetChild(2)).Text = Utils.FormatNumbers(parsed);
+        ((Control)ec.GetChild(4)).Visible = false;
+        ((Control)ec.GetChild(5)).Visible = false;
     }
 
     string CommaRemover(string newValue)
@@ -67,5 +73,33 @@ public partial class CountInputController : InputController
             cleaned = before + after;
         }
         return cleaned;
+    }
+
+    public void OnLeaveFocusText()
+    {
+        richTextLabel.Text = Text;
+        Visible = false;
+
+        Node node = GetParent()?.GetParent(); // Zapewniamy, że nie jest null
+
+        if (node is GeneratorController gc)
+        {
+            SaveEdits(gc);
+        }
+        else if (node is ElementController ec)
+        {
+            SaveEdits(ec);
+        }
+        else
+        {
+            GD.PrintErr($"OnLeaveFocusText: Parent is neither GeneratorController nor ElementController. Got: {node?.GetType().Name}");
+        }
+    }
+
+
+    public void OnEnterFocus()
+    {
+        Text = richTextLabel.Text;
+        Visible = true;
     }
 }

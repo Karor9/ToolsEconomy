@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Diagnostics.Metrics;
 
 public partial class GeneratorController : NodeController
 {
@@ -7,43 +8,45 @@ public partial class GeneratorController : NodeController
     [Export] public LineEdit LineEdit;
     void ShowGrabbedFocus(bool vis, Color color)
     {
-        Globals.Instace.CurrFocus = this;
+        Globals.Instance.CurrFocus = this;
         Dot.Visible = vis;
         Dot.SelfModulate = color;
     }
 
     void Pressed(InputEvent @event)
     {
-        if(@event.IsActionPressed("LMB") && Globals.Instace.CurrentToolState == Enums.ToolState.EditingNode)
+        if (@event.IsActionPressed("LMB") && Globals.Instance.CurrentToolState == Enums.ToolState.EditingNode)
         {
-            LineEdit le = (LineEdit)Globals.Instace.CurrFocus;
-            if(le is not null)
+            if (Globals.Instance.CurrFocus is LineEdit previousLe)
             {
-                GeneratorController ec = (GeneratorController)le.GetParent().GetParent();
-                ec.LostFocus();
+                if (previousLe.GetParent()?.GetParent() is GeneratorController ec)
+                {
+                    ec.LostFocus();
+                }
             }
-            le = LineEdit;
+
+            LineEdit le = LineEdit; 
             le.GrabFocus();
             le.CaretColumn = le.Text.Length;
             ((Control)le.GetParent()).Visible = true;
-            Globals.Instace.CurrFocus = le;
+            Globals.Instance.CurrFocus = le;
         }
         if(@event.IsActionPressed("LMB") &&
-        Globals.Instace.CurrentToolState == Enums.ToolState.MoveNode)
+        Globals.Instance.CurrentToolState == Enums.ToolState.MoveNode)
         {
-            Globals.Instace.CurrFocus = this;
+            Globals.Instance.CurrFocus = this;
         }
     }
 
     public override void _Input(InputEvent @event)
     {
         if(@event.IsActionPressed("AcceptTextEdit") 
-        && Globals.Instace.CurrentToolState == Enums.ToolState.EditingNode
-        && Globals.Instace.CurrFocus != null)
+        && Globals.Instance.CurrentToolState == Enums.ToolState.EditingNode
+        && Globals.Instance.CurrFocus != null)
         {
-            if(Globals.Instace.CurrFocus.GetParent().GetParent() != this)
+            if(Globals.Instance.CurrFocus.GetParent().GetParent() != this)
                 return;
-            LineEdit le = (LineEdit)Globals.Instace.CurrFocus;
+            LineEdit le = (LineEdit)Globals.Instance.CurrFocus;
             
             Utils.Print("yellow", le);
             ((CountInputController)le).SaveEdits(this);
@@ -51,18 +54,18 @@ public partial class GeneratorController : NodeController
         }
 
         if(Input.IsActionPressed("LMB") 
-        && Globals.Instace.CurrentToolState == Enums.ToolState.MoveNode
-        && Globals.Instace.CurrFocus == this)
+        && Globals.Instance.CurrentToolState == Enums.ToolState.MoveNode
+        && Globals.Instance.CurrFocus == this)
         {
             SelfModulate = new Color(1, 1, 1, 0.5f);
         }
 
         if(@event.IsActionReleased("LMB") 
-        && Globals.Instace.CurrentToolState == Enums.ToolState.MoveNode
-        && Globals.Instace.CurrFocus == this)
+        && Globals.Instance.CurrentToolState == Enums.ToolState.MoveNode
+        && Globals.Instance.CurrFocus == this)
         {
             SelfModulate = new Color(1,1,1,1);
-            Globals.Instace.CurrFocus = null;
+            Globals.Instance.CurrFocus = null;
         }
     }
 
@@ -73,17 +76,20 @@ public partial class GeneratorController : NodeController
 
     public void LostFocusPanel()
     {
-        Control item = Globals.Instace.CurrFocus;
+        Control item = Globals.Instance.CurrFocus;
         item.ReleaseFocus();
-        Globals.Instace.CurrFocus = null;
-        ((TextureRect)GetChild(4)).Visible = false;
+        Globals.Instance.CurrFocus = null;
+        if(GetChild(6).GetChildCount() <= 0)
+            QueueFree();
+        ((TextureRect)GetChild(5)).Visible = false;
+        SaveEdits();
     }
 
     public override void _PhysicsProcess(double delta)
     {
         if(Input.IsActionPressed("LMB") 
-        && Globals.Instace.CurrentToolState == Enums.ToolState.MoveNode
-        && Globals.Instace.CurrFocus == this)
+        && Globals.Instance.CurrentToolState == Enums.ToolState.MoveNode
+        && Globals.Instance.CurrFocus == this)
         {
             MoveNode();
         }
@@ -93,5 +99,18 @@ public partial class GeneratorController : NodeController
     {
         base.MoveNode();
     }
+
+    public void SaveEdits()
+    {
+        if(!((Control)GetChild(4)).Visible)
+            return;
+        Node countText = GetChild(4).GetChild(0);
+        
+        if(countText is CountInputController cic)
+        {
+            cic.SaveEdits(this);
+        }
+    }
+
 
 }

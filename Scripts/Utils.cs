@@ -1,4 +1,5 @@
 using System;
+using System.Formats.Tar;
 using System.Linq;
 using Godot;
 
@@ -21,28 +22,65 @@ public static class Utils
 
     public static int GetNextID()
     {
-        if(Globals.Instace.Goods.Count <= 0)
+        if(Globals.Instance.Goods.Count <= 0)
             return 0;
-        return Globals.Instace.Goods.Keys.Max() + 1;
+        return Globals.Instance.Goods.Keys.Max() + 1;
     }
 
     public static void AddToGoodsArray(int id, Goods goods)
     {
-        if(!Globals.Instace.Goods.ContainsKey(id))
-            Globals.Instace.Goods.Add(id, goods);
+        if(!Globals.Instance.Goods.ContainsKey(id))
+            Globals.Instance.Goods.Add(id, goods);
         //TBD
     }
 
     public static string FormatNumbers(float val)
     {
-        return string.Format("{0:0.00}",Math.Round(val, 3));
+        return string.Format("{0:0.000}",Math.Round(val, 3));
     }
     public static string FormatNumbers(double val)
     {
-        return string.Format("{0:0.00}",Math.Round(val, 3));
+        return string.Format("{0:0.000}",Math.Round(val, 3));
     }
     public static string FormatNumbers(int val)
     {
-        return string.Format("{0:0.00}",Math.Round((decimal)val, 3));
+        return string.Format("{0:0.000}",Math.Round((decimal)val, 3));
+    }
+
+    public static Vector2 GetEdgePoint(Panel panel, Panel targetPanel)
+    {
+        Vector2 target = targetPanel.Position + (targetPanel.Size/2);
+        Vector2 center = panel.Position + (panel.Size/2);
+        Vector2 dir = (target-center).Normalized();
+
+        float dx = panel.Size.X / 2;
+        float dy = panel.Size.Y / 2;
+
+        float px = center.X + dx * Mathf.Sign(dir.X);
+        float py = center.Y + dx * Mathf.Sign(dir.Y);
+
+        float tx = dx / Mathf.Abs(dir.X);
+        float ty = dy / Mathf.Abs(dir.Y);
+
+        if(tx < ty)
+            return center + dir * tx;
+        else
+            return center + dir * ty;
+
+    }
+
+    public static void DrawArrow(Line2D line, Vector2 tail, Vector2 tip)
+    {
+
+        float angleCorr = 0.4f;
+        float arrowSize = 10f;
+        float angle = (tail-tip).Angle();
+
+        Vector2 leftWing = tip + new Vector2(Mathf.Cos(angle + angleCorr), Mathf.Sin(angle + angleCorr)) * arrowSize;
+        Vector2 rightWing = tip + new Vector2(Mathf.Cos(angle - angleCorr), Mathf.Sin(angle - angleCorr)) * arrowSize;
+
+        line.AddPoint(leftWing);
+        line.AddPoint(rightWing);
+        line.AddPoint(tip);
     }
 }

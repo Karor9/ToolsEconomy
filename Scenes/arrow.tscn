@@ -1,9 +1,4 @@
-[gd_scene load_steps=2 format=3 uid="uid://ckud46p1aim7u"]
-
-[sub_resource type="Gradient" id="Gradient_5paiy"]
-interpolation_color_space = 2
-colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
+[gd_scene format=3 uid="uid://ckud46p1aim7u"]
 
 [node name="Arrow" type="Line2D"]
 width = 5.0
-gradient = SubResource("Gradient_5paiy")

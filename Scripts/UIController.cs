@@ -21,7 +21,7 @@ public partial class UIController : Control
 
     void SetState()
     {
-        CurrentState.Text = Globals.Instace.CurrentToolState.ToString();
+        CurrentState.Text = Globals.Instance.CurrentToolState.ToString();
     }
 
 
@@ -51,9 +51,9 @@ public partial class UIController : Control
 
     void SetToolState(int state)
     {
-        Globals.Instace.CurrentToolState = (ToolState)state;
-        Utils.Print("#008000", Globals.Instace.CurrentToolState.ToString());
-        GD.PrintRich("[color=#]"+ Globals.Instace.CurrentToolState);
+        Globals.Instance.CurrentToolState = (ToolState)state;
+        Utils.Print("#008000", Globals.Instance.CurrentToolState.ToString());
+        GD.PrintRich("[color=#]"+ Globals.Instance.CurrentToolState);
         CloseSecondary();
         SetState();
         LostFocusOnAction();
@@ -61,18 +61,29 @@ public partial class UIController : Control
 
     void LostFocusOnAction()
     {
-        if(Globals.Instace.CurrFocus is null)
+        if(Globals.Instance.CurrFocus is null)
             return;
-        LineEdit le = (LineEdit)Globals.Instace.CurrFocus; 
-        if(le.Name == "NameInput")
-            ((NameInputController)le).SaveEdits((ElementController)le.GetParent().GetParent());
-        else if(le.Name == "CountInput")
-            ((CountInputController)le).SaveEdits((ElementController)le.GetParent().GetParent());
+        if (Globals.Instance.CurrFocus is LineEdit le && Globals.Instance.CurrFocus is not GeneratorController)
+        {
+            if (le.Name == "NameInput" && le is NameInputController nameInput)
+            {
+                nameInput.SaveEdits((ElementController)le.GetParent().GetParent());
+            }
+            else if (le.Name == "CountInput" && le is CountInputController countInput)
+            {
+                countInput.SaveEdits((ElementController)le.GetParent().GetParent());
+            }
+        }
+        else if (Globals.Instance.CurrFocus is GeneratorController ge)
+        {
+            ge.LostFocusPanel();
+        }
+
     }
 
     void IsObstructed(bool state)
     {
-        Globals.Instace.Obstructed = state;
-        Utils.Print("pink", "Mouse obstructed:" + Globals.Instace.Obstructed);
+        Globals.Instance.Obstructed = state;
+        Utils.Print("pink", "Mouse obstructed:" + Globals.Instance.Obstructed);
     }
 }

@@ -10,7 +10,7 @@ public partial class InputController : LineEdit
         Utils.Print("yellow", Name);
         newValue = Text;
         int id = int.Parse(ec.Name);
-        g = Globals.Instace.Goods[id];
+        g = Globals.Instance.Goods[id];
         ec.LostFocus();
     }
 

@@ -17,6 +17,15 @@ script = ExtResource("1_pyrd2")
 Dot = NodePath("TextureRect")
 LineEdit = NodePath("ColorCount/CountInput")
 
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(5.77569e-07, 0.457114, 0.720748, 1)
+
 [node name="Name" type="RichTextLabel" parent="."]
 custom_minimum_size = Vector2(0, 25)
 layout_mode = 1
