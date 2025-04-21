@@ -47,7 +47,7 @@ public static class Utils
         return string.Format("{0:0.000}",Math.Round((decimal)val, 3));
     }
 
-    public static Vector2 GetEdgePoint(Panel panel, Panel targetPanel)
+    public static Vector2 GetEdgePoints(Panel panel, Panel targetPanel)
     {
         Vector2 target = targetPanel.Position + (targetPanel.Size/2);
         Vector2 center = panel.Position + (panel.Size/2);
@@ -66,8 +66,27 @@ public static class Utils
             return center + dir * tx;
         else
             return center + dir * ty;
-
     }
+
+    // public static Vector2 GetEdgePoint(Panel panel, Vector2 target)
+    // {
+    //     Vector2 center = panel.Position + (panel.Size/2);
+    //     Vector2 dir = (target-center).Normalized();
+
+    //     float dx = panel.Size.X / 2;
+    //     float dy = panel.Size.Y / 2;
+
+    //     float px = center.X + dx * Mathf.Sign(dir.X);
+    //     float py = center.Y + dx * Mathf.Sign(dir.Y);
+
+    //     float tx = dx / Mathf.Abs(dir.X);
+    //     float ty = dy / Mathf.Abs(dir.Y);
+
+    //     if(tx < ty)
+    //         return center + dir * tx;
+    //     else
+    //         return center + dir * ty;
+    // }
 
     public static void DrawArrow(Line2D line, Vector2 tail, Vector2 tip)
     {
@@ -83,4 +102,13 @@ public static class Utils
         line.AddPoint(rightWing);
         line.AddPoint(tip);
     }
+
+    public static void RedrawArrow(Panel p1, Panel p2, Line2D line2D)
+    {
+        Vector2 tail = GetEdgePoints(p1, p2);
+        Vector2 tip = GetEdgePoints(p2, p1);
+        line2D.Points = [tail, tip];
+        DrawArrow(line2D, tail, tip);
+    }
+
 }

@@ -4,7 +4,7 @@
 [ext_resource type="Script" uid="uid://cav3viplgcyq3" path="res://Scripts/CountInputController.cs" id="3_8mhug"]
 [ext_resource type="Texture2D" uid="uid://dkbkc87blrlyj" path="res://rysunek.svg" id="3_pkqr7"]
 
-[node name="Generator" type="Panel" node_paths=PackedStringArray("Dot", "LineEdit")]
+[node name="Generator" type="Panel" node_paths=PackedStringArray("Dot", "LineEdit", "LineParent")]
 self_modulate = Color(0.00492994, 0.228797, 1, 1)
 z_index = 100
 custom_minimum_size = Vector2(50, 50)
@@ -16,6 +16,7 @@ focus_mode = 2
 script = ExtResource("1_pyrd2")
 Dot = NodePath("TextureRect")
 LineEdit = NodePath("ColorCount/CountInput")
+LineParent = NodePath("Arrows")
 
 [node name="ColorRect" type="ColorRect" parent="."]
 layout_mode = 1

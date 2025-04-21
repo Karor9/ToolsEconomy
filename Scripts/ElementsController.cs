@@ -51,8 +51,8 @@ public partial class ElementsController : Control
         // Vector2 ep = nodeProp.Position + (nodeProp.Size/2);
 
         
-        Vector2 fp = Utils.GetEdgePoint(gc, nodeProp);
-        Vector2 ep = Utils.GetEdgePoint(nodeProp, gc);
+        Vector2 fp = Utils.GetEdgePoints(gc, nodeProp);
+        Vector2 ep = Utils.GetEdgePoints(nodeProp, gc);
 
         line.Points = [fp, ep];
         Utils.DrawArrow(line, fp, ep);

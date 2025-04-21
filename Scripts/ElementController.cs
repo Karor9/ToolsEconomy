@@ -47,8 +47,8 @@ public partial class ElementController : NodeController
             Line2D line2D = (Line2D)Globals.Instance.Arrow.Instantiate();
             // Vector2 fp = gc.Position + (gc.Size/2);
             // Vector2 ep = Position + (Size/2);
-            Vector2 fp = Utils.GetEdgePoint(gc, this);
-            Vector2 ep = Utils.GetEdgePoint(this, gc);
+            Vector2 fp = Utils.GetEdgePoints(gc, this);
+            Vector2 ep = Utils.GetEdgePoints(this, gc);
             line2D.Points = [fp, ep];
             Utils.DrawArrow(line2D, fp, ep);
             line2D.Name = Name;
@@ -95,7 +95,17 @@ public partial class ElementController : NodeController
         && Globals.Instance.CurrFocus == this)
         {
             SelfModulate = new Color(1,1,1,1);
-            Globals.Instance.CurrFocus = null;
+            if(Globals.Instance.CurrFocus is LineEdit le)
+            {
+                if(le.Name == "NameInput")
+                    ((NameInputController)le).SaveEdits(this);
+                else if(le.Name == "CountInput")
+                    ((CountInputController)le).SaveEdits(this);
+            } else
+            {
+                ReleaseFocus();
+                Globals.Instance.CurrFocus = null;
+            }
         }
     }
 
@@ -112,6 +122,19 @@ public partial class ElementController : NodeController
     public override void MoveNode()
     {
         base.MoveNode();
+        foreach (Node item in InLine)
+        {
+            Line2D line = (Line2D)item;
+            Panel element = (Panel)line.GetParent().GetParent();
+            Utils.RedrawArrow(element, this, line);
+        }
+        //TBD OUTLINE MOVEMENT WHEN CRAFTING IS DONE
+        // foreach (Node item in OutLine) 
+        // {
+        //     Line2D line = (Line2D)item;
+        //     Panel element = (Panel)line.GetParent().GetParent();
+        //     Utils.RedrawArrow(element, this, line);
+        // }
     }
 
     public override void LostFocus()

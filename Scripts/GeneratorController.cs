@@ -1,11 +1,13 @@
 using Godot;
 using System;
 using System.Diagnostics.Metrics;
+using System.Linq;
 
 public partial class GeneratorController : NodeController
 {
     [Export] TextureRect Dot;
     [Export] public LineEdit LineEdit;
+    [Export] Node LineParent;
     void ShowGrabbedFocus(bool vis, Color color)
     {
         Globals.Instance.CurrFocus = this;
@@ -65,7 +67,8 @@ public partial class GeneratorController : NodeController
         && Globals.Instance.CurrFocus == this)
         {
             SelfModulate = new Color(1,1,1,1);
-            Globals.Instance.CurrFocus = null;
+            // Globals.Instance.CurrFocus = null;
+            LostFocusPanel();
         }
     }
 
@@ -98,6 +101,13 @@ public partial class GeneratorController : NodeController
     public override void MoveNode()
     {
         base.MoveNode();
+        foreach (Node item in LineParent.GetChildren())
+        {
+            Line2D line = (Line2D)item;
+            int id = int.Parse(line.Name);
+            Panel element = (Panel)Globals.Instance.Goods[id].Element;
+            Utils.RedrawArrow(this, element, line);
+        }
     }
 
     public void SaveEdits()

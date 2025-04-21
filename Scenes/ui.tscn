@@ -14,12 +14,12 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_w371h")
-UIPanel = NodePath("MainUIPanel")
-SecondaryPanel = NodePath("UIAddSubpanel")
-CurrentState = NodePath("MainUIPanel/ColorRect/VSplitContainer/CurrentState/RichTextLabel")
+UIPanel = NodePath("CanvasLayer/MainUIPanel")
+SecondaryPanel = NodePath("CanvasLayer/UIAddSubpanel")
+CurrentState = NodePath("CanvasLayer/MainUIPanel/ColorRect/VSplitContainer/CurrentState/RichTextLabel")
 openButton = NodePath("OpenPanel")
 closeButton = NodePath("ClosePanel")
-CategoryButtons = [NodePath("UIAddSubpanel/ColorRect/Adding"), NodePath("UIAddSubpanel/ColorRect/Editing")]
+CategoryButtons = [NodePath("CanvasLayer/UIAddSubpanel/ColorRect/Adding"), NodePath("CanvasLayer/UIAddSubpanel/ColorRect/Editing")]
 
 [node name="OpenPanel" type="Button" parent="."]
 layout_mode = 1
@@ -70,15 +70,17 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 1
 
-[node name="MainUIPanel" type="Panel" parent="."]
-layout_mode = 1
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="MainUIPanel" type="Panel" parent="CanvasLayer"]
+top_level = true
 anchors_preset = -1
 anchor_right = 0.08
 anchor_bottom = 1.0
 offset_top = 6.10352e-05
 offset_bottom = 6.10352e-05
 
-[node name="ColorRect" type="ColorRect" parent="MainUIPanel"]
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer/MainUIPanel"]
 z_index = 4096
 layout_mode = 1
 anchors_preset = 15
@@ -89,7 +91,7 @@ grow_vertical = 2
 mouse_filter = 2
 color = Color(0.237539, 0.237539, 0.237539, 1)
 
-[node name="VSplitContainer" type="VBoxContainer" parent="MainUIPanel/ColorRect"]
+[node name="VSplitContainer" type="VBoxContainer" parent="CanvasLayer/MainUIPanel/ColorRect"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -97,11 +99,11 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="CurrentState" type="Panel" parent="MainUIPanel/ColorRect/VSplitContainer"]
+[node name="CurrentState" type="Panel" parent="CanvasLayer/MainUIPanel/ColorRect/VSplitContainer"]
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 
-[node name="RichTextLabel" type="RichTextLabel" parent="MainUIPanel/ColorRect/VSplitContainer/CurrentState"]
+[node name="RichTextLabel" type="RichTextLabel" parent="CanvasLayer/MainUIPanel/ColorRect/VSplitContainer/CurrentState"]
 layout_mode = 1
 anchors_preset = -1
 anchor_right = 10.0
@@ -115,14 +117,14 @@ scroll_active = false
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Button" type="Button" parent="MainUIPanel/ColorRect/VSplitContainer"]
+[node name="Button" type="Button" parent="CanvasLayer/MainUIPanel/ColorRect/VSplitContainer"]
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 focus_mode = 0
 mouse_filter = 1
 theme = ExtResource("2_nxvpl")
 
-[node name="RichTextLabel" type="RichTextLabel" parent="MainUIPanel/ColorRect/VSplitContainer/Button"]
+[node name="RichTextLabel" type="RichTextLabel" parent="CanvasLayer/MainUIPanel/ColorRect/VSplitContainer/Button"]
 layout_mode = 1
 anchors_preset = -1
 anchor_right = 10.0
@@ -135,7 +137,7 @@ text = "Add"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="RichTextLabel2" type="RichTextLabel" parent="MainUIPanel/ColorRect/VSplitContainer/Button"]
+[node name="RichTextLabel2" type="RichTextLabel" parent="CanvasLayer/MainUIPanel/ColorRect/VSplitContainer/Button"]
 layout_mode = 1
 anchors_preset = -1
 anchor_right = 10.0
@@ -150,14 +152,14 @@ text = ">"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Button2" type="Button" parent="MainUIPanel/ColorRect/VSplitContainer"]
+[node name="Button2" type="Button" parent="CanvasLayer/MainUIPanel/ColorRect/VSplitContainer"]
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 focus_mode = 0
 mouse_filter = 1
 theme = ExtResource("2_nxvpl")
 
-[node name="RichTextLabel" type="RichTextLabel" parent="MainUIPanel/ColorRect/VSplitContainer/Button2"]
+[node name="RichTextLabel" type="RichTextLabel" parent="CanvasLayer/MainUIPanel/ColorRect/VSplitContainer/Button2"]
 layout_mode = 1
 anchors_preset = -1
 anchor_right = 10.0
@@ -170,7 +172,7 @@ text = "Edit"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="RichTextLabel2" type="RichTextLabel" parent="MainUIPanel/ColorRect/VSplitContainer/Button2"]
+[node name="RichTextLabel2" type="RichTextLabel" parent="CanvasLayer/MainUIPanel/ColorRect/VSplitContainer/Button2"]
 layout_mode = 1
 anchors_preset = -1
 anchor_right = 10.0
@@ -185,14 +187,14 @@ text = ">"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Move" type="Button" parent="MainUIPanel/ColorRect/VSplitContainer"]
+[node name="Move" type="Button" parent="CanvasLayer/MainUIPanel/ColorRect/VSplitContainer"]
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 focus_mode = 0
 mouse_filter = 1
 theme = ExtResource("2_nxvpl")
 
-[node name="RichTextLabel" type="RichTextLabel" parent="MainUIPanel/ColorRect/VSplitContainer/Move"]
+[node name="RichTextLabel" type="RichTextLabel" parent="CanvasLayer/MainUIPanel/ColorRect/VSplitContainer/Move"]
 layout_mode = 1
 anchors_preset = -1
 anchor_right = 10.0
@@ -205,7 +207,7 @@ text = "Move"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="RichTextLabel2" type="RichTextLabel" parent="MainUIPanel/ColorRect/VSplitContainer/Move"]
+[node name="RichTextLabel2" type="RichTextLabel" parent="CanvasLayer/MainUIPanel/ColorRect/VSplitContainer/Move"]
 visible = false
 layout_mode = 1
 anchors_preset = -1
@@ -221,10 +223,10 @@ text = ">"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="UIAddSubpanel" type="Panel" parent="."]
+[node name="UIAddSubpanel" type="Panel" parent="CanvasLayer"]
 visible = false
+top_level = true
 z_index = 4096
-layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.08
 anchor_right = 0.16
@@ -232,7 +234,7 @@ anchor_bottom = 1.0
 offset_top = 6.10352e-05
 offset_bottom = 6.10352e-05
 
-[node name="ColorRect" type="ColorRect" parent="UIAddSubpanel"]
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer/UIAddSubpanel"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -242,7 +244,7 @@ grow_vertical = 2
 mouse_filter = 1
 color = Color(0.239216, 0.239216, 0.239216, 0.470588)
 
-[node name="Adding" type="VBoxContainer" parent="UIAddSubpanel/ColorRect"]
+[node name="Adding" type="VBoxContainer" parent="CanvasLayer/UIAddSubpanel/ColorRect"]
 visible = false
 layout_mode = 1
 anchors_preset = 15
@@ -251,14 +253,14 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Button" type="Button" parent="UIAddSubpanel/ColorRect/Adding"]
+[node name="Button" type="Button" parent="CanvasLayer/UIAddSubpanel/ColorRect/Adding"]
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 focus_mode = 0
 mouse_filter = 1
 theme = ExtResource("2_nxvpl")
 
-[node name="RichTextLabel" type="RichTextLabel" parent="UIAddSubpanel/ColorRect/Adding/Button"]
+[node name="RichTextLabel" type="RichTextLabel" parent="CanvasLayer/UIAddSubpanel/ColorRect/Adding/Button"]
 layout_mode = 1
 anchors_preset = -1
 anchor_right = 10.0
@@ -271,14 +273,14 @@ text = "Add Node"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Button2" type="Button" parent="UIAddSubpanel/ColorRect/Adding"]
+[node name="Button2" type="Button" parent="CanvasLayer/UIAddSubpanel/ColorRect/Adding"]
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 focus_mode = 0
 mouse_filter = 1
 theme = ExtResource("2_nxvpl")
 
-[node name="RichTextLabel" type="RichTextLabel" parent="UIAddSubpanel/ColorRect/Adding/Button2"]
+[node name="RichTextLabel" type="RichTextLabel" parent="CanvasLayer/UIAddSubpanel/ColorRect/Adding/Button2"]
 layout_mode = 1
 anchors_preset = -1
 anchor_right = 10.0
@@ -291,7 +293,7 @@ text = "Add Generator"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Editing" type="VBoxContainer" parent="UIAddSubpanel/ColorRect"]
+[node name="Editing" type="VBoxContainer" parent="CanvasLayer/UIAddSubpanel/ColorRect"]
 visible = false
 layout_mode = 1
 anchors_preset = 15
@@ -300,14 +302,14 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Button" type="Button" parent="UIAddSubpanel/ColorRect/Editing"]
+[node name="Button" type="Button" parent="CanvasLayer/UIAddSubpanel/ColorRect/Editing"]
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 focus_mode = 0
 mouse_filter = 1
 theme = ExtResource("2_nxvpl")
 
-[node name="RichTextLabel" type="RichTextLabel" parent="UIAddSubpanel/ColorRect/Editing/Button"]
+[node name="RichTextLabel" type="RichTextLabel" parent="CanvasLayer/UIAddSubpanel/ColorRect/Editing/Button"]
 layout_mode = 1
 anchors_preset = -1
 anchor_right = 10.0
@@ -320,15 +322,18 @@ text = "Edit Node"
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="Camera2D" type="Camera2D" parent="."]
+anchor_mode = 0
+
 [connection signal="pressed" from="OpenPanel" to="." method="OpenClose" binds= [true]]
 [connection signal="pressed" from="ClosePanel" to="." method="OpenClose" binds= [false]]
-[connection signal="mouse_entered" from="MainUIPanel" to="." method="IsObstructed" binds= [true]]
-[connection signal="mouse_exited" from="MainUIPanel" to="." method="IsObstructed" binds= [false]]
-[connection signal="pressed" from="MainUIPanel/ColorRect/VSplitContainer/Button" to="." method="OpenSecondary" binds= [0]]
-[connection signal="pressed" from="MainUIPanel/ColorRect/VSplitContainer/Button2" to="." method="OpenSecondary" binds= [1]]
-[connection signal="pressed" from="MainUIPanel/ColorRect/VSplitContainer/Move" to="." method="SetToolState" binds= [4]]
-[connection signal="mouse_entered" from="UIAddSubpanel" to="." method="IsObstructed" binds= [true]]
-[connection signal="mouse_exited" from="UIAddSubpanel" to="." method="IsObstructed" binds= [false]]
-[connection signal="pressed" from="UIAddSubpanel/ColorRect/Adding/Button" to="." method="SetToolState" binds= [1]]
-[connection signal="pressed" from="UIAddSubpanel/ColorRect/Adding/Button2" to="." method="SetToolState" binds= [6]]
-[connection signal="pressed" from="UIAddSubpanel/ColorRect/Editing/Button" to="." method="SetToolState" binds= [2]]
+[connection signal="mouse_entered" from="CanvasLayer/MainUIPanel" to="." method="IsObstructed" binds= [true]]
+[connection signal="mouse_exited" from="CanvasLayer/MainUIPanel" to="." method="IsObstructed" binds= [false]]
+[connection signal="pressed" from="CanvasLayer/MainUIPanel/ColorRect/VSplitContainer/Button" to="." method="OpenSecondary" binds= [0]]
+[connection signal="pressed" from="CanvasLayer/MainUIPanel/ColorRect/VSplitContainer/Button2" to="." method="OpenSecondary" binds= [1]]
+[connection signal="pressed" from="CanvasLayer/MainUIPanel/ColorRect/VSplitContainer/Move" to="." method="SetToolState" binds= [4]]
+[connection signal="mouse_entered" from="CanvasLayer/UIAddSubpanel" to="." method="IsObstructed" binds= [true]]
+[connection signal="mouse_exited" from="CanvasLayer/UIAddSubpanel" to="." method="IsObstructed" binds= [false]]
+[connection signal="pressed" from="CanvasLayer/UIAddSubpanel/ColorRect/Adding/Button" to="." method="SetToolState" binds= [1]]
+[connection signal="pressed" from="CanvasLayer/UIAddSubpanel/ColorRect/Adding/Button2" to="." method="SetToolState" binds= [6]]
+[connection signal="pressed" from="CanvasLayer/UIAddSubpanel/ColorRect/Editing/Button" to="." method="SetToolState" binds= [2]]
