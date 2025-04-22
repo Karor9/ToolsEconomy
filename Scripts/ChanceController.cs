@@ -18,6 +18,11 @@ public partial class ChanceController : Panel
         }
     }
 
+    public double GetChance()
+    {
+        return double.Parse(label.Text.Replace("%", ""))/100d;
+    }
+
     public void Save()
     {
         label.Text = Utils.FormatPercentage(input.Value);
@@ -58,6 +63,12 @@ public partial class ChanceController : Panel
             le.Select(0, le.Text.Length - 1);
         }
     }
+
+    public override void _Ready()
+    {
+        label.Text = Utils.FormatPercentage(input.Value);
+    }
+
 
 
 }

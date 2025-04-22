@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.ComponentModel;
 
 public partial class NameInputController : InputController
 {
@@ -11,11 +12,21 @@ public partial class NameInputController : InputController
         ((RichTextLabel)ec.GetChild(1)).Text = g.Name;
     }
 
+    public override void SaveEdits(GeneratorController ec)
+    {
+        base.SaveEdits(ec);
+    }
+
+
     public void OnLeaveFocusText()
     {
         richTextLabel.Text = Text;
         // Visible = false;
-        SaveEdits((ElementController)GetParent().GetParent());
+        Node node = GetParent().GetParent();
+        if(node is ElementController ec)
+            SaveEdits(ec);
+        else if(node is GeneratorController gc)
+            SaveEdits(gc);
     }
     
     public void OnEnterFocus()

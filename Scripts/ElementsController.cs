@@ -31,6 +31,25 @@ public partial class ElementsController : Control
                     break;
             }
         }
+        if(@event.IsActionPressed("Spawn"))
+        {
+            foreach (Node item in ParentGenerator.GetChildren())
+            {
+                Node node = item.GetChild(6);
+                GeneratorController gc = (GeneratorController)item;
+                if(node.GetChildCount() <= 0)
+                    continue;
+                foreach (Node item2 in node.GetChildren())
+                {
+                    Line2D line2D = (Line2D)item2;
+                    Node dotParent = line2D.GetChild(0);
+                    Dot dot = (Dot)Globals.Instance.Dot.Instantiate();
+                    dot.Init(line2D.Points[0], line2D.Points[1], line2D, gc.GetValueToAdd());
+                    dotParent.AddChild(dot);
+                }
+
+            }
+        }
     }
 
     void IsObstructed(bool state)

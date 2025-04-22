@@ -113,7 +113,7 @@ public static class Utils
         Vector2 tail = GetEdgePoints(p1, p2);
         Vector2 tip = GetEdgePoints(p2, p1);
         line2D.Points = [tail, tip];
-        ChanceController node = (ChanceController)line2D.GetChild(0);
+        ChanceController node = (ChanceController)line2D.GetChild(1);
         CalculateChangeBlockPos(line2D, node);
         DrawArrow(line2D, tail, tip);
     }

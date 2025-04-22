@@ -9,6 +9,9 @@ public partial class ElementController : NodeController
     [Export] public Array<Line2D> InLine;
     [Export] public Array<Line2D> OutLine;
 
+    [Export] RichTextLabel GoodsName;
+    [Export] RichTextLabel GoodsCount;
+
 
     void Pressed(InputEvent @event, int id)
     {
@@ -153,6 +156,13 @@ public partial class ElementController : NodeController
     {
         Globals.Instance.Obstructed = obs;
         Utils.Print("pink", "Mouse obstructed:" + Globals.Instance.Obstructed);
+    }
+
+    public void UpdateText()
+    {
+        int id = int.Parse(Name);
+        GoodsName.Text = Globals.Instance.Goods[id].Name;
+        GoodsCount.Text = Utils.FormatNumbers(Globals.Instance.Goods[id].Count);
     }
 
 }

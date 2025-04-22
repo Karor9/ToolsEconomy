@@ -19,4 +19,12 @@ public partial class Goods : Resource
     {
         return Name + " " + Count;
     }
+
+    public void AddValue(double add)
+    {
+        Count += add;
+        ElementController ec = (ElementController)Element;
+        ec.UpdateText();
+    }
+
 }

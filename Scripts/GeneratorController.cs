@@ -6,7 +6,8 @@ using System.Linq;
 public partial class GeneratorController : NodeController
 {
     [Export] TextureRect Dot;
-    [Export] public LineEdit LineEdit;
+    [Export] Control[] LineEdits;
+    [Export] RichTextLabel CountText;
     [Export] Node LineParent;
     void ShowGrabbedFocus(bool vis, Color color)
     {
@@ -15,24 +16,45 @@ public partial class GeneratorController : NodeController
         Dot.SelfModulate = color;
     }
 
-    void Pressed(InputEvent @event)
+    void Pressed(InputEvent @event, int id)
     {
         if (@event.IsActionPressed("LMB") && Globals.Instance.CurrentToolState == Enums.ToolState.EditingNode)
         {
-            if (Globals.Instance.CurrFocus is LineEdit previousLe)
+            if (Globals.Instance.CurrFocus is LineEdit le)
             {
-                if (previousLe.GetParent()?.GetParent() is GeneratorController ec)
+                var parent = le.GetParent();
+                if (parent != null && parent.GetParent() is GeneratorController ec)
                 {
                     ec.LostFocus();
                 }
             }
 
-            LineEdit le = LineEdit; 
-            le.GrabFocus();
-            le.CaretColumn = le.Text.Length;
-            ((Control)le.GetParent()).Visible = true;
-            Globals.Instance.CurrFocus = le;
+            LineEdits[id].Visible = true;
+
+            if (LineEdits[id].GetChild(0) is LineEdit newLe)
+            {
+                newLe.GrabFocus();
+                newLe.CaretColumn = newLe.Text.Length;
+                Globals.Instance.CurrFocus = newLe;
+            }
         }
+
+        // if (@event.IsActionPressed("LMB") && Globals.Instance.CurrentToolState == Enums.ToolState.EditingNode)
+        // {
+        //     if (Globals.Instance.CurrFocus is LineEdit previousLe)
+        //     {
+        //         if (previousLe.GetParent()?.GetParent() is GeneratorController ec)
+        //         {
+        //             ec.LostFocus();
+        //         }
+        //     }
+
+        //     LineEdit le = LineEdit; 
+        //     le.GrabFocus();
+        //     le.CaretColumn = le.Text.Length;
+        //     ((Control)le.GetParent()).Visible = true;
+        //     Globals.Instance.CurrFocus = le;
+        // }
         if(@event.IsActionPressed("LMB") &&
         Globals.Instance.CurrentToolState == Enums.ToolState.MoveNode)
         {
@@ -50,8 +72,10 @@ public partial class GeneratorController : NodeController
                 return;
             LineEdit le = (LineEdit)Globals.Instance.CurrFocus;
             
-            Utils.Print("yellow", le);
-            ((CountInputController)le).SaveEdits(this);
+            if(le.Name == "NameInput")
+                ((NameInputController)le).SaveEdits(this);
+            else if(le.Name == "CountInput")
+                ((CountInputController)le).SaveEdits(this);
 
         }
 
@@ -120,6 +144,11 @@ public partial class GeneratorController : NodeController
         {
             cic.SaveEdits(this);
         }
+    }
+
+    public double GetValueToAdd()
+    {
+        return double.Parse(CountText.Text);
     }
 
 

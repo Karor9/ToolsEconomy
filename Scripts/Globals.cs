@@ -1,3 +1,4 @@
+using System;
 using Godot;
 using Godot.Collections;
 using static Enums;
@@ -19,5 +20,4 @@ public partial class Globals : Node
     {
         Instance = this;
     }
-
 }
