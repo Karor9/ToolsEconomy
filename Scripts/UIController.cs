@@ -77,6 +77,9 @@ public partial class UIController : Control
         else if (Globals.Instance.CurrFocus is GeneratorController ge)
         {
             ge.LostFocusPanel();
+        } else if(Globals.Instance.CurrFocus is ChanceController sb)
+        {
+            sb.Save();
         }
 
     }
