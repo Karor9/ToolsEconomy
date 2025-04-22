@@ -13,6 +13,8 @@ public partial class Globals : Node
 
     [ExportGroup("Scenes")]
     [Export] public PackedScene Arrow;
+    [Export] public PackedScene ChangeBlock;
+    [Export] public PackedScene Dot;
     public override void _Ready()
     {
         Instance = this;

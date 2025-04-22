@@ -1,6 +1,12 @@
-[gd_resource type="Theme" load_steps=2 format=3 uid="uid://cqjbmnt6in0d5"]
+[gd_resource type="Theme" load_steps=5 format=3 uid="uid://cqjbmnt6in0d5"]
 
 [ext_resource type="FontFile" uid="uid://b5ut3plp75jd7" path="res://Fonts/Roboto-Regular.ttf" id="1_ko64t"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ko64t"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_q4vyd"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_2ccob"]
 
 [resource]
 Button/colors/font_color = Color(0.875, 0.875, 0.875, 1)
@@ -10,10 +16,13 @@ Button/font_sizes/font_size = 160
 Button/fonts/font = ExtResource("1_ko64t")
 LineEdit/constants/caret_width = 10
 LineEdit/constants/outline_size = 30
-LineEdit/font_sizes/font_size = 180
+LineEdit/font_sizes/font_size = 160
 LineEdit/fonts/font = ExtResource("1_ko64t")
 RichTextLabel/colors/font_outline_color = Color(0, 0, 0, 1)
 RichTextLabel/constants/outline_size = 30
 RichTextLabel/font_sizes/normal_font_size = 160
 RichTextLabel/fonts/normal_font = ExtResource("1_ko64t")
+SpinBox/styles/down_background = SubResource("StyleBoxEmpty_ko64t")
+SpinBox/styles/field_and_buttons_separator = SubResource("StyleBoxEmpty_q4vyd")
+SpinBox/styles/up_background = SubResource("StyleBoxEmpty_2ccob")
 VBoxContainer/constants/separation = 0

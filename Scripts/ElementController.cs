@@ -9,6 +9,7 @@ public partial class ElementController : NodeController
     [Export] public Array<Line2D> InLine;
     [Export] public Array<Line2D> OutLine;
 
+
     void Pressed(InputEvent @event, int id)
     {
         if(@event.IsActionPressed("LMB") && Globals.Instance.CurrentToolState == Enums.ToolState.EditingNode)
@@ -50,6 +51,9 @@ public partial class ElementController : NodeController
             Vector2 fp = Utils.GetEdgePoints(gc, this);
             Vector2 ep = Utils.GetEdgePoints(this, gc);
             line2D.Points = [fp, ep];
+            
+
+            Utils.SpawnChangeBlock(line2D);
             Utils.DrawArrow(line2D, fp, ep);
             line2D.Name = Name;
 
@@ -65,6 +69,8 @@ public partial class ElementController : NodeController
             //TBD
         }
     }
+
+
 
     public override void _Input(InputEvent @event)
     {

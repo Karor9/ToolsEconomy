@@ -1,0 +1,101 @@
+[gd_scene load_steps=2 format=3 uid="uid://ttje7golha0"]
+
+[ext_resource type="Script" uid="uid://b3xbc5h0hk1y8" path="res://Scripts/ChanceController.cs" id="1_jg2fd"]
+
+[node name="ChanceNode" type="Panel" node_paths=PackedStringArray("button", "label", "input")]
+anchors_preset = -1
+anchor_top = 0.039
+anchor_bottom = 0.039
+offset_left = 136.0
+offset_top = 0.92
+offset_right = 176.0
+offset_bottom = 40.92
+rotation = 0.785398
+script = ExtResource("1_jg2fd")
+button = NodePath("Button")
+label = NodePath("ColorRect/Percentage")
+input = NodePath("Percentage")
+
+[node name="ColorRect2" type="ColorRect" parent="."]
+layout_mode = 0
+offset_left = -1.0
+offset_top = -1.0
+offset_right = 41.0
+offset_bottom = 41.0
+mouse_filter = 1
+color = Color(0, 0, 0, 1)
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+color = Color(0.760784, 0.207843, 0.207843, 1)
+
+[node name="Percentage" type="RichTextLabel" parent="ColorRect"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.513
+anchor_top = 0.513
+anchor_right = 0.513
+anchor_bottom = 0.513
+offset_left = -40.52
+offset_top = -0.52
+offset_right = 539.48
+offset_bottom = 579.48
+grow_horizontal = 2
+grow_vertical = 2
+rotation = -0.785398
+scale = Vector2(0.1, 0.1)
+mouse_filter = 1
+text = "100"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Button" type="Button" parent="."]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+focus_mode = 0
+mouse_filter = 1
+
+[node name="Percentage" type="SpinBox" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -27.0711
+offset_top = 12.5269
+offset_right = 566.929
+offset_bottom = 231.527
+grow_horizontal = 2
+grow_vertical = 2
+rotation = -0.785398
+scale = Vector2(0.1, 0.1)
+mouse_filter = 1
+step = 0.001
+alignment = 1
+update_on_text_changed = true
+suffix = "%"
+
+[connection signal="mouse_entered" from="ColorRect2" to="." method="IsObstructed" binds= [true]]
+[connection signal="mouse_exited" from="ColorRect2" to="." method="IsObstructed" binds= [false]]
+[connection signal="pressed" from="Button" to="." method="OnClick"]
+[connection signal="mouse_entered" from="Percentage" to="." method="IsObstructed" binds= [true]]
+[connection signal="mouse_exited" from="Percentage" to="." method="IsObstructed" binds= [false]]

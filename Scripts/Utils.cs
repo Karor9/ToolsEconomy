@@ -47,6 +47,11 @@ public static class Utils
         return string.Format("{0:0.000}",Math.Round((decimal)val, 3));
     }
 
+    public static string FormatPercentage(double val)
+    {
+        return string.Format("{0:0.00}%", Math.Round(val, 2));
+    }
+
     public static Vector2 GetEdgePoints(Panel panel, Panel targetPanel)
     {
         Vector2 target = targetPanel.Position + (targetPanel.Size/2);
@@ -108,7 +113,22 @@ public static class Utils
         Vector2 tail = GetEdgePoints(p1, p2);
         Vector2 tip = GetEdgePoints(p2, p1);
         line2D.Points = [tail, tip];
+        ChanceController node = (ChanceController)line2D.GetChild(0);
+        CalculateChangeBlockPos(line2D, node);
         DrawArrow(line2D, tail, tip);
+    }
+
+    public static void SpawnChangeBlock(Line2D line)
+    {
+        ChanceController node = (ChanceController)Globals.Instance.ChangeBlock.Instantiate();
+        CalculateChangeBlockPos(line, node);
+        line.AddChild(node);
+    }
+
+    static void CalculateChangeBlockPos(Line2D line, ChanceController node)
+    {
+        node.Position = (line.Points[0] + line.Points[1]) / 2;
+        node.Position = new Vector2(node.Position.X, node.Position.Y-node.Size.Y/2);
     }
 
 }
