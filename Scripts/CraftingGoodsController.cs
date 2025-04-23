@@ -43,4 +43,24 @@ public partial class CraftingGoodsController : Panel
         Count.GetLineEdit().Editable = false;
     }
 
+    void OnValueChange(float value)
+    {
+        requiredCount = value;
+    }
+
+    public double GetRequired()
+    {
+        return requiredCount;
+    }
+
+    public int GetGoodsId()
+    {
+        return id;
+    }
+
+    public bool IsInRecipe()
+    {
+        return Nay.Visible;
+    }
+
 }

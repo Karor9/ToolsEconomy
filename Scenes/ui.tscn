@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://dbkd43hcka6mm"]
+[gd_scene load_steps=8 format=3 uid="uid://dbkd43hcka6mm"]
 
 [ext_resource type="Script" uid="uid://cgs64qdjrn5d3" path="res://Scripts/UIController.cs" id="1_w371h"]
 [ext_resource type="Theme" uid="uid://cyu8db8yf0kqr" path="res://Themes/UIButtonTheme.tres" id="2_nxvpl"]
@@ -6,8 +6,9 @@
 [ext_resource type="PackedScene" uid="uid://cvbwir3ylwhoq" path="res://Scenes/element.tscn" id="3_hfhsn"]
 [ext_resource type="PackedScene" uid="uid://bwhc82i0w0osx" path="res://Scenes/generator.tscn" id="4_qwshj"]
 [ext_resource type="PackedScene" uid="uid://cx7077130b6uu" path="res://Scenes/Crafting.tscn" id="5_48q88"]
+[ext_resource type="Script" uid="uid://ch1wh85racwdo" path="res://Scripts/SaveRecipe.cs" id="7_xjg7p"]
 
-[node name="Control" type="Control" node_paths=PackedStringArray("UIPanel", "SecondaryPanel", "CurrentState", "Camera", "CraftingInputContainer", "openButton", "closeButton", "CategoryButtons")]
+[node name="Control" type="Control" node_paths=PackedStringArray("UIPanel", "SecondaryPanel", "CurrentState", "Camera", "CraftingInputContainer", "CraftingParent", "openButton", "closeButton", "CategoryButtons")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -20,6 +21,7 @@ SecondaryPanel = NodePath("CanvasLayer/UIAddSubpanel")
 CurrentState = NodePath("CanvasLayer/MainUIPanel/ColorRect/VSplitContainer/CurrentState/RichTextLabel")
 Camera = NodePath("Camera2D")
 CraftingInputContainer = NodePath("CanvasLayer/CraftingPanel/ScrollContainer/VBoxContainer")
+CraftingParent = NodePath("ElementsContainer/CraftingContainer")
 openButton = NodePath("OpenPanel")
 closeButton = NodePath("ClosePanel")
 CategoryButtons = [NodePath("CanvasLayer/UIAddSubpanel/ColorRect/Adding"), NodePath("CanvasLayer/UIAddSubpanel/ColorRect/Editing")]
@@ -374,13 +376,16 @@ custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 mouse_filter = 1
 
-[node name="Button" type="Button" parent="CanvasLayer/CraftingPanel/ScrollContainer/VBoxContainer/MainPanel"]
+[node name="Button" type="Button" parent="CanvasLayer/CraftingPanel/ScrollContainer/VBoxContainer/MainPanel" node_paths=PackedStringArray("GoodsContainer")]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.7
 anchor_right = 1.0
 anchor_bottom = 1.0
+focus_mode = 0
 mouse_filter = 1
+script = ExtResource("7_xjg7p")
+GoodsContainer = NodePath("../..")
 
 [node name="RichTextLabel" type="RichTextLabel" parent="CanvasLayer/CraftingPanel/ScrollContainer/VBoxContainer/MainPanel/Button"]
 layout_mode = 1
@@ -395,6 +400,19 @@ theme_override_colors/default_color = Color(0, 0.317647, 0, 1)
 theme_override_constants/outline_size = 40
 theme_override_font_sizes/normal_font_size = 400
 text = "Save"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="RichTextLabel" type="RichTextLabel" parent="CanvasLayer/CraftingPanel/ScrollContainer/VBoxContainer/MainPanel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 7.0
+anchor_bottom = 10.0
+offset_right = 40.0
+offset_bottom = 40.0
+scale = Vector2(0.1, 0.1)
+theme_override_font_sizes/normal_font_size = 400
+text = "Input"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -417,3 +435,4 @@ anchor_mode = 0
 [connection signal="pressed" from="CanvasLayer/UIAddSubpanel/ColorRect/Editing/Button" to="." method="SetToolState" binds= [2]]
 [connection signal="mouse_entered" from="CanvasLayer/CraftingPanel" to="." method="IsObstructed" binds= [true]]
 [connection signal="mouse_exited" from="CanvasLayer/CraftingPanel" to="." method="IsObstructed" binds= [false]]
+[connection signal="pressed" from="CanvasLayer/CraftingPanel/ScrollContainer/VBoxContainer/MainPanel/Button" to="CanvasLayer/CraftingPanel/ScrollContainer/VBoxContainer/MainPanel/Button" method="OnClick"]

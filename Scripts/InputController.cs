@@ -7,7 +7,6 @@ public partial class InputController : LineEdit
     protected string newValue;
     public virtual void SaveEdits(ElementController ec)
     {
-        Utils.Print("yellow", Name);
         newValue = Text;
         int id = int.Parse(ec.Name);
         g = Globals.Instance.Goods[id];
@@ -16,7 +15,6 @@ public partial class InputController : LineEdit
 
     public virtual void SaveEdits(GeneratorController ec)
     {
-        Utils.Print("yellow", Name);
         newValue = Text;
         ec.LostFocus();
     }

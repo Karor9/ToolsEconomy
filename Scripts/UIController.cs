@@ -1,3 +1,4 @@
+using System;
 using Godot;
 using Godot.Collections;
 using static Enums;
@@ -10,6 +11,7 @@ public partial class UIController : Control
     [Export] RichTextLabel CurrentState;
     [Export] Camera2D Camera;
     [Export] VBoxContainer CraftingInputContainer;
+    [Export] Node CraftingParent;
 
     [ExportGroup("OpenCloseButtons")]
     [Export] Button openButton;
@@ -56,12 +58,25 @@ public partial class UIController : Control
     void SetToolState(int state)
     {
         Globals.Instance.CurrentToolState = (ToolState)state;
+        if(Globals.Instance.CurrentToolState == ToolState.MoveNode)
+            ChangeStateCrafting(false);
+        else
+            ChangeStateCrafting(true);
         Utils.Print("#008000", Globals.Instance.CurrentToolState.ToString());
-        GD.PrintRich("[color=#]"+ Globals.Instance.CurrentToolState);
         CloseSecondary();
         SetState();
         LostFocusOnAction();
     }
+
+    private void ChangeStateCrafting(bool v)
+    {
+        foreach (Control item in CraftingParent.GetChildren())
+        {
+            CraftingController cc = (CraftingController)item;
+            cc.MoveButtonSetup(v);
+        }
+    }
+
 
     void LostFocusOnAction()
     {

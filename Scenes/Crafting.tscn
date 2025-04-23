@@ -2,13 +2,18 @@
 
 [ext_resource type="Script" uid="uid://sdp1dxl3unau" path="res://Scripts/CraftingController.cs" id="1_14og4"]
 
-[node name="Panel" type="Panel" node_paths=PackedStringArray("InLine", "OutLine")]
+[node name="Panel" type="Panel" node_paths=PackedStringArray("InLine", "OutLine", "SetRecipe", "ShowRecipe", "ArrowIn", "ArrowOut")]
 custom_minimum_size = Vector2(50, 50)
 offset_right = 150.0
 offset_bottom = 50.0
+mouse_filter = 1
 script = ExtResource("1_14og4")
 InLine = []
 OutLine = []
+SetRecipe = NodePath("SetRecipe")
+ShowRecipe = NodePath("CheckRecipe")
+ArrowIn = NodePath("ArrowsIn")
+ArrowOut = NodePath("ArrowsOut")
 
 [node name="ColorRect" type="ColorRect" parent="."]
 layout_mode = 1
@@ -17,6 +22,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 1
 color = Color(0.588235, 0.294118, 0, 1)
 
 [node name="Name" type="RichTextLabel" parent="."]
@@ -65,4 +71,5 @@ autowrap_mode = 1
 
 [node name="ArrowsOut" type="Node" parent="."]
 
+[connection signal="gui_input" from="." to="." method="Pressed"]
 [connection signal="pressed" from="SetRecipe" to="." method="SetupCrafting"]

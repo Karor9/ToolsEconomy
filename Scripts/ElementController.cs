@@ -27,7 +27,6 @@ public partial class ElementController : NodeController
                 {
                     ec.LostFocus();
                 } 
-                GD.Print(parent.Name);
                 
             }
 
@@ -78,7 +77,6 @@ public partial class ElementController : NodeController
             node.AddChild(line2D);
             InLine.Add(line2D);
             gc.LostFocusPanel();
-            Utils.Print("green", "Connect");
             //TBD
         }
     }
@@ -147,13 +145,13 @@ public partial class ElementController : NodeController
             Panel element = (Panel)line.GetParent().GetParent();
             Utils.RedrawArrow(element, this, line);
         }
-        //TBD OUTLINE MOVEMENT WHEN CRAFTING IS DONE
-        // foreach (Node item in OutLine) 
-        // {
-        //     Line2D line = (Line2D)item;
-        //     Panel element = (Panel)line.GetParent().GetParent();
-        //     Utils.RedrawArrow(element, this, line);
-        // }
+        foreach (Node item in OutLine)
+        {
+            Line2D line = (Line2D)item;
+            Panel element = (Panel)line.GetParent().GetParent();
+            Utils.RedrawArrow(this, element, line);
+        }
+
     }
 
     public override void LostFocus()

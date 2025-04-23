@@ -133,12 +133,10 @@ public partial class ElementsController : Control
             {
                 if (le is NameInputController nameInput)
                 {
-                    Utils.Print("blue", "NameInputController");
                     nameInput.SaveEdits(element);
                 }
                 else if (le is CountInputController countInput)
                 {
-                    Utils.Print("blue", "CountInputController");
                     countInput.SaveEdits(element);
                 }
             }
@@ -146,25 +144,20 @@ public partial class ElementsController : Control
             {
                 if (le is NameInputController nameInput)
                 {
-                    Utils.Print("blue", "NameInputController");
                     nameInput.SaveEdits(node);
                 }
                 else if (le is CountInputController countInput)
                 {
-                    Utils.Print("blue", "CountInputController");
                     countInput.SaveEdits(node);
                 } else
-                {
-                    Utils.Print("blue", "GeneratorController");
+                {;
                     node.LostFocusPanel();
                 }
                 
             }
-            Utils.Print("blue", "LineEdit");
         }
         if(Globals.Instance.CurrFocus is ChanceController ce)
         {
-            Utils.Print("blue", "ChanceController");
             ce.SaveMouse();
         }
     }

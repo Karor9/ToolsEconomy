@@ -66,7 +66,7 @@ public static class Utils
 
         float tx = dx / Mathf.Abs(dir.X);
         float ty = dy / Mathf.Abs(dir.Y);
-
+        GD.Print(target, center);
         if(tx < ty)
             return center + dir * tx;
         else
@@ -113,8 +113,11 @@ public static class Utils
         Vector2 tail = GetEdgePoints(p1, p2);
         Vector2 tip = GetEdgePoints(p2, p1);
         line2D.Points = [tail, tip];
-        ChanceController node = (ChanceController)line2D.GetChild(1);
-        CalculateChangeBlockPos(line2D, node);
+        if(line2D.GetChildCount() > 1)
+        {
+            ChanceController node = (ChanceController)line2D.GetChild(1);
+            CalculateChangeBlockPos(line2D, node);
+        }
         DrawArrow(line2D, tail, tip);
     }
 

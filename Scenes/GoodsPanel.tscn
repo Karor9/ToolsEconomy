@@ -74,5 +74,6 @@ texture_focused = ExtResource("3_ta128")
 ignore_texture_size = true
 stretch_mode = 0
 
+[connection signal="value_changed" from="SpinBox" to="." method="OnValueChange"]
 [connection signal="pressed" from="Yay" to="." method="OnClickYay"]
 [connection signal="pressed" from="Nay" to="." method="OnClickNay"]
