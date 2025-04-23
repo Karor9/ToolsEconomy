@@ -27,6 +27,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 1
 color = Color(5.77569e-07, 0.457114, 0.720748, 1)
 
 [node name="Name" type="RichTextLabel" parent="."]
@@ -89,7 +90,7 @@ anchor_bottom = 1.0
 mouse_filter = 1
 color = Color(0.201527, 0.201527, 0.201527, 1)
 
-[node name="CountInput" type="LineEdit" parent="ColorCount"]
+[node name="CountInput" type="LineEdit" parent="ColorCount" node_paths=PackedStringArray("richTextLabel")]
 custom_minimum_size = Vector2(0, 25)
 layout_mode = 1
 anchors_preset = -1
@@ -101,6 +102,7 @@ mouse_filter = 1
 text = "0"
 alignment = 1
 script = ExtResource("3_8mhug")
+richTextLabel = NodePath("../../Count")
 
 [node name="TextureRect" type="TextureRect" parent="."]
 visible = false
@@ -122,4 +124,6 @@ expand_mode = 1
 [connection signal="gui_input" from="Count" to="." method="Pressed" binds= [1]]
 [connection signal="focus_entered" from="ColorName/NameInput" to="ColorName/NameInput" method="OnEnterFocus"]
 [connection signal="focus_exited" from="ColorName/NameInput" to="ColorName/NameInput" method="OnLeaveFocusText"]
+[connection signal="focus_entered" from="ColorCount/CountInput" to="ColorCount/CountInput" method="OnEnterFocus"]
+[connection signal="focus_exited" from="ColorCount/CountInput" to="ColorCount/CountInput" method="OnLeaveFocusText"]
 [connection signal="text_changed" from="ColorCount/CountInput" to="ColorCount/CountInput" method="OnTextChanged"]

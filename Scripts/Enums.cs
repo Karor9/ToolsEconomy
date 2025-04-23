@@ -11,6 +11,7 @@ public static partial class Enums
         AddingLine, //3
         MoveNode, //4
         EditingLine, //5
-        AddingGenerator //6
+        AddingGenerator, //6
+        AddingCrafting
     }
 }

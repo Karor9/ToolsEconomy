@@ -89,6 +89,7 @@ grow_horizontal = 2
 grow_vertical = 2
 rotation = -0.785398
 scale = Vector2(0.1, 0.1)
+focus_mode = 2
 mouse_filter = 1
 step = 0.001
 value = 100.0
@@ -99,5 +100,6 @@ suffix = "%"
 [connection signal="mouse_entered" from="ColorRect2" to="." method="IsObstructed" binds= [true]]
 [connection signal="mouse_exited" from="ColorRect2" to="." method="IsObstructed" binds= [false]]
 [connection signal="pressed" from="Button" to="." method="OnClick"]
+[connection signal="focus_exited" from="Percentage" to="." method="Save"]
 [connection signal="mouse_entered" from="Percentage" to="." method="IsObstructed" binds= [true]]
 [connection signal="mouse_exited" from="Percentage" to="." method="IsObstructed" binds= [false]]

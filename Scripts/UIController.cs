@@ -8,6 +8,8 @@ public partial class UIController : Control
     [Export] Panel UIPanel;
     [Export] Panel SecondaryPanel;
     [Export] RichTextLabel CurrentState;
+    [Export] Camera2D Camera;
+    [Export] VBoxContainer CraftingInputContainer;
 
     [ExportGroup("OpenCloseButtons")]
     [Export] Button openButton;
@@ -17,6 +19,8 @@ public partial class UIController : Control
     public override void _Ready()
     {
         SetState();
+        Globals.Instance.Camera = Camera;
+        Globals.Instance.CraftingInputContainer = CraftingInputContainer;
     }
 
     void SetState()

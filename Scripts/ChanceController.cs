@@ -13,6 +13,7 @@ public partial class ChanceController : Panel
         Globals.Instance.CurrFocus is null)
         {
             Globals.Instance.CurrFocus = this;
+            input.GrabFocus();
             input.Visible = true;   
             label.Visible = false;
         }
@@ -54,6 +55,7 @@ public partial class ChanceController : Panel
         Globals.Instance.CurrFocus == this)
         {
             Save();
+            input.ReleaseFocus();
         }
         if(@event.IsActionPressed("PickAll") &&
         Globals.Instance.CurrFocus == this)
@@ -68,7 +70,5 @@ public partial class ChanceController : Panel
     {
         label.Text = Utils.FormatPercentage(input.Value);
     }
-
-
 
 }

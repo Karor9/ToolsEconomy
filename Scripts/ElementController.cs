@@ -17,18 +17,28 @@ public partial class ElementController : NodeController
     {
         if(@event.IsActionPressed("LMB") && Globals.Instance.CurrentToolState == Enums.ToolState.EditingNode)
         {
-            LineEdit le = (LineEdit)Globals.Instance.CurrFocus;
-            if(le is not null)
+            if (Globals.Instance.CurrFocus is LineEdit le)
             {
-                ElementController ec = (ElementController)le.GetParent().GetParent();
-                ec.LostFocus();
+                var parent = le.GetParent();
+                if (parent != null && parent.GetParent() is GeneratorController gc)
+                {
+                    gc.LostFocus();
+                } else if (parent != null && parent.GetParent() is ElementController ec)
+                {
+                    ec.LostFocus();
+                } 
+                GD.Print(parent.Name);
+                
             }
 
             LineEdits[id].Visible = true;
-            le = (LineEdit)LineEdits[id].GetChild(0);
-            le.GrabFocus();
-            le.CaretColumn = le.Text.Length;
-            Globals.Instance.CurrFocus = le;
+
+            if (LineEdits[id].GetChild(0) is LineEdit newLe)
+            {
+                newLe.GrabFocus();
+                newLe.CaretColumn = newLe.Text.Length;
+                Globals.Instance.CurrFocus = newLe;
+            }
         }
         if(@event.IsActionPressed("LMB") &&
         Globals.Instance.CurrentToolState == Enums.ToolState.MoveNode)

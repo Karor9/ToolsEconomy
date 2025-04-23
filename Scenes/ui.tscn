@@ -1,12 +1,13 @@
-[gd_scene load_steps=6 format=3 uid="uid://dbkd43hcka6mm"]
+[gd_scene load_steps=7 format=3 uid="uid://dbkd43hcka6mm"]
 
 [ext_resource type="Script" uid="uid://cgs64qdjrn5d3" path="res://Scripts/UIController.cs" id="1_w371h"]
 [ext_resource type="Theme" uid="uid://cyu8db8yf0kqr" path="res://Themes/UIButtonTheme.tres" id="2_nxvpl"]
 [ext_resource type="Script" uid="uid://btdkpkhblrhk8" path="res://Scripts/ElementsController.cs" id="3_dewlx"]
 [ext_resource type="PackedScene" uid="uid://cvbwir3ylwhoq" path="res://Scenes/element.tscn" id="3_hfhsn"]
 [ext_resource type="PackedScene" uid="uid://bwhc82i0w0osx" path="res://Scenes/generator.tscn" id="4_qwshj"]
+[ext_resource type="PackedScene" uid="uid://cx7077130b6uu" path="res://Scenes/Crafting.tscn" id="5_48q88"]
 
-[node name="Control" type="Control" node_paths=PackedStringArray("UIPanel", "SecondaryPanel", "CurrentState", "openButton", "closeButton", "CategoryButtons")]
+[node name="Control" type="Control" node_paths=PackedStringArray("UIPanel", "SecondaryPanel", "CurrentState", "Camera", "CraftingInputContainer", "openButton", "closeButton", "CategoryButtons")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -17,6 +18,8 @@ script = ExtResource("1_w371h")
 UIPanel = NodePath("CanvasLayer/MainUIPanel")
 SecondaryPanel = NodePath("CanvasLayer/UIAddSubpanel")
 CurrentState = NodePath("CanvasLayer/MainUIPanel/ColorRect/VSplitContainer/CurrentState/RichTextLabel")
+Camera = NodePath("Camera2D")
+CraftingInputContainer = NodePath("CanvasLayer/CraftingPanel/ScrollContainer/VBoxContainer")
 openButton = NodePath("OpenPanel")
 closeButton = NodePath("ClosePanel")
 CategoryButtons = [NodePath("CanvasLayer/UIAddSubpanel/ColorRect/Adding"), NodePath("CanvasLayer/UIAddSubpanel/ColorRect/Editing")]
@@ -47,7 +50,7 @@ scale = Vector2(0.1, 0.1)
 focus_mode = 0
 text = "<"
 
-[node name="ElementsContainer" type="Control" parent="." node_paths=PackedStringArray("Parent", "ParentGenerator")]
+[node name="ElementsContainer" type="Control" parent="." node_paths=PackedStringArray("Parent", "ParentGenerator", "ParentCrafting")]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -58,8 +61,10 @@ mouse_filter = 1
 script = ExtResource("3_dewlx")
 Parent = NodePath(".")
 ParentGenerator = NodePath("GeneratorContainer")
+ParentCrafting = NodePath("CraftingContainer")
 Node = ExtResource("3_hfhsn")
 Generator = ExtResource("4_qwshj")
+Crafting = ExtResource("5_48q88")
 
 [node name="GeneratorContainer" type="Control" parent="ElementsContainer"]
 layout_mode = 1
@@ -69,6 +74,8 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 1
+
+[node name="CraftingContainer" type="Node" parent="ElementsContainer"]
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -293,6 +300,26 @@ text = "Add Generator"
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="Button3" type="Button" parent="CanvasLayer/UIAddSubpanel/ColorRect/Adding"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+focus_mode = 0
+mouse_filter = 1
+theme = ExtResource("2_nxvpl")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="CanvasLayer/UIAddSubpanel/ColorRect/Adding/Button3"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 10.0
+anchor_bottom = 10.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.1, 0.1)
+mouse_filter = 1
+text = "Add Crafting"
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [node name="Editing" type="VBoxContainer" parent="CanvasLayer/UIAddSubpanel/ColorRect"]
 visible = false
 layout_mode = 1
@@ -322,7 +349,57 @@ text = "Edit Node"
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="CraftingPanel" type="Panel" parent="CanvasLayer"]
+anchors_preset = -1
+anchor_left = 0.7
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 1
+
+[node name="ScrollContainer" type="ScrollContainer" parent="CanvasLayer/CraftingPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/CraftingPanel/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="MainPanel" type="Panel" parent="CanvasLayer/CraftingPanel/ScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+mouse_filter = 1
+
+[node name="Button" type="Button" parent="CanvasLayer/CraftingPanel/ScrollContainer/VBoxContainer/MainPanel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.7
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 1
+
+[node name="RichTextLabel" type="RichTextLabel" parent="CanvasLayer/CraftingPanel/ScrollContainer/VBoxContainer/MainPanel/Button"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 10.0
+anchor_bottom = 10.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.1, 0.1)
+mouse_filter = 1
+theme_override_colors/default_color = Color(0, 0.317647, 0, 1)
+theme_override_constants/outline_size = 40
+theme_override_font_sizes/normal_font_size = 400
+text = "Save"
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(32.14, 0)
 anchor_mode = 0
 
 [connection signal="pressed" from="OpenPanel" to="." method="OpenClose" binds= [true]]
@@ -336,4 +413,7 @@ anchor_mode = 0
 [connection signal="mouse_exited" from="CanvasLayer/UIAddSubpanel" to="." method="IsObstructed" binds= [false]]
 [connection signal="pressed" from="CanvasLayer/UIAddSubpanel/ColorRect/Adding/Button" to="." method="SetToolState" binds= [1]]
 [connection signal="pressed" from="CanvasLayer/UIAddSubpanel/ColorRect/Adding/Button2" to="." method="SetToolState" binds= [6]]
+[connection signal="pressed" from="CanvasLayer/UIAddSubpanel/ColorRect/Adding/Button3" to="." method="SetToolState" binds= [7]]
 [connection signal="pressed" from="CanvasLayer/UIAddSubpanel/ColorRect/Editing/Button" to="." method="SetToolState" binds= [2]]
+[connection signal="mouse_entered" from="CanvasLayer/CraftingPanel" to="." method="IsObstructed" binds= [true]]
+[connection signal="mouse_exited" from="CanvasLayer/CraftingPanel" to="." method="IsObstructed" binds= [false]]

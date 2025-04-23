@@ -6,9 +6,11 @@ public partial class ElementsController : Control
 {
     [Export] Control Parent;
     [Export] Control ParentGenerator;
+    [Export] Node ParentCrafting;
     [ExportGroup("Nodes")]
     [Export] PackedScene Node;
     [Export] PackedScene Generator;
+    [Export] PackedScene Crafting;
     public override void _Input(InputEvent @event)
     {
         if(@event.IsActionPressed("LMB"))
@@ -28,6 +30,9 @@ public partial class ElementsController : Control
                         CreateGenerateNode();
                     else
                         CreateGenerator();
+                    break;
+                case Enums.ToolState.AddingCrafting:
+                    CreateCraftingNode();
                     break;
             }
         }
@@ -51,6 +56,17 @@ public partial class ElementsController : Control
             }
         }
     }
+
+    private void CreateCraftingNode()
+    {
+        Node node = Crafting.Instantiate();
+        CraftingController cc = (CraftingController)node;
+
+        SetupEvents(cc);
+
+        ParentCrafting.AddChild(cc);
+    }
+
 
     void IsObstructed(bool state)
     {
@@ -128,8 +144,21 @@ public partial class ElementsController : Control
             }
             if(grandParent is GeneratorController node)
             {
-                Utils.Print("blue", "GeneratorController");
-                node.LostFocusPanel();
+                if (le is NameInputController nameInput)
+                {
+                    Utils.Print("blue", "NameInputController");
+                    nameInput.SaveEdits(node);
+                }
+                else if (le is CountInputController countInput)
+                {
+                    Utils.Print("blue", "CountInputController");
+                    countInput.SaveEdits(node);
+                } else
+                {
+                    Utils.Print("blue", "GeneratorController");
+                    node.LostFocusPanel();
+                }
+                
             }
             Utils.Print("blue", "LineEdit");
         }

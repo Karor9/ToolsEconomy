@@ -23,7 +23,10 @@ public partial class GeneratorController : NodeController
             if (Globals.Instance.CurrFocus is LineEdit le)
             {
                 var parent = le.GetParent();
-                if (parent != null && parent.GetParent() is GeneratorController ec)
+                if (parent != null && parent.GetParent() is GeneratorController gc)
+                {
+                    gc.LostFocus();
+                } else if (parent != null && parent.GetParent() is ElementController ec)
                 {
                     ec.LostFocus();
                 }
@@ -99,6 +102,7 @@ public partial class GeneratorController : NodeController
     public override void LostFocus()
     {
         base.LostFocus();
+        ((TextureRect)GetChild(5)).Visible = false;
     }
 
     public void LostFocusPanel()
