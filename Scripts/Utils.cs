@@ -1,6 +1,7 @@
 using System;
 using System.Formats.Tar;
 using System.Linq;
+using System.Threading.Tasks;
 using Godot;
 
 public static class Utils
@@ -132,6 +133,17 @@ public static class Utils
     {
         node.Position = (line.Points[0] + line.Points[1]) / 2;
         node.Position = new Vector2(node.Position.X, node.Position.Y-node.Size.Y/2);
+    }
+
+    public static async Task DelaySeconds(float seconds, Node parent)
+    {
+        var timer = new Timer();
+        parent.AddChild(timer);
+        timer.WaitTime = seconds;
+        timer.OneShot = true;
+        timer.Start();
+        await parent.ToSignal(timer, "timeout");
+        timer.QueueFree();
     }
 
 }

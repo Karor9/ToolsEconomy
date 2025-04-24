@@ -15,7 +15,7 @@ public partial class Dot : CharacterBody2D
     int goodsIdDest;
     double valueToAdd;
 
-    public void Init(Vector2 s, Vector2 e, Line2D line, double add)
+    public void Init(Vector2 s, Vector2 e, Line2D line, double add = 0)
     {
         start = s;
         end = e;
@@ -50,7 +50,8 @@ public partial class Dot : CharacterBody2D
 
             if(Position.DistanceTo(end) < minDist)
             {
-                Globals.Instance.Goods[goodsIdDest].AddValue(valueToAdd);
+                if(valueToAdd != 0)
+                    Globals.Instance.Goods[goodsIdDest].AddValue(valueToAdd);
 
                 QueueFree();
             }

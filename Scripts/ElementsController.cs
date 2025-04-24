@@ -1,6 +1,9 @@
 using Godot;
 using System;
+using System.Linq;
+using System.Reflection.Metadata;
 using System.Runtime.Serialization;
+using System.Threading.Tasks;
 
 public partial class ElementsController : Control
 {
@@ -38,23 +41,64 @@ public partial class ElementsController : Control
         }
         if(@event.IsActionPressed("Spawn"))
         {
-            foreach (Node item in ParentGenerator.GetChildren())
-            {
-                Node node = item.GetChild(6);
-                GeneratorController gc = (GeneratorController)item;
-                if(node.GetChildCount() <= 0)
-                    continue;
-                foreach (Node item2 in node.GetChildren())
-                {
-                    Line2D line2D = (Line2D)item2;
-                    Node dotParent = line2D.GetChild(0);
-                    Dot dot = (Dot)Globals.Instance.Dot.Instantiate();
-                    dot.Init(line2D.Points[0], line2D.Points[1], line2D, gc.GetValueToAdd());
-                    dotParent.AddChild(dot);
-                }
+            _ = HandleSpawnAsync(async () => {
+                await SpawnGeneratorDots(1f);
+                await CraftingDots(1f);
+            });
+        }
+    }
 
+    async Task HandleSpawnAsync(Func<Task> action)
+    {
+        await action();
+    }
+
+    async Task CraftingDots(float time)
+    {
+        foreach (Node item in ParentCrafting.GetChildren())
+        {
+            CraftingController cc = (CraftingController)item;
+            bool haveGoods = true;
+            int[] requiredGoods = cc.Recipe.Keys.ToArray();
+            foreach (int good in requiredGoods)
+            {
+                if(Globals.Instance.Goods[good].Count < cc.Recipe[good])
+                {
+                    haveGoods = false;
+                    break;
+                }
+            }
+            if(!haveGoods)
+                continue;
+            
+            foreach (int good in requiredGoods)
+            {
+                Globals.Instance.Goods[good].AddValue(-1*cc.Recipe[good]);
+            }
+
+            // GD.Print(cc.Recipe.Keys);
+        }
+        await Utils.DelaySeconds(time, this);
+    }
+
+    private async Task SpawnGeneratorDots(float time)
+    {
+        foreach (Node item in ParentGenerator.GetChildren())
+        {
+            Node node = item.GetChild(6);
+            GeneratorController gc = (GeneratorController)item;
+            if(node.GetChildCount() <= 0)
+                continue;
+            foreach (Node item2 in node.GetChildren())
+            {
+                Line2D line2D = (Line2D)item2;
+                Node dotParent = line2D.GetChild(0);
+                Dot dot = (Dot)Globals.Instance.Dot.Instantiate();
+                dot.Init(line2D.Points[0], line2D.Points[1], line2D, gc.GetValueToAdd());
+                dotParent.AddChild(dot);
             }
         }
+        await Utils.DelaySeconds(time, this);
     }
 
     private void CreateCraftingNode()

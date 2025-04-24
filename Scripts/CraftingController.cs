@@ -10,8 +10,8 @@ public partial class CraftingController : NodeController
     [Export] Button SetRecipe;
     [Export] Button ShowRecipe;
 
-    [Export] Dictionary<int, double> Recipe = new Dictionary<int, double>();
-    [Export] Dictionary<int, double> OutputRecipe = new Dictionary<int, double>();
+    [Export] public Dictionary<int, double> Recipe = new Dictionary<int, double>();
+    [Export] public Dictionary<int, double> OutputRecipe = new Dictionary<int, double>();
 
     [Export] Node ArrowIn;
     [Export] Node ArrowOut;
