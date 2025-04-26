@@ -4,8 +4,8 @@ using Godot.Collections;
 
 public partial class CraftingController : NodeController
 {
-    [Export] public Array<Line2D> InLine;
-    [Export] public Array<Line2D> OutLine;
+    [Export] public Array<Arrow> InLine;
+    [Export] public Array<Arrow> OutLine;
 
     [Export] Button SetRecipe;
     [Export] Button ShowRecipe;
@@ -17,6 +17,7 @@ public partial class CraftingController : NodeController
     [Export] Node ArrowOut;
 
     [Export] bool InputMode = true;
+    public int currentTranstactions = 0;
     public void SetupCrafting()
     {
         if(Globals.Instance.CraftingInputContainer is null)
@@ -44,6 +45,7 @@ public partial class CraftingController : NodeController
         if(InputMode)
         {
             Recipe.Clear();
+            ClearArrows(ArrowIn);
             Recipe = newRecipe;
             SpawnArrows();
             SpawnGoods("Output");
@@ -52,11 +54,19 @@ public partial class CraftingController : NodeController
         } else
         {
             OutputRecipe.Clear();
+            ClearArrows(ArrowOut);
             OutputRecipe = newRecipe;
             SpawnArrows();
             InputMode = true;
 
             return true;
+        }
+    }
+    void ClearArrows(Node node)
+    {
+        foreach (Node item in node.GetChildren())
+        {
+            item.QueueFree();
         }
     }
 
@@ -97,7 +107,6 @@ public partial class CraftingController : NodeController
                 line.Parent = ec;
                 line.Child = this;
 
-                line.GetChild(0).QueueFree();
                 Vector2 fp = Utils.GetEdgePoints(ec, this);
                 Vector2 ep = Utils.GetEdgePoints(this, ec);
                 line.Points = [fp, ep];
@@ -119,12 +128,13 @@ public partial class CraftingController : NodeController
 
                 line.Parent = this;
                 line.Child = ec;
-
-                line.GetChild(0).QueueFree();
+                // line.GetChild(0).QueueFree();
                 Vector2 fp = Utils.GetEdgePoints(ec, this);
                 Vector2 ep = Utils.GetEdgePoints(this, ec);
                 line.Points = [ep, fp];
             
+                Utils.SpawnChangeBlock(line);
+
                 ec.InLine.Add(line);
                 OutLine.Add(line);
 
@@ -142,13 +152,13 @@ public partial class CraftingController : NodeController
         foreach (Node item in InLine)
         {
             Arrow line = (Arrow)item;
-            Panel element = (Panel)line.GetParent().GetParent();
+            // Panel element = (Panel)line.GetParent().GetParent();
             Utils.RedrawArrow(line.Parent, line.Child, line);
         }
         foreach (Node item in OutLine)
         {
             Arrow line = (Arrow)item;
-            Panel element = (Panel)line.GetParent().GetParent();
+            // Panel element = (Panel)line.GetParent().GetParent();
             Utils.RedrawArrow(line.Parent, line.Child, line);
         }
     }

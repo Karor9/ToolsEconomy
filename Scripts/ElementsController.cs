@@ -1,8 +1,7 @@
 using Godot;
 using System;
 using System.Linq;
-using System.Reflection.Metadata;
-using System.Runtime.Serialization;
+using Godot.Collections;
 using System.Threading.Tasks;
 
 public partial class ElementsController : Control
@@ -44,6 +43,7 @@ public partial class ElementsController : Control
             _ = HandleSpawnAsync(async () => {
                 await SpawnGeneratorDots(1f);
                 await CraftingDots(1f);
+                await CraftGoods(1f);
             });
         }
     }
@@ -51,6 +51,34 @@ public partial class ElementsController : Control
     async Task HandleSpawnAsync(Func<Task> action)
     {
         await action();
+    }
+
+    async Task CraftGoods(float time)
+    {
+        foreach (Node item in ParentCrafting.GetChildren())
+        {
+            CraftingController cc = (CraftingController)item;
+            if(cc.currentTranstactions <= 0)
+                continue;
+            int[] targetGoods = cc.OutputRecipe.Keys.ToArray();
+            foreach (Node node in item.GetChild(5).GetChildren())
+            {
+                Line2D line = (Line2D)node;
+                Node dotParent = line.GetChild(0);
+                Dot dot = (Dot)Globals.Instance.Dot.Instantiate();
+                dot.Init(line.Points[0], line.Points[1], line, 0, Colors.Yellow, false);
+                dotParent.AddChild(dot);
+            }
+
+            foreach (int good in targetGoods)
+            {
+                Globals.Instance.Goods[good].AddValue(cc.OutputRecipe[good]);
+            }
+            cc.currentTranstactions -= 1;
+        }        
+        if(ParentCrafting.GetChildCount() <= 0)
+            time = time / 1000f;
+        await Utils.DelaySeconds(time, this);
     }
 
     async Task CraftingDots(float time)
@@ -71,13 +99,24 @@ public partial class ElementsController : Control
             if(!haveGoods)
                 continue;
             
+            foreach (Node node in item.GetChild(4).GetChildren())
+            {
+                Line2D line = (Line2D)node;
+                Node dotParent = line.GetChild(0);
+                Dot dot = (Dot)Globals.Instance.Dot.Instantiate();
+                dot.Init(line.Points[0], line.Points[1], line, 0, Colors.LimeGreen, false);
+                dotParent.AddChild(dot);
+            }
+
             foreach (int good in requiredGoods)
             {
                 Globals.Instance.Goods[good].AddValue(-1*cc.Recipe[good]);
             }
-
+            cc.currentTranstactions += 1;
             // GD.Print(cc.Recipe.Keys);
         }
+        if(ParentCrafting.GetChildCount() <= 0)
+            time = time / 1000f;
         await Utils.DelaySeconds(time, this);
     }
 
@@ -98,6 +137,8 @@ public partial class ElementsController : Control
                 dotParent.AddChild(dot);
             }
         }
+        if(ParentGenerator.GetChildCount() <= 0)
+            time = time / 1000f;
         await Utils.DelaySeconds(time, this);
     }
 
@@ -122,9 +163,10 @@ public partial class ElementsController : Control
         if(Globals.Instance.Obstructed)
             return;
         Panel nodeProp = CreateNode();
-        Line2D line = (Line2D)Globals.Instance.Arrow.Instantiate();
-        
+        Arrow line = (Arrow)Globals.Instance.Arrow.Instantiate();
         GeneratorController gc = (GeneratorController)Globals.Instance.CurrFocus;
+        line.Parent = gc;
+        line.Child = nodeProp;
         Node node = gc.GetChild(6);
         // Vector2 fp = gc.Position + (gc.Size/2);
         // Vector2 ep = nodeProp.Position + (nodeProp.Size/2);
@@ -134,8 +176,8 @@ public partial class ElementsController : Control
         Vector2 ep = Utils.GetEdgePoints(nodeProp, gc);
         line.Points = [fp, ep];
 
-        Utils.SpawnChangeBlock(line);
 
+        Utils.SpawnChangeBlock(line);
         Utils.DrawArrow(line, fp, ep);
         line.Name = nodeProp.Name;
         NodePath nodePath = new NodePath(nodeProp.Name);

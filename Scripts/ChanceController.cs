@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.ComponentModel.DataAnnotations;
 
 public partial class ChanceController : Panel
 {
@@ -26,6 +27,8 @@ public partial class ChanceController : Panel
 
     public void Save()
     {
+        if(Globals.Instance.CurrFocus == this)
+            return;
         label.Text = Utils.FormatPercentage(input.Value);
         input.Visible = false;
         label.Visible = true;
@@ -64,6 +67,7 @@ public partial class ChanceController : Panel
             le.GrabFocus();
             le.Select(0, le.Text.Length - 1);
         }
+
     }
 
     public override void _Ready()

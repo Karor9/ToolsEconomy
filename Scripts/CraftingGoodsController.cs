@@ -45,7 +45,7 @@ public partial class CraftingGoodsController : Panel
 
     void OnValueChange(float value)
     {
-        requiredCount = value;
+        requiredCount = double.Parse(value.ToString());
     }
 
     public double GetRequired()

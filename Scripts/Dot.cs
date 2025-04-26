@@ -14,14 +14,19 @@ public partial class Dot : CharacterBody2D
     ChanceController myChance;
     int goodsIdDest;
     double valueToAdd;
+    bool chanceBlockActive;
 
-    public void Init(Vector2 s, Vector2 e, Line2D line, double add = 0)
+    public void Init(Vector2 s, Vector2 e, Line2D line, double add = 0, Color? color = null, bool chanceBlock = true)
     {
         start = s;
         end = e;
-        myChance = (ChanceController)line.GetChild(1);
+        chanceBlockActive = chanceBlock;
+        if(chanceBlockActive)
+            myChance = (ChanceController)line.GetChild(1);
         goodsIdDest = int.Parse(line.Name);
         valueToAdd = add;
+        if(color != null)
+            ((Sprite2D)GetChild(1)).SelfModulate = (Color)color;
     }
 
     public override void _Ready()
@@ -35,30 +40,40 @@ public partial class Dot : CharacterBody2D
 
     public override void _PhysicsProcess(double delta)
     {
-        if(chancePassed is null)
+        if(chanceBlockActive)
         {
-            Vector2 dir = (chancePoint - Position).Normalized();
-            Velocity = dir * speed;
-            MoveAndSlide();
-            if(Position.DistanceTo(chancePoint) < minDist)
-                chancePassed = GD.Randf() <= myChance.GetChance();
-        } else if ((bool)chancePassed)
-        {
-            Vector2 dir = (end - Position).Normalized();
-            Velocity = dir * speed;
-            MoveAndSlide();
-
-            if(Position.DistanceTo(end) < minDist)
+            if(chancePassed is null)
             {
-                if(valueToAdd != 0)
-                    Globals.Instance.Goods[goodsIdDest].AddValue(valueToAdd);
+                Vector2 dir = (chancePoint - Position).Normalized();
+                Velocity = dir * speed;
+                MoveAndSlide();
+                if(Position.DistanceTo(chancePoint) < minDist)
+                    chancePassed = GD.Randf() <= myChance.GetChance();
+            } else if ((bool)chancePassed)
+            {
+                Vector2 dir = (end - Position).Normalized();
+                Velocity = dir * speed;
+                MoveAndSlide();
 
+                if(Position.DistanceTo(end) < minDist)
+                {
+                    if(valueToAdd != 0)
+                        Globals.Instance.Goods[goodsIdDest].AddValue(valueToAdd);
+
+                    QueueFree();
+                }
+                    
+            } else
+            {
                 QueueFree();
             }
-                
         } else
         {
-            QueueFree();
+            Vector2 dir = (end - Position).Normalized();
+            Velocity = dir * speed * 2;
+            MoveAndSlide();
+            if(Position.DistanceTo(end) < minDist)
+                QueueFree();
         }
     } 
 

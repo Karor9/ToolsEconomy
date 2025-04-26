@@ -3,6 +3,7 @@ using System.Formats.Tar;
 using System.Linq;
 using System.Threading.Tasks;
 using Godot;
+using Godot.Collections;
 
 public static class Utils
 {
@@ -131,6 +132,8 @@ public static class Utils
 
     static void CalculateChangeBlockPos(Line2D line, ChanceController node)
     {
+        if(line.Points.Length < 2)
+            return;
         node.Position = (line.Points[0] + line.Points[1]) / 2;
         node.Position = new Vector2(node.Position.X, node.Position.Y-node.Size.Y/2);
     }
@@ -144,6 +147,23 @@ public static class Utils
         timer.Start();
         await parent.ToSignal(timer, "timeout");
         timer.QueueFree();
+    }
+
+    public static string GetUUID()
+    {
+        Guid myuuid = Guid.NewGuid();
+        return myuuid.ToString();
+    }
+
+    public static Array<Arrow> RemoveNulls(Array<Arrow> array)
+    {
+        Array<Arrow> newArray = [];
+        foreach (Arrow item in array)
+        {
+            if(item != null)
+                newArray.Add(item);
+        }
+        return newArray;
     }
 
 }

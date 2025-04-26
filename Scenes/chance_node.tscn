@@ -72,6 +72,7 @@ grow_horizontal = 2
 grow_vertical = 2
 focus_mode = 0
 mouse_filter = 1
+mouse_default_cursor_shape = 2
 
 [node name="Percentage" type="SpinBox" parent="."]
 visible = false
@@ -97,9 +98,7 @@ alignment = 1
 update_on_text_changed = true
 suffix = "%"
 
-[connection signal="mouse_entered" from="ColorRect2" to="." method="IsObstructed" binds= [true]]
-[connection signal="mouse_exited" from="ColorRect2" to="." method="IsObstructed" binds= [false]]
+[connection signal="mouse_entered" from="Button" to="." method="IsObstructed" binds= [true]]
+[connection signal="mouse_exited" from="Button" to="." method="IsObstructed" binds= [false]]
 [connection signal="pressed" from="Button" to="." method="OnClick"]
 [connection signal="focus_exited" from="Percentage" to="." method="Save"]
-[connection signal="mouse_entered" from="Percentage" to="." method="IsObstructed" binds= [true]]
-[connection signal="mouse_exited" from="Percentage" to="." method="IsObstructed" binds= [false]]

@@ -6,8 +6,8 @@ using System.Linq;
 public partial class ElementController : NodeController
 {
     [Export] Control[] LineEdits;
-    [Export] public Array<Line2D> InLine;
-    [Export] public Array<Line2D> OutLine;
+    [Export] public Array<Arrow> InLine;
+    [Export] public Array<Arrow> OutLine;
 
     [Export] RichTextLabel GoodsName;
     [Export] RichTextLabel GoodsCount;
@@ -57,13 +57,14 @@ public partial class ElementController : NodeController
             }
             Node node = gc.GetChild(6);
 
-            Line2D line2D = (Line2D)Globals.Instance.Arrow.Instantiate();
+            Arrow line2D = (Arrow)Globals.Instance.Arrow.Instantiate();
             // Vector2 fp = gc.Position + (gc.Size/2);
             // Vector2 ep = Position + (Size/2);
             Vector2 fp = Utils.GetEdgePoints(gc, this);
             Vector2 ep = Utils.GetEdgePoints(this, gc);
             line2D.Points = [fp, ep];
-            
+            line2D.Parent = gc;
+            line2D.Child = this;
 
             Utils.SpawnChangeBlock(line2D);
             Utils.DrawArrow(line2D, fp, ep);
@@ -75,6 +76,7 @@ public partial class ElementController : NodeController
             if(node.GetNodeOrNull(nodePath) is not null)
                 return;
             node.AddChild(line2D);
+
             InLine.Add(line2D);
             gc.LostFocusPanel();
             //TBD

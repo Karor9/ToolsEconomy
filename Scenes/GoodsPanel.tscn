@@ -38,6 +38,7 @@ max_value = 9.22337e+18
 step = 0.001
 alignment = 1
 editable = false
+update_on_text_changed = true
 
 [node name="Yay" type="TextureButton" parent="."]
 layout_mode = 1
