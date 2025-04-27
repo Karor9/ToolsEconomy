@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://ttje7golha0"]
 
-[ext_resource type="Script" uid="uid://b3xbc5h0hk1y8" path="res://Scripts/ChanceController.cs" id="1_jg2fd"]
+[ext_resource type="Script" uid="uid://cn4s11edrlqnf" path="res://Scripts/Nodes/ChanceController.cs" id="1_jg2fd"]
 
 [node name="ChanceNode" type="Panel" node_paths=PackedStringArray("button", "label", "input")]
 anchors_preset = -1

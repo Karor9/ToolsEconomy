@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://cx7077130b6uu"]
 
-[ext_resource type="Script" uid="uid://sdp1dxl3unau" path="res://Scripts/CraftingController.cs" id="1_14og4"]
+[ext_resource type="Script" uid="uid://em5mquqhlcln" path="res://Scripts/Nodes/CraftingController.cs" id="1_14og4"]
 
 [node name="Panel" type="Panel" node_paths=PackedStringArray("InLine", "OutLine", "SetRecipe", "ShowRecipe", "ArrowIn", "ArrowOut")]
 custom_minimum_size = Vector2(50, 50)

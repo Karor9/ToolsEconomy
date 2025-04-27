@@ -128,39 +128,7 @@ public partial class ElementController : NodeController
         }
     }
 
-    public override void _PhysicsProcess(double delta)
-    {
-        if(Input.IsActionPressed("LMB") 
-        && Globals.Instance.CurrentToolState == Enums.ToolState.MoveNode
-        && Globals.Instance.CurrFocus == this)
-        {
-            MoveNode();
-        }
-    }
-
-    public override void MoveNode()
-    {
-        base.MoveNode();
-        foreach (Node item in InLine)
-        {
-            Line2D line = (Line2D)item;
-            Panel element = (Panel)line.GetParent().GetParent();
-            Utils.RedrawArrow(element, this, line);
-        }
-        foreach (Node item in OutLine)
-        {
-            Line2D line = (Line2D)item;
-            Panel element = (Panel)line.GetParent().GetParent();
-            Utils.RedrawArrow(this, element, line);
-        }
-
-    }
-
-    public override void LostFocus()
-    {
-        base.LostFocus();
-    }
-
+    //POST SELF CODE REVIEW
 
     void IsObstructed(bool obs)
     {
@@ -168,11 +136,33 @@ public partial class ElementController : NodeController
         Utils.Print("pink", "Mouse obstructed:" + Globals.Instance.Obstructed);
     }
 
+    // public override void LostFocus()
+    // {
+    //     base.LostFocus();
+    // }
+
+    public override void MoveNode()
+    {
+        base.MoveNode();
+        foreach (Node item in this.InLine)
+        {
+            Line2D line = (Line2D)item;
+            Panel element = (Panel)line.GetParent().GetParent();
+            Utils.RedrawArrow(element, this, line);
+        }
+        foreach (Node item in this.OutLine)
+        {
+            Line2D line = (Line2D)item;
+            Panel element = (Panel)line.GetParent().GetParent();
+            Utils.RedrawArrow(this, element, line);
+        }
+    }
+
+    
     public void UpdateText()
     {
         int id = int.Parse(Name);
         GoodsName.Text = Globals.Instance.Goods[id].Name;
         GoodsCount.Text = Utils.FormatNumbers(Globals.Instance.Goods[id].Count);
     }
-
 }

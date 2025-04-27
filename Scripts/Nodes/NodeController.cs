@@ -21,4 +21,17 @@ public partial class NodeController : Panel
         ((LineEdit)item).ReleaseFocus();
         Globals.Instance.CurrFocus = null;
     }
+
+    //POST SELF CODE REVIEW
+
+    public override void _PhysicsProcess(double delta)
+    {
+        if(Input.IsActionPressed("LMB") 
+        && Globals.Instance.CurrentToolState == Enums.ToolState.MoveNode
+        && Globals.Instance.CurrFocus == this)
+        {
+            MoveNode();
+        }
+    }
+
 }

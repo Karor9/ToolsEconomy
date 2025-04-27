@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://bwhc82i0w0osx"]
 
-[ext_resource type="Script" uid="uid://03qqx0vb0rqq" path="res://Scripts/GeneratorController.cs" id="1_pyrd2"]
+[ext_resource type="Script" uid="uid://qmm441pl5q4q" path="res://Scripts/Nodes/GeneratorController.cs" id="1_pkqr7"]
 [ext_resource type="Script" uid="uid://dalagd4o5mvih" path="res://Scripts/NameInputController.cs" id="2_pkqr7"]
 [ext_resource type="Script" uid="uid://cav3viplgcyq3" path="res://Scripts/CountInputController.cs" id="3_8mhug"]
 [ext_resource type="Texture2D" uid="uid://dkbkc87blrlyj" path="res://rysunek.svg" id="3_pkqr7"]
@@ -14,9 +14,9 @@ offset_top = 146.273
 offset_right = 492.487
 offset_bottom = 196.273
 focus_mode = 2
-script = ExtResource("1_pyrd2")
+script = ExtResource("1_pkqr7")
 Dot = NodePath("TextureRect")
-LineEdits = [NodePath("ColorName"), NodePath("ColorCount")]
+LineEdits = []
 CountText = NodePath("Count")
 LineParent = NodePath("Arrows")
 

@@ -5,16 +5,12 @@ using System.Linq;
 
 public partial class GeneratorController : NodeController
 {
-    [Export] TextureRect Dot;
+    [Export] TextureRect Dot; //Child 5
     [Export] Control[] LineEdits;
     [Export] RichTextLabel CountText;
-    [Export] Node LineParent;
-    void ShowGrabbedFocus(bool vis, Color color)
-    {
-        Globals.Instance.CurrFocus = this;
-        Dot.Visible = vis;
-        Dot.SelfModulate = color;
-    }
+    [Export] Node LineParent; 
+    [Export] Control ColorCount; //Child 4
+
 
     void Pressed(InputEvent @event, int id)
     {
@@ -41,23 +37,6 @@ public partial class GeneratorController : NodeController
                 Globals.Instance.CurrFocus = newLe;
             }
         }
-
-        // if (@event.IsActionPressed("LMB") && Globals.Instance.CurrentToolState == Enums.ToolState.EditingNode)
-        // {
-        //     if (Globals.Instance.CurrFocus is LineEdit previousLe)
-        //     {
-        //         if (previousLe.GetParent()?.GetParent() is GeneratorController ec)
-        //         {
-        //             ec.LostFocus();
-        //         }
-        //     }
-
-        //     LineEdit le = LineEdit; 
-        //     le.GrabFocus();
-        //     le.CaretColumn = le.Text.Length;
-        //     ((Control)le.GetParent()).Visible = true;
-        //     Globals.Instance.CurrFocus = le;
-        // }
         if(@event.IsActionPressed("LMB") &&
         Globals.Instance.CurrentToolState == Enums.ToolState.MoveNode)
         {
@@ -99,30 +78,32 @@ public partial class GeneratorController : NodeController
         }
     }
 
+
+
+
+
+    //POST SELF CODE REVIEW
     public override void LostFocus()
     {
         base.LostFocus();
-        ((TextureRect)GetChild(5)).Visible = false;
+        Dot.Visible = false;
     }
 
-    public void LostFocusPanel()
+    public double GetValueToAdd()
     {
-        Control item = Globals.Instance.CurrFocus;
-        item.ReleaseFocus();
-        Globals.Instance.CurrFocus = null;
-        if(GetChild(6).GetChildCount() <= 0)
-            QueueFree();
-        ((TextureRect)GetChild(5)).Visible = false;
-        SaveEdits();
+        return double.Parse(CountText.Text);
     }
 
-    public override void _PhysicsProcess(double delta)
+    
+    public void SaveEdits()
     {
-        if(Input.IsActionPressed("LMB") 
-        && Globals.Instance.CurrentToolState == Enums.ToolState.MoveNode
-        && Globals.Instance.CurrFocus == this)
+        if(!ColorCount.Visible)
+            return;
+        Node countText = ColorCount.GetChild(0);
+        
+        if(countText is CountInputController cic)
         {
-            MoveNode();
+            cic.SaveEdits(this);
         }
     }
 
@@ -137,23 +118,21 @@ public partial class GeneratorController : NodeController
             Utils.RedrawArrow(this, element, line);
         }
     }
-
-    public void SaveEdits()
+    public void LostFocusPanel()
     {
-        if(!((Control)GetChild(4)).Visible)
-            return;
-        Node countText = GetChild(4).GetChild(0);
-        
-        if(countText is CountInputController cic)
-        {
-            cic.SaveEdits(this);
-        }
+        Control item = Globals.Instance.CurrFocus;
+        item.ReleaseFocus();
+        Globals.Instance.CurrFocus = null;
+        if(LineParent.GetChildCount() <= 0)
+            QueueFree();
+        Dot.Visible = false;
+        SaveEdits();
     }
 
-    public double GetValueToAdd()
+    void ShowGrabbedFocus(bool vis, Color color)
     {
-        return double.Parse(CountText.Text);
+        Globals.Instance.CurrFocus = this;
+        Dot.Visible = vis;
+        Dot.SelfModulate = color;
     }
-
-
 }

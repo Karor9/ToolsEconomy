@@ -145,33 +145,7 @@ public partial class CraftingController : NodeController
         }
     }
 
-    public override void MoveNode()
-    {
-        base.MoveNode();
 
-        foreach (Node item in InLine)
-        {
-            Arrow line = (Arrow)item;
-            // Panel element = (Panel)line.GetParent().GetParent();
-            Utils.RedrawArrow(line.Parent, line.Child, line);
-        }
-        foreach (Node item in OutLine)
-        {
-            Arrow line = (Arrow)item;
-            // Panel element = (Panel)line.GetParent().GetParent();
-            Utils.RedrawArrow(line.Parent, line.Child, line);
-        }
-    }
-
-    public override void _PhysicsProcess(double delta)
-    {
-        if(Input.IsActionPressed("LMB") 
-        && Globals.Instance.CurrentToolState == Enums.ToolState.MoveNode
-        && Globals.Instance.CurrFocus == this)
-        {
-            MoveNode();
-        }
-    }
 
     public override void _Input(InputEvent @event)
     {
@@ -200,6 +174,23 @@ public partial class CraftingController : NodeController
         }
     }
 
+    //POST SELF CODE REVIEW
+    public override void MoveNode()
+    {
+        base.MoveNode();
 
+        foreach (Node item in this.InLine)
+        {
+            Arrow line = (Arrow)item;
+            // Panel element = (Panel)line.GetParent().GetParent();
+            Utils.RedrawArrow(line.Parent, line.Child, line);
+        }
+        foreach (Node item in this.OutLine)
+        {
+            Arrow line = (Arrow)item;
+            // Panel element = (Panel)line.GetParent().GetParent();
+            Utils.RedrawArrow(line.Parent, line.Child, line);
+        }
+    }
 
 }
