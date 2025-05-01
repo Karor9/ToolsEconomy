@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://dbkd43hcka6mm"]
+[gd_scene load_steps=9 format=3 uid="uid://dbkd43hcka6mm"]
 
 [ext_resource type="Script" uid="uid://cgs64qdjrn5d3" path="res://Scripts/UIController.cs" id="1_w371h"]
 [ext_resource type="Theme" uid="uid://cyu8db8yf0kqr" path="res://Themes/UIButtonTheme.tres" id="2_nxvpl"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://cvbwir3ylwhoq" path="res://Scenes/element.tscn" id="3_hfhsn"]
 [ext_resource type="PackedScene" uid="uid://bwhc82i0w0osx" path="res://Scenes/generator.tscn" id="4_qwshj"]
 [ext_resource type="PackedScene" uid="uid://cx7077130b6uu" path="res://Scenes/Crafting.tscn" id="5_48q88"]
+[ext_resource type="Script" uid="uid://cl3knguoav3nu" path="res://Scripts/Nodes/SaveLoadData.cs" id="6_mg6lk"]
 [ext_resource type="Script" uid="uid://ch1wh85racwdo" path="res://Scripts/SaveRecipe.cs" id="7_xjg7p"]
 
 [node name="Control" type="Control" node_paths=PackedStringArray("UIPanel", "SecondaryPanel", "CurrentState", "Camera", "CraftingInputContainer", "CraftingParent", "openButton", "closeButton", "CategoryButtons")]
@@ -79,7 +80,11 @@ mouse_filter = 1
 
 [node name="CraftingContainer" type="Node" parent="ElementsContainer"]
 
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
+[node name="CanvasLayer" type="CanvasLayer" parent="." node_paths=PackedStringArray("ElementParent", "GeneratorParent", "CraftingParent")]
+script = ExtResource("6_mg6lk")
+ElementParent = NodePath("../ElementsContainer")
+GeneratorParent = NodePath("../ElementsContainer/GeneratorContainer")
+CraftingParent = NodePath("../ElementsContainer/CraftingContainer")
 
 [node name="MainUIPanel" type="Panel" parent="CanvasLayer"]
 top_level = true
@@ -217,6 +222,78 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="RichTextLabel2" type="RichTextLabel" parent="CanvasLayer/MainUIPanel/ColorRect/VSplitContainer/Move"]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 10.0
+anchor_bottom = 10.0
+offset_left = 91.0
+offset_right = -819.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.1, 0.1)
+mouse_filter = 1
+text = ">"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Save" type="Button" parent="CanvasLayer/MainUIPanel/ColorRect/VSplitContainer"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+focus_mode = 0
+mouse_filter = 1
+theme = ExtResource("2_nxvpl")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="CanvasLayer/MainUIPanel/ColorRect/VSplitContainer/Save"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 10.0
+anchor_bottom = 10.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.1, 0.1)
+mouse_filter = 1
+text = "Save"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="RichTextLabel2" type="RichTextLabel" parent="CanvasLayer/MainUIPanel/ColorRect/VSplitContainer/Save"]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 10.0
+anchor_bottom = 10.0
+offset_left = 91.0
+offset_right = -819.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.1, 0.1)
+mouse_filter = 1
+text = ">"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Load" type="Button" parent="CanvasLayer/MainUIPanel/ColorRect/VSplitContainer"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+focus_mode = 0
+mouse_filter = 1
+theme = ExtResource("2_nxvpl")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="CanvasLayer/MainUIPanel/ColorRect/VSplitContainer/Load"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 10.0
+anchor_bottom = 10.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.1, 0.1)
+mouse_filter = 1
+text = "Load"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="RichTextLabel2" type="RichTextLabel" parent="CanvasLayer/MainUIPanel/ColorRect/VSplitContainer/Load"]
 visible = false
 layout_mode = 1
 anchors_preset = -1
@@ -428,6 +505,8 @@ anchor_mode = 0
 [connection signal="pressed" from="CanvasLayer/MainUIPanel/ColorRect/VSplitContainer/Button" to="." method="OpenSecondary" binds= [0]]
 [connection signal="pressed" from="CanvasLayer/MainUIPanel/ColorRect/VSplitContainer/Button2" to="." method="OpenSecondary" binds= [1]]
 [connection signal="pressed" from="CanvasLayer/MainUIPanel/ColorRect/VSplitContainer/Move" to="." method="SetToolState" binds= [4]]
+[connection signal="pressed" from="CanvasLayer/MainUIPanel/ColorRect/VSplitContainer/Save" to="CanvasLayer" method="Save"]
+[connection signal="pressed" from="CanvasLayer/MainUIPanel/ColorRect/VSplitContainer/Load" to="CanvasLayer" method="Load"]
 [connection signal="mouse_entered" from="CanvasLayer/UIAddSubpanel" to="." method="IsObstructed" binds= [true]]
 [connection signal="mouse_exited" from="CanvasLayer/UIAddSubpanel" to="." method="IsObstructed" binds= [false]]
 [connection signal="pressed" from="CanvasLayer/UIAddSubpanel/ColorRect/Adding/Button" to="." method="SetToolState" binds= [1]]
