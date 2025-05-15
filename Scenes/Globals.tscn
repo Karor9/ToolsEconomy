@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://dq883xrcuecr5"]
+[gd_scene load_steps=7 format=3 uid="uid://dq883xrcuecr5"]
 
 [ext_resource type="Script" uid="uid://cmjgxohx4ewap" path="res://Scripts/Globals.cs" id="1_18ypc"]
 [ext_resource type="PackedScene" uid="uid://ckud46p1aim7u" path="res://Scenes/arrow.tscn" id="2_t1ydv"]
 [ext_resource type="PackedScene" uid="uid://ttje7golha0" path="res://Scenes/chance_node.tscn" id="3_jbomx"]
 [ext_resource type="PackedScene" uid="uid://d2exp84guk0lx" path="res://Scenes/Dot.tscn" id="4_f1ypk"]
 [ext_resource type="PackedScene" uid="uid://cddg2j32mklop" path="res://Scenes/GoodsPanel.tscn" id="5_i30fr"]
+[ext_resource type="PackedScene" uid="uid://cvbwir3ylwhoq" path="res://Scenes/element.tscn" id="6_d3awt"]
 
 [node name="Node" type="Node"]
 script = ExtResource("1_18ypc")
@@ -12,3 +13,4 @@ Arrow = ExtResource("2_t1ydv")
 ChangeBlock = ExtResource("3_jbomx")
 Dot = ExtResource("4_f1ypk")
 Crafting = ExtResource("5_i30fr")
+Good = ExtResource("6_d3awt")

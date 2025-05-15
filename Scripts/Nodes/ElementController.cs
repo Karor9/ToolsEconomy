@@ -29,7 +29,7 @@ public partial class ElementController : NodeController
                 } 
                 
             }
-
+            GD.Print(id);
             LineEdits[id].Visible = true;
 
             if (LineEdits[id].GetChild(0) is LineEdit newLe)

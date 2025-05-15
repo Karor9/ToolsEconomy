@@ -25,10 +25,20 @@ public partial class SaveLoadData : CanvasLayer
                 sectionId += 1;
             GD.Print(item);
             string[] line = item.Split(";");
+            if(line.Length <= 1)
+                continue;
             switch(sectionId)
             {
                 case 0:
                     Goods good;
+                    ElementController ec = (ElementController)Globals.Instance.Good.Instantiate();
+                    ec.Name = line[0];
+                    string[] pos = line[1].Replace("(", "").Replace(")", "").Split(",");
+                    ec.Position = new Vector2(float.Parse(pos[0].Replace(".", ",")), float.Parse(pos[1].Replace(".", ",")));
+                    Globals.Instance.GoodParent.AddChild(ec);
+                    good = new Goods(line[3], double.Parse(line[2]), ec);
+                    Globals.Instance.Goods.Add(int.Parse(line[0]), good);
+                    ec.UpdateText();
                     break;
             }
         }
@@ -80,7 +90,7 @@ public partial class SaveLoadData : CanvasLayer
                 continue;
             ElementController ec = (ElementController)item;
             Goods g = Globals.Instance.Goods[int.Parse(ec.Name)];
-            result += ec.Name + ";" + ec.Position + ";" + g.Count + "\n";
+            result += ec.Name + ";" + ec.Position + ";" + g.Count + ";" + g.Name + "\n";
 
             foreach (Arrow arrow in ec.InLine)
             {

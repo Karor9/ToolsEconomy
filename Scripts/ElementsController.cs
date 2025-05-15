@@ -13,6 +13,12 @@ public partial class ElementsController : Control
     [Export] PackedScene Node;
     [Export] PackedScene Generator;
     [Export] PackedScene Crafting;
+
+    public override void _Ready()
+    {
+        Globals.Instance.GoodParent = Parent;
+    }
+
     public override void _Input(InputEvent @event)
     {
         if(@event.IsActionPressed("LMB"))

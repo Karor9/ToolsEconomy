@@ -17,9 +17,11 @@ public partial class Globals : Node
     [Export] public PackedScene ChangeBlock;
     [Export] public PackedScene Dot;
     [Export] public PackedScene Crafting;
+    [Export] public PackedScene Good;
 
     [ExportGroup("Elements")]
     [Export] public VBoxContainer CraftingInputContainer;
+    [Export] public Node GoodParent;
     
 
     public override void _Ready()
